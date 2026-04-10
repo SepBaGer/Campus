@@ -1,0 +1,32 @@
+{
+  "snapshots": [
+    {
+      "timestamp": "2026-04-05T19:56:44.244Z",
+      "featureId": "001-campus-replatform",
+      "score": 21,
+      "factors": {
+        "specCoverage": 0,
+        "testCoverage": 0,
+        "taskCompletion": 21,
+        "constitutionAlignment": 0
+      },
+      "phaseStates": {
+        "constitution": "complete",
+        "spec": "complete",
+        "plan": "complete",
+        "checklist": "complete",
+        "testify": "not_started",
+        "tasks": "complete",
+        "analyze": "complete",
+        "implement": "in_progress"
+      },
+      "risks": [
+        "Overall health score is critically low (21/100)",
+        "22 task(s) not linked to any requirement: T001, T002, T003, T004, T005"
+      ],
+      "staleArtifacts": [],
+      "brokenRefs": [],
+      "integrityStatus": "valid"
+    }
+  ]
+}

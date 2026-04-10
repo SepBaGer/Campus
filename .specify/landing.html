@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23122562'/%3E%3Cstop offset='100%25' stop-color='%231A3278'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='36' height='36' rx='10' fill='url(%23g)'/%3E%3Crect x='10' y='12' width='4' height='12' rx='.5' fill='%23FFF'/%3E%3Crect x='16' y='12' width='4' height='8' rx='.5' fill='%23FFF'/%3E%3Crect x='16' y='22' width='4' height='2' rx='.5' fill='%23FFF'/%3E%3Crect x='22' y='12' width='4' height='6' rx='.5' fill='%23FFF'/%3E%3Crect x='22' y='20' width='4' height='4' rx='.5' fill='%23FFF'/%3E%3Ccircle cx='18' cy='8' r='2' fill='%23FFD700'/%3E%3C/svg%3E">
+  <title>SDD — Spec Driven Development by MetodologIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #1F2833;
+      --surface: #122562;
+      --card: rgba(255,255,255,0.03);
+      --gold: #FFD700;
+      --blue: #137DC5;
+      --navy: #122562;
+      --lavender: #BBA0CC;
+      --gray: #808080;
+      --text: #F8F9FC;
+      --muted: #BBA0CC;
+      --card-blur: blur(16px) saturate(180%);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Trebuchet MS', 'Trebuchet', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* --- HERO --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px;
+      background: radial-gradient(ellipse at 50% 20%, rgba(19,125,197,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 50% 80%, rgba(187,160,204,0.06) 0%, transparent 50%);
+    }
+
+    .hero-logo {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 32px;
+      filter: drop-shadow(0 0 24px rgba(255,215,0,0.25));
+    }
+
+    .hero-title {
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, var(--gold) 0%, #FFF 50%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    .hero-brand {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-top: 12px;
+      font-weight: 500;
+    }
+    .hero-brand .ia { color: var(--gold); font-weight: 700; }
+
+    .hero-tagline {
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      color: var(--muted);
+      max-width: 600px;
+      margin: 24px auto 0;
+    }
+
+    .hero-actions { display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-4px) scale(1.01); }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), #FFC107);
+      color: #1F2833;
+      box-shadow: 0 4px 24px rgba(255,215,0,0.25);
+    }
+    .btn-gold:hover { box-shadow: 0 8px 40px rgba(255,215,0,0.45); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid rgba(255,255,255,0.15);
+    }
+    .btn-outline:hover { border-color: var(--gold); box-shadow: 0 4px 20px rgba(255,215,0,0.15); }
+
+    /* --- SECTION --- */
+    .section { padding: 100px 24px; }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .section-title .gold { color: var(--gold); }
+    .section-desc {
+      text-align: center;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 60px;
+      font-size: 1.05rem;
+    }
+
+    /* --- FEATURES --- */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--card);
+      backdrop-filter: var(--card-blur);
+      -webkit-backdrop-filter: var(--card-blur);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 32px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 8px 40px rgba(255,215,0,0.08);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--lavender));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature-card p { color: var(--muted); font-size: 0.95rem; }
+
+    .pulse-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-left: 8px;
+      vertical-align: middle;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.6); }
+      50% { box-shadow: 0 0 0 10px rgba(255,215,0,0); }
+    }
+
+    /* --- PIPELINE --- */
+    .pipeline-section { background: var(--surface); }
+
+    .pipeline-wrapper { overflow-x: auto; padding: 20px 0; }
+
+    .pipeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      min-width: 900px;
+      padding: 40px 20px;
+    }
+
+    .phase {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .phase-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), #FFC107);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--bg);
+      box-shadow: 0 0 20px rgba(255,215,0,0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: default;
+    }
+    .phase-circle:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 32px rgba(255,215,0,0.5);
+    }
+
+    .phase-label {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .connector {
+      width: 40px;
+      height: 2px;
+      background: rgba(255,215,0,0.3);
+      flex-shrink: 0;
+      position: relative;
+      top: -12px;
+    }
+
+    .gate {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      top: -12px;
+    }
+
+    .gate-diamond {
+      width: 22px;
+      height: 22px;
+      background: var(--blue);
+      transform: rotate(45deg);
+      border: 2px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 12px rgba(19,125,197,0.4);
+    }
+
+    .gate-label {
+      margin-top: 18px;
+      font-size: 0.65rem;
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    /* --- COMMANDS --- */
+    .commands-table {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+    .commands-table th {
+      text-align: left;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .commands-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.95rem;
+    }
+    .commands-table tr:hover { background: rgba(255,255,255,0.02); }
+
+    .cmd-pill {
+      display: inline-block;
+      background: rgba(255,215,0,0.08);
+      border: 1px solid rgba(255,215,0,0.2);
+      color: var(--gold);
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .cmd-desc { color: var(--muted); }
+
+    /* --- STATS --- */
+    .stats-bar {
+      background: var(--surface);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 60px 24px;
+    }
+
+    .stat-block h3 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), #FFC107);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-block p {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+      background: var(--navy);
+      border-top: 3px solid var(--gold);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-line {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .footer-line .ia { color: var(--gold); font-weight: 700; }
+    .footer-line strong { color: var(--text); font-weight: 600; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero { padding: 60px 20px; }
+      .pipeline { min-width: 700px; }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="hero-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#122562"/>
+          <stop offset="100%" stop-color="#1A3278"/>
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="46" fill="url(#logoGrad)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+      <circle cx="62" cy="34" r="6" fill="#FFD700">
+        <animate attributeName="opacity" values="1;0.6;1" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+
+    <h1 class="hero-title">SDD</h1>
+    <p class="hero-subtitle">Spec Driven Development</p>
+    <p class="hero-brand">by metodolog<span class="ia">IA</span></p>
+    <p class="hero-tagline">De la especificaci&oacute;n a la implementaci&oacute;n con puertas mandatorias, hashing criptogr&aacute;fico y trazabilidad bidireccional. Tu IDE se convierte en una plataforma de delivery.</p>
+
+    <div class="hero-actions">
+      <a href="/sdd:tour" class="btn btn-gold">Comenzar &rarr;</a>
+      <a href="/sdd:demo" class="btn btn-outline">Ver Demo &rarr;</a>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title fade-up">&iquest;Por qu&eacute; <span class="gold">SDD</span>?</h2>
+      <p class="section-desc fade-up">M&eacute;todo completo de especificaci&oacute;n primero con puertas de calidad mandatorias, inteligencia ambiental y trazabilidad bidireccional.</p>
+
+      <div class="features-grid">
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x1F6E1;</div>
+          <h3>Puertas Mandatorias G1/G2/G3</h3>
+          <p>Tres puertas de calidad que <strong>detienen el pipeline</strong> ante violaciones. No son advertencias — son paradas reales.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x1F512;</div>
+          <h3>Hashing Criptogr&aacute;fico</h3>
+          <p>SHA-256 sobre escenarios BDD. Se genera en Fase 4, se verifica en Fase 7. Detecta manipulaci&oacute;n de aserciones.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x1F3D7;</div>
+          <h3>Pipeline de 9 Fases</h3>
+          <p>De Constituci&oacute;n a GitHub Issues. Cada fase actualiza el estado del pipeline para prevenir saltos.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x1F49B;</div>
+          <h3>Heartbeat Ambiental <span class="pulse-dot"></span></h3>
+          <p>Inteligencia por prompt. &lt; 100ms. Escaneo limitado a 50 archivos. Silencioso cuando todo est&aacute; bien.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x1F578;</div>
+          <h3>Grafo Bidireccional</h3>
+          <p>Principios &rarr; Requisitos &rarr; Pruebas &rarr; Tareas. Detecta hu&eacute;rfanos en ambas direcciones y referencias rotas.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x1F4CB;</div>
+          <h3>Workspace por Tarea</h3>
+          <p>Carpetas fechadas con inputs, RAG, logs y tasklog. Escrituras at&oacute;micas y concurrencia por flock.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x2705;</div>
+          <h3>Validaci&oacute;n de Esquemas</h3>
+          <p>JSON schemas para context, session y gates. Validadores de contenido para spec, plan y tasks.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x1F3AE;</div>
+          <h3>ALM Command Center</h3>
+          <p>Dashboard multi-p&aacute;gina: salud, pipeline, specs, calidad, inteligencia, workspace, gobernanza, logs.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">&#x1F9E0;</div>
+          <h3>Memoria RAG Segura</h3>
+          <p>L&iacute;mite 10 MB, resoluci&oacute;n de symlinks, detecci&oacute;n de binarios. Enrutamiento autom&aacute;tico al workspace.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section class="section pipeline-section">
+    <div class="container">
+      <h2 class="section-title fade-up">El <span class="gold">Pipeline</span></h2>
+      <p class="section-desc fade-up">9 fases, 3 puertas mandatorias. Cada artefacto es trazable y validado.</p>
+
+      <div class="pipeline-wrapper fade-up">
+        <div class="pipeline">
+          <div class="phase"><div class="phase-circle">0</div><div class="phase-label">Constituci&oacute;n</div></div>
+          <div class="connector"></div>
+          <div class="phase"><div class="phase-circle">1</div><div class="phase-label">Especificar</div></div>
+          <div class="connector"></div>
+          <div class="phase"><div class="phase-circle">2</div><div class="phase-label">Planificar</div></div>
+          <div class="connector"></div>
+          <div class="gate"><div class="gate-diamond"></div><div class="gate-label">G1</div></div>
+          <div class="connector"></div>
+          <div class="phase"><div class="phase-circle">3</div><div class="phase-label">Checklist</div></div>
+          <div class="connector"></div>
+          <div class="phase"><div class="phase-circle">4</div><div class="phase-label">Testificar</div></div>
+          <div class="connector"></div>
+          <div class="phase"><div class="phase-circle">5</div><div class="phase-label">Tareas</div></div>
+          <div class="connector"></div>
+          <div class="phase"><div class="phase-circle">6</div><div class="phase-label">Analizar</div></div>
+          <div class="connector"></div>
+          <div class="gate"><div class="gate-diamond"></div><div class="gate-label">G2</div></div>
+          <div class="connector"></div>
+          <div class="phase"><div class="phase-circle">7</div><div class="phase-label">Implementar</div></div>
+          <div class="connector"></div>
+          <div class="gate"><div class="gate-diamond"></div><div class="gate-label">G3</div></div>
+          <div class="connector"></div>
+          <div class="phase"><div class="phase-circle">8</div><div class="phase-label">Issues</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMANDS -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title fade-up">Vitrina de <span class="gold">Comandos</span></h2>
+      <p class="section-desc fade-up">Comandos esenciales que impulsan el flujo SDD.</p>
+
+      <table class="commands-table fade-up">
+        <thead>
+          <tr><th>Comando</th><th>Descripci&oacute;n</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="cmd-pill">/sdd:tour</span></td><td class="cmd-desc">Recorrido interactivo de onboarding (8 pasos)</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:init</span></td><td class="cmd-desc">Inicializar proyecto con constituci&oacute;n y ALM</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:spec</span></td><td class="cmd-desc">Crear especificaciones funcionales (FR-NNN, SC-NNN)</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:plan</span></td><td class="cmd-desc">Generar plan t&eacute;cnico con modelo de datos y contratos</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:test</span></td><td class="cmd-desc">Derivar casos BDD con hashing criptogr&aacute;fico</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:workspace</span></td><td class="cmd-desc">Gestionar sesiones de workspace por tarea</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:sentinel</span></td><td class="cmd-desc">Ciclo completo de percibir-decidir-actuar</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:graph</span></td><td class="cmd-desc">Grafo de trazabilidad bidireccional con detecci&oacute;n de hu&eacute;rfanos</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:verify</span></td><td class="cmd-desc">Suite de verificaci&oacute;n completa (8 chequeos)</td></tr>
+          <tr><td><span class="cmd-pill">/sdd:dashboard</span></td><td class="cmd-desc">ALM Command Center (10 p&aacute;ginas)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat-block fade-up"><h3 id="s-cmd">0</h3><p>Comandos</p></div>
+      <div class="stat-block fade-up"><h3 id="s-scr">0</h3><p>Scripts</p></div>
+      <div class="stat-block fade-up"><h3 id="s-sch">0</h3><p>Esquemas</p></div>
+      <div class="stat-block fade-up"><h3 id="s-hk">0</h3><p>Hooks</p></div>
+      <div class="stat-block fade-up"><h3 id="s-sk">0</h3><p>Skills</p></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-line"><strong>SDD v3.5</strong> &middot; Spec Driven Development</p>
+    <p class="footer-line">by metodolog<span class="ia">IA</span></p>
+    <p class="footer-line">Co-creado por <strong>Javier Monta&ntilde;o</strong> &amp; <strong>Katherin Oquendo</strong></p>
+    <p class="footer-line">Potenciado por Claude Code &middot; Antigravity &middot; Agente Pristino</p>
+    <p class="footer-line" style="color:var(--gold)">&hearts; Construido con m&eacute;todo y mucho amor</p>
+  </footer>
+
+  <script>
+    (function() {
+      var els = document.querySelectorAll('.fade-up');
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+          });
+        }, { threshold: 0.15 });
+        els.forEach(function(el) { obs.observe(el); });
+      } else {
+        els.forEach(function(el) { el.classList.add('visible'); });
+      }
+    })();
+
+    (function() {
+      var stats = [
+        { id: 's-cmd', target: 39 },
+        { id: 's-scr', target: 27 },
+        { id: 's-sch', target: 3 },
+        { id: 's-hk', target: 4 },
+        { id: 's-sk', target: 12 }
+      ];
+      var animated = false;
+      function animateCount(el, target) {
+        var c = 0, step = Math.max(1, Math.floor(target / 40));
+        var i = setInterval(function() {
+          c += step; if (c >= target) { c = target; clearInterval(i); }
+          el.textContent = c;
+        }, 30);
+      }
+      var section = document.querySelector('.stats-bar');
+      if (section && 'IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries) {
+          if (entries[0].isIntersecting && !animated) {
+            animated = true;
+            stats.forEach(function(s) { animateCount(document.getElementById(s.id), s.target); });
+          }
+        }, { threshold: 0.3 });
+        obs.observe(section);
+      } else {
+        stats.forEach(function(s) { document.getElementById(s.id).textContent = s.target; });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "gates": [
+    {
+      "gate": "G1",
+      "phase": "03",
+      "result": "PASS",
+      "timestamp": "2026-04-05T16:53:26Z",
+      "findings": [],
+      "errors": 0,
+      "warnings": 0
+    }
+  ]
+}

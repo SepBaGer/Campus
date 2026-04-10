@@ -1,0 +1,28 @@
+# Hostinger .htaccess - MetodologIA Campus v2
+# Soporte para SPA (Single Page Application) en subcarpeta /campus/
+
+RewriteEngine On
+RewriteBase /campus/
+
+# Evitar bucles en index.html
+RewriteRule ^index\.html$ - [L]
+
+# Si el archivo o carpeta solicitada no existe, redirigir a index.html
+# Esto permite que el router de JavaScript tome el control de la URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /campus/index.html [L]
+
+# Optimizaciones de Cache (Opcional pero recomendado para NFR-08)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>

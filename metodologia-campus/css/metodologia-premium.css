@@ -1,0 +1,726 @@
+/**
+ * @license Copyleft
+ * @copyright MetodologIA
+ * @author Javier Montaño
+ * @technology Antigravity | GoogleAI Studio | Gemini 3 Pro | Gemini 3 Flash 
+ * @poweredBy Pristino Agent
+ */
+
+/**
+ * MetodologIA Color System
+ * Standardized semantic color palette
+ * Version: 1.0.0
+ */
+
+:root {
+    /* ═══════════════════════════════════════════════════════════════
+     BACKGROUNDS
+     ═══════════════════════════════════════════════════════════════ */
+    --bg-primary: #020617;
+    /* Main page background */
+    --bg-surface: #0f172a;
+    /* Cards, elevated sections */
+    --bg-elevated: rgba(255, 255, 255, 0.03);
+    /* Glass-effect surfaces */
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    /* Hover states */
+
+    /* ═══════════════════════════════════════════════════════════════
+     TEXT
+     ═══════════════════════════════════════════════════════════════ */
+    --text-primary: #FFFFFF;
+    /* Headings, important text */
+    --text-secondary: #cbd5e1;
+    /* Body text, descriptions */
+    --text-muted: #64748b;
+    /* Captions, hints, less important */
+
+    /* ═══════════════════════════════════════════════════════════════
+     BORDERS
+     ═══════════════════════════════════════════════════════════════ */
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --border-default: rgba(255, 255, 255, 0.10);
+    --border-strong: rgba(255, 255, 255, 0.20);
+
+    /* ═══════════════════════════════════════════════════════════════
+     BRAND SEMANTIC COLORS
+     ═══════════════════════════════════════════════════════════════ */
+
+    /* GOLD - Método, Cultura, Framework, MetodologIA "IA" branding */
+    --brand-gold: #FFD700;
+    --brand-gold-dark: #FFA000;
+    --brand-gold-glow: rgba(255, 215, 0, 0.2);
+
+    /* YELLOW - Aceleración, Velocidad, CTAs, Urgencia */
+    --brand-yellow: #fbbf24;
+    --brand-yellow-dark: #d97706;
+    --brand-yellow-glow: rgba(251, 191, 36, 0.2);
+
+    /* RED - Negativo, Errores, Warnings, "NO" boundaries */
+    --brand-red: #ef4444;
+    --brand-red-dark: #dc2626;
+    --brand-red-glow: rgba(239, 68, 68, 0.2);
+
+    /* EMERALD - Positivo, Éxito, Completado, "SÍ" items */
+    --brand-emerald: #34d399;
+    --brand-emerald-dark: #10b981;
+    --brand-emerald-glow: rgba(52, 211, 153, 0.2);
+
+    /* CYAN - Tecnología, Digital, IA-related */
+    --brand-cyan: #22d3ee;
+    --brand-cyan-dark: #06b6d4;
+    --brand-cyan-glow: rgba(34, 211, 238, 0.2);
+
+    /* PURPLE - Premium, (R)Evolución, Advanced features */
+    --brand-purple: #8b5cf6;
+    --brand-purple-dark: #7c3aed;
+    --brand-purple-glow: rgba(139, 92, 246, 0.2);
+
+    /* BLUE - Profesional, Confianza, Estructura */
+    --brand-blue: #3b82f6;
+    --brand-blue-dark: #2563eb;
+    --brand-blue-glow: rgba(59, 130, 246, 0.2);
+
+    /* ═══════════════════════════════════════════════════════════════
+     GRADIENTS
+     ═══════════════════════════════════════════════════════════════ */
+    --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFA000 100%);
+    --gradient-yellow: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
+    --gradient-surface: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY CLASSES (COLORS)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Text Colors */
+.text-gold {
+    color: var(--brand-gold) !important;
+}
+
+.text-yellow {
+    color: var(--brand-yellow) !important;
+}
+
+.text-red {
+    color: var(--brand-red) !important;
+}
+
+.text-emerald {
+    color: var(--brand-emerald) !important;
+}
+
+.text-cyan {
+    color: var(--brand-cyan) !important;
+}
+
+.text-purple {
+    color: var(--brand-purple) !important;
+}
+
+.text-blue {
+    color: var(--brand-blue) !important;
+}
+
+/* Background Colors */
+.bg-gold {
+    background-color: var(--brand-gold) !important;
+}
+
+.bg-yellow {
+    background-color: var(--brand-yellow) !important;
+}
+
+.bg-red {
+    background-color: var(--brand-red) !important;
+}
+
+.bg-emerald {
+    background-color: var(--brand-emerald) !important;
+}
+
+.bg-cyan {
+    background-color: var(--brand-cyan) !important;
+}
+
+.bg-purple {
+    background-color: var(--brand-purple) !important;
+}
+
+.bg-blue {
+    background-color: var(--brand-blue) !important;
+}
+
+/* Gradient Text */
+.text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-purple {
+    background: var(--gradient-purple);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Border Colors */
+.border-gold {
+    border-color: var(--brand-gold) !important;
+}
+
+.border-yellow {
+    border-color: var(--brand-yellow) !important;
+}
+
+.border-red {
+    border-color: var(--brand-red) !important;
+}
+
+.border-emerald {
+    border-color: var(--brand-emerald) !important;
+}
+
+.border-cyan {
+    border-color: var(--brand-cyan) !important;
+}
+
+.border-purple {
+    border-color: var(--brand-purple) !important;
+}
+
+.border-blue {
+    border-color: var(--brand-blue) !important;
+}
+
+/* Glow Effects */
+.glow-gold {
+    box-shadow: 0 0 20px var(--brand-gold-glow);
+}
+
+.glow-yellow {
+    box-shadow: 0 0 20px var(--brand-yellow-glow);
+}
+
+.glow-emerald {
+    box-shadow: 0 0 20px var(--brand-emerald-glow);
+}
+
+.glow-cyan {
+    box-shadow: 0 0 20px var(--brand-cyan-glow);
+}
+
+.glow-purple {
+    box-shadow: 0 0 20px var(--brand-purple-glow);
+}
+
+.glow-blue {
+    box-shadow: 0 0 20px var(--brand-blue-glow);
+}
+
+/* Card Styles */
+.card-glass {
+    background: var(--bg-elevated);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-subtle);
+}
+
+.card-glass:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-default);
+}
+
+/* Button - Primary Gold CTA */
+.btn-gold {
+    background: var(--gradient-gold);
+    color: #000;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px var(--brand-gold-glow);
+    text-decoration: none;
+}
+
+.btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+
+/* MetodologIA Brand Highlights */
+.highlight-metodologia {
+    color: var(--text-primary);
+    font-weight: 900;
+}
+
+.highlight-ia {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM COMPONENTS from HOME
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+    /* Footer Variables */
+    --surface-primary: #0f172a;
+    --border-subtle: rgba(203, 213, 225, 0.08);
+    --text-secondary: #94a3b8;
+
+    /* Typography - Families - Brandbook MetodologIA v3.0 */
+    --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-secondary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+    /* === COLORES PRINCIPALES DE MARCA METODOLOGIA === */
+    --primary-blue-900: #0A122A;
+    /* Blue Dark Principal */
+    --primary-blue-800: #1e293b;
+    /* Blue Dark Secundario */
+    --accent-gold: #FFD700;
+    /* Gold Principal */
+    --accent-gold-light: #FFF176;
+    /* Gold Light */
+    --accent-gold-dark: #FFA000;
+    /* Gold Dark */
+    --accent-cyan: #00FFFF;
+    /* IA Highlight */
+    --surface-ground: #0F172A;
+    /* Fondo Principal */
+    --surface-raised: #1E293B;
+    /* Tarjetas y Elementos */
+    --text-primary: #FFFFFF;
+    /* Texto Principal */
+    --text-secondary: #F8F9FA;
+    /* Texto Secundario */
+
+    /* === ALIAS PARA COMPATIBILIDAD === */
+    --brand-primary: var(--primary-blue-900);
+    --brand-secondary: var(--primary-blue-800);
+    --brand-gold: var(--accent-gold);
+    --brand-highlight: var(--accent-gold-dark);
+
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFA000 100%);
+    --gradient-blue: linear-gradient(135deg, #0B2545 0%, #1E3A5F 100%);
+}
+
+.font-primary {
+    font-family: var(--font-primary);
+}
+
+.font-secondary {
+    font-family: var(--font-secondary);
+}
+
+.font-heading {
+    font-family: var(--font-primary);
+}
+
+body {
+    background-color: var(--bg-primary, #020617);
+    color: #e2e8f0;
+    overflow-x: hidden;
+    font-family: var(--font-secondary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-primary);
+}
+
+/* === PREMIUM NAVIGATION (Disruptive Header) === */
+.premium-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 18, 42, 0.88);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.875rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-shrink: 0;
+}
+
+.nav-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.nav-logo-link:hover {
+    transform: translateY(-2px);
+}
+
+.nav-logo-link:hover .logo-svg {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+}
+
+.nav-logo-link h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: white;
+}
+
+.nav-tagline-modern {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .nav-tagline-modern {
+        display: flex;
+    }
+}
+
+.tagline-separator {
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(180deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+}
+
+.tagline-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+}
+
+/* Segment Switcher */
+.segment-switcher {
+    display: none;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+}
+
+@media (min-width: 1024px) {
+    .segment-switcher {
+        display: flex;
+    }
+}
+
+.segment-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.segment-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: #FFD700;
+}
+
+.segment-btn.active {
+    background: rgba(255, 215, 0, 0.15);
+    color: #FFD700;
+    box-shadow: inset 0 0 0 1px rgba(255, 215, 0, 0.3);
+}
+
+.segment-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.segment-btn:hover .segment-icon,
+.segment-btn.active .segment-icon {
+    opacity: 1;
+}
+
+/* CTA Nav: Maximum Contrast Header Button - PILL SHAPE */
+.nav-cta-glow {
+    position: relative;
+    padding: 0.6rem 1.5rem;
+    background: #fbbf24;
+    /* Amber 400 - Solid Yellow like reference */
+    color: #020617;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 9999px;
+    /* Full Rounded Pill */
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.nav-cta-glow:hover {
+    background: #f59e0b;
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.6);
+}
+
+/* Navigation Links (Premium Text Style - Matches Reference) */
+.nav-link-premium {
+    color: #94a3b8;
+    /* Slate 400 */
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link-premium:hover {
+    color: #FFFFFF;
+}
+
+.nav-link-premium.active {
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+/* Secondary Links (Right Side) */
+.nav-link-secondary {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.nav-link-secondary:hover {
+    color: #FFFFFF;
+}
+
+/* Layout Fixes for Header - Explicit Flexbox */
+.nav-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 2rem;
+    /* Wider gap like reference */
+}
+
+.nav-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .nav-row {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-actions {
+        display: none !important;
+    }
+}
+
+/* Animated Gold Underline */
+.nav-glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.1) 20%, rgba(255, 215, 0, 0.6) 50%, rgba(255, 215, 0, 0.1) 80%, transparent 100%);
+    animation: glow-pulse 4s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: flex;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+    .mobile-menu-btn {
+        display: none !important;
+    }
+}
+
+/* Text Gradients & Glow */
+.text-gradient-gold {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-glow-gold {
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Animations */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes float-gentle {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.animate-float-gentle {
+    animation: float-gentle 2s ease-in-out infinite;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Highlight classes from prompt override */
+.highlight-metodologia {
+    color: #FFFFFF !important;
+    /* Pure White */
+    font-weight: 900;
+    letter-spacing: -0.02em;
+}
+
+.highlight-ia-premium {
+    color: #FFD700 !important;
+    /* Solid Gold for better readability */
+    background: none;
+    /* Removing gradient if it caused "unequal colors" issues */
+    font-weight: 900;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    font-size: 1.05em;
+}
+
+/* Navigation Typography Override */
+.nav-link-premium,
+.nav-cta-glow,
+.nav-link-secondary,
+.tagline-text {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Footer Micro-Interactions */
+.footer-link {
+    position: relative;
+    color: #94a3b8;
+    transition: color 0.25s ease, transform 0.25s ease;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: #fbbf24;
+    transform: translateX(4px);
+}
+
+.footer-link-active {
+    color: #FFD700 !important;
+    font-weight: 600;
+}
+
+.footer-link-active::before {
+    content: '›';
+    margin-right: 0.5rem;
+    color: #FFD700;
+    font-weight: 700;
+}
+
+.footer-glow-line {
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 215, 0, 0.1) 20%,
+            rgba(255, 215, 0, 0.4) 50%,
+            rgba(255, 215, 0, 0.1) 80%,
+            transparent 100%);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    opacity: 0.5;
+}
+
+.footer-section-title {
+    position: relative;
+    display: inline-block;
+}
+
+.footer-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 2rem;
+    height: 2px;
+    background: linear-gradient(90deg, #FFD700, transparent);
+    opacity: 0.5;
+}

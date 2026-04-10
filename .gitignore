@@ -1,0 +1,10 @@
+campus-v2/node_modules/
+campus-v2/dist/
+campus-v2/.env
+campus-v2/.env.*
+campus-v2/supabase/.temp/
+campus-v2/supabase/.branches/
+mao-sdd/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Header MetodologIA</title>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- System CSS (Mocking if missing or relative) -->
+    <link rel="stylesheet" href="css/metodologia-system.css">
+    <!-- Premium CSS (The one we edited) -->
+    <link rel="stylesheet" href="css/metodologia-premium.css">
+
+    <style>
+        /* Mocking body class and background if needed */
+        body {
+            background-color: #020617;
+            /* --bg-primary */
+            margin: 0;
+            padding-top: 100px;
+            /* Space for fixed header */
+        }
+    </style>
+</head>
+
+<body class="metodologia-campus">
+
+    <div id="page" class="site">
+        <!-- Premium Nav (Homologated) -->
+        <nav class="premium-nav">
+            <div class="nav-container">
+                <!-- Logo & Tagline -->
+                <div class="flex items-center gap-6">
+                    <a href="#" class="nav-logo-link flex items-center gap-3">
+                        <svg width="32" height="32" viewBox="0 0 36 36" fill="none" class="logo-svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#0A122A" />
+                                    <stop offset="100%" stop-color="#1e293b" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="36" height="36" rx="10" fill="url(#logoGradient)" />
+                            <path d="M10 12h3v12h-3V12zm6 0h3v8h-3v-8zm0 10h3v2h-3v-2zm6-10h3v6h-3v-6zm0 8h3v4h-3v-4z"
+                                fill="white" />
+                            <circle cx="18" cy="8" r="2" fill="#FFD700" />
+                        </svg>
+                        <h1><span class="highlight-metodologia">Metodolog</span><span
+                                class="highlight-ia-premium">IA</span></h1>
+                    </a>
+
+                    <!-- Separator & Tagline -->
+                    <div class="hidden xl:flex items-center gap-4 border-l border-white/10 pl-6 h-8">
+                        <span class="text-xs font-bold tracking-widest text-[#FFD700] uppercase">Acelere su
+                            Estrategia</span>
+                    </div>
+                </div>
+
+                <!-- Main Navigation (Clean Text Links - No Icons) -->
+                <div class="nav-row">
+                    <a href="#" class="nav-link-premium">
+                        Aula
+                    </a>
+                    <a href="#" class="nav-link-premium active">
+                        Calendario
+                    </a>
+                    <a href="#" class="nav-link-premium">
+                        Comunidad
+                    </a>
+                    <a href="#" class="nav-link-premium">
+                        Ranking
+                    </a>
+                </div>
+
+                <!-- Right Actions -->
+                <div class="nav-actions">
+                    <a href="#" target="_blank" class="nav-link-secondary">Recursos</a>
+                    <a href="#" target="_blank" class="nav-link-secondary">Contacto</a>
+
+                    <!-- Simulating Logged Out State initially -->
+                    <a href="#" class="nav-cta-glow">Inicio de Sesión</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 text-slate-300" aria-label="Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="4" x2="20" y1="12" y2="12" />
+                        <line x1="4" x2="20" y1="6" y2="6" />
+                        <line x1="4" x2="20" y1="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+</body>
+
+</html>
