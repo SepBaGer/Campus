@@ -1,9 +1,0 @@
-{
-  "generated": "2026-04-05T16:59:25Z",
-  "algorithm": "sha256",
-  "scope": "non-blank, non-comment lines",
-  "count": 4,
-  "hashes": {
-    "mao-sdd/tests/dashboard/fixtures/testify/tests/features/acceptance.feature": "809abadf9bac1b21fc4b0b13d3710bf5e5a54ff77e6b43c2c496ac86a8f156bb","mao-sdd/tests/dashboard/fixtures/testify/tests/features/contract.feature": "1b42403fba6bde1a6f50a8bed635d1d5099df541e36c24cbdf3249bedd15cec0","mao-sdd/tests/dashboard/fixtures/testify/tests/features/validation.feature": "5b046f77f41cd97a9e8ddfd11d1c7ada60c7f8b662621399f97c0a0fdd3c7a50","tests/features/campus-replatform.feature": "abeb4f5cf1a442f9485ee18677fb75fc2c6e549f65263e8723c7d8898fbbc26c"
-  }
-}
