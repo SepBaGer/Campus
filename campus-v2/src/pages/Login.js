@@ -1,9 +1,15 @@
 import { AuthService } from '../auth.js';
 
 export const Login = {
-  _mode: 'login', // 'login' | 'register'
+  _mode: 'login',
 
   render() {
+    const isAuthConfigured = AuthService.isConfigured();
+    const pendingMessage = AuthService.getPendingMessage();
+    const submitAttrs = isAuthConfigured
+      ? 'style="width:100%;justify-content:center;margin-top:4px;"'
+      : 'style="width:100%;justify-content:center;margin-top:4px;opacity:.6;cursor:not-allowed;" disabled aria-disabled="true"';
+
     return `
       <div style="display: flex; height: 100vh; align-items: center; justify-content: center; width: 100vw;">
         <div class="glass-panel" style="padding: 40px; width: 100%; max-width: 420px; animation: fadeIn 0.4s ease-out;">
@@ -22,9 +28,8 @@ export const Login = {
               </div>
             </div>
 
-            <!-- Mode tabs -->
             <div style="display:flex;gap:8px;background:rgba(255,255,255,0.04);padding:4px;border-radius:12px;margin-bottom:28px;">
-              <button id="tabLogin" onclick="window._loginSetMode('login')" style="flex:1;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:0.9rem;transition:all .2s;background:var(--accent-color);color:#000;">Iniciar Sesión</button>
+              <button id="tabLogin" onclick="window._loginSetMode('login')" style="flex:1;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:0.9rem;transition:all .2s;background:var(--accent-color);color:#000;">Iniciar Sesion</button>
               <button id="tabRegister" onclick="window._loginSetMode('register')" style="flex:1;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:0.9rem;transition:all .2s;background:transparent;color:var(--text-secondary);">Crear Cuenta</button>
             </div>
           </div>
@@ -32,11 +37,13 @@ export const Login = {
           <form id="loginForm" style="display:flex;flex-direction:column;gap:18px;">
             <div id="errorMsg" style="color:#ef4444;font-size:0.9rem;text-align:center;padding:10px;background:rgba(239,68,68,0.1);border-radius:8px;display:none;"></div>
             <div id="successMsg" style="color:#22c55e;font-size:0.9rem;text-align:center;padding:10px;background:rgba(34,197,94,0.1);border-radius:8px;display:none;"></div>
+            <div id="pendingMsg" style="display:${isAuthConfigured ? 'none' : 'block'}; color:var(--navy); font-size:0.9rem; text-align:center; padding:12px; background:rgba(19,125,197,0.08); border:1px solid rgba(19,125,197,0.16); border-radius:12px;">
+              ${pendingMessage}
+            </div>
 
-            <!-- Name field — only on register -->
             <div class="form-group" id="nameGroup" style="display:none;">
               <label for="displayName">Tu nombre</label>
-              <input type="text" id="displayName" class="form-control" placeholder="María González">
+              <input type="text" id="displayName" class="form-control" placeholder="Maria Gonzalez">
             </div>
 
             <div class="form-group">
@@ -45,17 +52,19 @@ export const Login = {
             </div>
 
             <div class="form-group">
-              <label for="password">Contraseña</label>
-              <input type="password" id="password" class="form-control" required placeholder="••••••••" minlength="6">
+              <label for="password">Contrasena</label>
+              <input type="password" id="password" class="form-control" required placeholder="********" minlength="6">
             </div>
 
-            <button type="submit" id="btnSubmit" class="btn-primary" style="width:100%;justify-content:center;margin-top:4px;">
-              Ingresar
+            <button type="submit" id="btnSubmit" class="btn-primary" ${submitAttrs}>
+              ${isAuthConfigured ? 'Ingresar' : 'Acceso pendiente'}
             </button>
           </form>
 
           <p id="modeHint" style="text-align:center;margin-top:20px;font-size:0.85rem;color:var(--text-secondary);">
-            ¿Sin cuenta? <a href="#" onclick="window._loginSetMode('register');return false;" style="color:var(--accent-color);font-weight:600;">Regístrate gratis</a>
+            ${isAuthConfigured
+              ? '¿Sin cuenta? <a href="#" onclick="window._loginSetMode(\'register\');return false;" style="color:var(--accent-color);font-weight:600;">Registrate gratis</a>'
+              : 'El acceso quedara habilitado al finalizar la configuracion remota.'}
           </p>
         </div>
       </div>
@@ -71,26 +80,32 @@ export const Login = {
     const tabLogin = document.getElementById('tabLogin');
     const tabRegister = document.getElementById('tabRegister');
     const modeHint = document.getElementById('modeHint');
+    const pendingMsg = document.getElementById('pendingMsg');
+    const isAuthConfigured = AuthService.isConfigured();
 
     const showError = (msg) => {
       errorMsg.textContent = msg;
       errorMsg.style.display = 'block';
       successMsg.style.display = 'none';
     };
+
     const showSuccess = (msg) => {
       successMsg.textContent = msg;
       successMsg.style.display = 'block';
       errorMsg.style.display = 'none';
     };
+
     const clearMessages = () => {
       errorMsg.style.display = 'none';
       successMsg.style.display = 'none';
     };
 
-    // Global mode switcher (called from onclick in HTML)
     window._loginSetMode = (mode) => {
+      if (!isAuthConfigured) return;
+
       this._mode = mode;
       clearMessages();
+
       if (mode === 'register') {
         nameGroup.style.display = 'block';
         btnSubmit.textContent = 'Crear Cuenta';
@@ -98,7 +113,7 @@ export const Login = {
         tabLogin.style.color = 'var(--text-secondary)';
         tabRegister.style.background = 'var(--accent-color)';
         tabRegister.style.color = '#000';
-        modeHint.innerHTML = '¿Ya tienes cuenta? <a href="#" onclick="window._loginSetMode(\'login\');return false;" style="color:var(--accent-color);font-weight:600;">Inicia sesión</a>';
+        modeHint.innerHTML = '¿Ya tienes cuenta? <a href="#" onclick="window._loginSetMode(\'login\');return false;" style="color:var(--accent-color);font-weight:600;">Inicia sesion</a>';
       } else {
         nameGroup.style.display = 'none';
         btnSubmit.textContent = 'Ingresar';
@@ -106,12 +121,27 @@ export const Login = {
         tabLogin.style.color = '#000';
         tabRegister.style.background = 'transparent';
         tabRegister.style.color = 'var(--text-secondary)';
-        modeHint.innerHTML = '¿Sin cuenta? <a href="#" onclick="window._loginSetMode(\'register\');return false;" style="color:var(--accent-color);font-weight:600;">Regístrate gratis</a>';
+        modeHint.innerHTML = '¿Sin cuenta? <a href="#" onclick="window._loginSetMode(\'register\');return false;" style="color:var(--accent-color);font-weight:600;">Registrate gratis</a>';
       }
     };
 
+    if (!isAuthConfigured) {
+      tabRegister.disabled = true;
+      tabRegister.style.opacity = '0.5';
+      tabRegister.style.cursor = 'not-allowed';
+      tabLogin.style.background = 'rgba(19,125,197,0.12)';
+      tabLogin.style.color = 'var(--navy)';
+      if (pendingMsg) pendingMsg.style.display = 'block';
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      if (!isAuthConfigured) {
+        showError(AuthService.getPendingMessage());
+        return;
+      }
+
       clearMessages();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
@@ -125,16 +155,14 @@ export const Login = {
         } else {
           const displayName = document.getElementById('displayName').value.trim() || email.split('@')[0];
           await AuthService.register(email, password, displayName);
-          showSuccess(`✅ ¡Cuenta creada! Bienvenido, ${displayName}. Redirigiendo...`);
+          showSuccess(`Cuenta creada. Bienvenido, ${displayName}. Redirigiendo...`);
           setTimeout(() => { window.location.hash = '#/dashboard'; }, 1200);
         }
       } catch (err) {
-        showError(err.message || 'Ocurrió un error. Inténtalo de nuevo.');
+        showError(err.message || 'Ocurrio un error. Intentalo de nuevo.');
         btnSubmit.disabled = false;
         btnSubmit.textContent = this._mode === 'login' ? 'Ingresar' : 'Crear Cuenta';
       }
     });
   }
 };
-
-

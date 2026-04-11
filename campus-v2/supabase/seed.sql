@@ -1,13 +1,13 @@
--- C:\Users\SepBa\Documents\Trabajo Agentico\workspace\campus-v2\supabase\seed.sql
+-- Seed de agenda para el Programa de Empoderamiento en Power Skills
 
--- 1. Calendario de Eventos Reales (Programa de Empoderamiento)
 TRUNCATE TABLE public.events RESTART IDENTITY CASCADE;
-INSERT INTO public.events (titulo, descripcion, fecha_inicio, tipo)
-VALUES 
-('Bienvenida G7: Lanzamiento', 'Sesión de apertura del Programa de Empoderamiento G7.', NOW() + INTERVAL '1 day', 'class'),
-('Workshop: Diseño de Sistemas con IA', 'Práctica intensa sobre orquestación de agentes.', NOW() + INTERVAL '4 days', 'workshop'),
-('Consultoría Grupal (Office Hours)', 'Resolución de dudas técnicas y estratégicas.', NOW() + INTERVAL '7 days', 'office_hours');
 
--- Nota: El usuario test@test.com se recomienda crearlo vía Supabase Dashboard o CLI
--- auth.users requiere hashes específicos y extensiones pg_crypto que varían.
--- Se asume que el usuario de prueba persiste o se recrea manualmente.
+INSERT INTO public.events (titulo, descripcion, fecha_inicio, tipo)
+VALUES
+  ('Sesion en vivo - Brujula MetodologIA', 'Alineacion de expectativas, estructura y foco de las primeras semanas.', NOW() + INTERVAL '1 day', 'class'),
+  ('Workshop - Deep Research aplicado', 'Practica guiada para investigar, sintetizar y convertir hallazgos en accion.', NOW() + INTERVAL '4 days', 'workshop'),
+  ('Office Hours - Real Solutions', 'Espacio de acompanamiento para destrabar la solucion real que cada estudiante esta construyendo.', NOW() + INTERVAL '7 days', 'office_hours'),
+  ('Cierre de cohorte - Presentacion final', 'Sesion de presentacion de soluciones, reflexiones de cierre y camino de embajadores.', NOW() + INTERVAL '12 days', 'class');
+
+-- Nota: los usuarios de prueba deben crearse en Supabase Dashboard o via CLI.
+-- auth.users requiere hashes y metadata gestionados por Supabase Auth.

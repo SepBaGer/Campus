@@ -1,46 +1,48 @@
-# Guía de Despliegue: Campus MetodologIA v2
+# Guia de Despliegue: Campus MetodologIA v2
 
-Esta documentación detalla los pasos para desplegar el campus en producción sobre el dominio `metodologia.info/campus/`.
+Esta documentacion prepara el Campus para ejecutarse con frontend estatico en Hostinger o Firebase Hosting y base de datos remota en Supabase.
 
-## 📦 Requisitos Previos
+## Requisitos previos
 
-1. **Node.js & NPM**: Instalados en el entorno de build (GitHub Actions o Local).
-2. **Supabase Project**: Un proyecto de producción en `supabase.com`.
-3. **Stripe Account**: Llaves de API (Secret & Webhook) configuradas.
+1. Node.js y NPM disponibles en el entorno de build.
+2. Un proyecto remoto de Supabase con HTTPS.
+3. Llaves publicas del frontend listas para `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`.
+4. Stripe y webhooks listos solo cuando se active monetizacion.
 
-## 🚀 Pasos para el Despliegue
+## Regla principal de arquitectura
 
-### 1. Configuración de Producción
+- El frontend se despliega en Hostinger o Firebase Hosting.
+- La base de datos, Auth y Edge Functions viven en Supabase remoto.
+- `SUPABASE_SERVICE_ROLE_KEY` no debe existir en archivos `.env` del frontend.
 
-Crea un archivo `.env.production` en la raíz de `campus-v2/`:
+## Configuracion de entorno
+
+Usa [campus-v2/.env.example](/C:/Users/SepBa/Documents/Trabajo%20Agentico/Campus/campus-v2/.env.example) como plantilla para desarrollo con backend remoto y [campus-v2/.env.production.example](/C:/Users/SepBa/Documents/Trabajo%20Agentico/Campus/campus-v2/.env.production.example) para el build final.
+
+Ejemplo de `.env.production`:
 
 ```env
-VITE_SUPABASE_URL=https://TU_PROYECTO.supabase.co
-VITE_SUPABASE_ANON_KEY=TU_ANON_KEY_DE_PRODUCCIÓN
+VITE_SUPABASE_URL=https://TU-PROYECTO.supabase.co
+VITE_SUPABASE_ANON_KEY=TU_ANON_KEY_PUBLICA
 ```
 
-### 2. Generar el Build
+## Build
 
-Ejecuta el siguiente comando para compilar el proyecto optimizado para la subcarpeta `/campus/`:
+Compila el proyecto optimizado para `/campus/`:
 
 ```bash
 npm run build
 ```
 
-Esto generará una carpeta `dist/`.
+Esto genera `dist/`.
 
-### 3. Subida de Archivos
+## Despliegue del frontend
 
-Sube el contenido de la carpeta `dist/` a tu servidor (Hostinger o VPS) mediante FTP/SSH en la ruta:
-`/var/www/metodologia/campus/`
+Sube el contenido de `dist/` a la carpeta publica donde vive `/campus/` en Hostinger, o publicalo en Firebase Hosting con la misma base path.
 
-### 4. Configuración del Servidor (Nginx/Apache)
+## Despliegue de Edge Functions
 
-Si usas Nginx, aplica la configuración adjunta en `nginx.conf`. Si usas Hostinger (Compartido o VPS), asegúrate de que el archivo `.htaccess` permita la redirección al `index.html`.
-
-### 5. Edge Functions de Supabase
-
-Despliega las funciones a tu proyecto de producción:
+Cuando llegue la fase de login y pagos, despliega las funciones al proyecto remoto:
 
 ```bash
 supabase functions deploy complete-lesson --project-ref TU_REF
@@ -48,18 +50,17 @@ supabase functions deploy create-checkout --project-ref TU_REF
 supabase functions deploy stripe-webhook --project-ref TU_REF
 ```
 
-**Importante:** Configura los secretos en Supabase:
+Luego configura secretos solo dentro de Supabase:
 
 ```bash
 supabase secrets set STRIPE_SECRET_KEY=sk_live_...
 supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...
+supabase secrets set SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
 ```
 
-## 🔐 Seguridad y Mantenimiento
+## Verificacion minima
 
-- **RLS**: Asegúrate de que las políticas de Row Level Security estén habilitadas en producción.
-- **Backups**: Configura backups automáticos en Supabase para las tablas `profiles` y `progress`.
-
-## 📈 SEO y Analytics
-
-Los títulos dinámicos están configurados en `src/router.js`. Puedes añadir el tag de Google Analytics en `index.html` antes del build final.
+- El build termina sin errores.
+- `VITE_SUPABASE_URL` apunta a HTTPS remoto.
+- RLS esta habilitado en produccion.
+- El login puede quedar pendiente hasta el despliegue, pero la app ya no debe depender de `localhost`.

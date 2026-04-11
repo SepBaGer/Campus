@@ -1,13 +1,23 @@
-import { supabase } from './supabase.js'
+import { supabase, supabaseConfig } from './supabase.js';
 
 export const AuthService = {
-  async login(email, password) {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) throw error
-    return data
+  isConfigured() {
+    return supabaseConfig.enabled;
   },
-  
+
+  getPendingMessage() {
+    return 'El acceso se activara cuando conectemos el despliegue al proyecto remoto de Supabase.';
+  },
+
+  async login(email, password) {
+    if (!supabaseConfig.enabled) throw new Error(this.getPendingMessage());
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    return data;
+  },
+
   async register(email, password, fullName) {
+    if (!supabaseConfig.enabled) throw new Error(this.getPendingMessage());
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -16,26 +26,37 @@ export const AuthService = {
           full_name: fullName
         }
       }
-    })
-    if (error) throw error
-    return data
+    });
+    if (error) throw error;
+    return data;
   },
-  
+
   async logout() {
-    const { error } = await supabase.auth.signOut()
-    if (error) throw error
+    if (!supabaseConfig.enabled) return;
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
   },
 
   async signOut() {
-    return this.logout()
+    return this.logout();
   },
-  
+
   async getCurrentUser() {
-    const { data: { user } } = await supabase.auth.getUser()
-    return user
+    if (!supabaseConfig.enabled) return null;
+    const { data: { user } } = await supabase.auth.getUser();
+    return user;
   },
-  
+
   onAuthStateChange(callback) {
-    return supabase.auth.onAuthStateChange(callback)
+    if (!supabaseConfig.enabled) {
+      return {
+        data: {
+          subscription: {
+            unsubscribe() {}
+          }
+        }
+      };
+    }
+    return supabase.auth.onAuthStateChange(callback);
   }
-}
+};

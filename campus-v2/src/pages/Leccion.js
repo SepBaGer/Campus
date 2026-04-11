@@ -59,7 +59,7 @@ export function Leccion(container, id) {
         <div style="padding: 60px; text-align: center;">
           <i data-lucide="lock" style="width: 64px; height: 64px; color: var(--text-muted); margin-bottom: 24px;"></i>
           <h2 style="margin-bottom: 12px;">Leccion inaccesible</h2>
-          <p style="color: var(--text-secondary); margin-bottom: 24px;">Esta leccion requiere membresia activa o desbloquear niveles previos.</p>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Esta leccion requiere membresia activa o desbloquear fases previas.</p>
           <a href="#/dashboard" class="btn-primary" style="text-decoration: none;">Volver al panel</a>
         </div>`;
       if (window.lucide) window.lucide.createIcons();
@@ -169,11 +169,11 @@ export function Leccion(container, id) {
       <div style="flex:1;display:flex;flex-direction:column;overflow-y:auto;position:relative;">
         <div style="padding:16px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--panel-border);background:rgba(15,17,26,0.95);backdrop-filter:blur(16px);position:sticky;top:0;z-index:20;">
           <div style="display:flex;align-items:center;gap:20px;">
-            <a href="#/aula/${lesson.level_id}" class="glass-btn" style="padding:8px;border-radius:8px;color:var(--text-secondary);text-decoration:none;display:flex;transition:color .2s;" title="Volver al Nivel">
+            <a href="#/aula/${lesson.level_id}" class="glass-btn" style="padding:8px;border-radius:8px;color:var(--text-secondary);text-decoration:none;display:flex;transition:color .2s;" title="Volver a la fase">
               <i data-lucide="arrow-left" style="width:20px;"></i>
             </a>
             <div>
-              <div style="color:var(--accent-color);font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px;font-weight:600;">${escapeHtml(lesson.levels?.titulo || 'Nivel')}</div>
+              <div style="color:var(--accent-color);font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px;font-weight:600;">${escapeHtml(lesson.levels?.titulo || 'Fase')}</div>
               <h2 style="font-size:1.1rem;font-weight:700;margin:0;">${lesson.orden}. ${escapeHtml(lesson.titulo)}</h2>
               ${progressBar}
             </div>

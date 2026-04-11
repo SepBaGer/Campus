@@ -8,7 +8,7 @@ export function Ranking(container) {
 
       <div style="margin-top: 30px; animation: fadeIn 0.5s ease-out;">
         <div class="section-title" style="margin-bottom: 24px;">
-          <h2 style="font-size: 1.8rem; letter-spacing: -0.5px;">Tabla de <span class="text-gradient">Maestria</span></h2>
+          <h2 style="font-size: 1.8rem; letter-spacing: -0.5px;">Ranking de <span class="text-gradient">Avance</span></h2>
           <p style="color: var(--text-secondary); margin-top: 8px;">Los 50 estudiantes con mas XP acumulado en el campus.</p>
         </div>
 
@@ -52,7 +52,7 @@ async function loadRankingData() {
         <tr>
           <th style="padding: 20px 30px; font-weight: 600;">#</th>
           <th style="padding: 20px; font-weight: 600;">Estudiante</th>
-          <th style="padding: 20px; font-weight: 600;">Nivel</th>
+          <th style="padding: 20px; font-weight: 600;">Fase</th>
           <th style="padding: 20px 30px; font-weight: 600; text-align: right;">Total XP</th>
         </tr>
       </thead>
@@ -84,7 +84,7 @@ async function loadRankingData() {
           </div>
         </td>
         <td style="padding: 20px;">
-          <span class="badge" style="background: rgba(99,102,241,0.1); color: var(--accent-color); border: 1px solid rgba(99,102,241,0.2);">Nivel ${toDisplayNumber(profile.current_level)}</span>
+          <span class="badge" style="background: rgba(99,102,241,0.1); color: var(--accent-color); border: 1px solid rgba(99,102,241,0.2);">Fase ${toDisplayNumber(profile.current_level)}</span>
         </td>
         <td style="padding: 20px 30px; text-align: right; font-weight: 700; font-family: 'Inter', sans-serif; color: var(--accent-color);">
           ${toDisplayNumber(profile.total_xp).toLocaleString()} XP

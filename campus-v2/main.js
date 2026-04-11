@@ -1,7 +1,7 @@
 import './style.css';
 import { store } from './src/store.js';
 import { router } from './src/router.js';
-import { supabase } from './src/supabase.js';
+import { supabase, supabaseConfig } from './src/supabase.js';
 import { AuthService } from './src/auth.js';
 import { Sidebar } from './src/components/Sidebar.js';
 import { Topbar } from './src/components/Topbar.js';
@@ -74,17 +74,22 @@ async function bootstrap() {
   // 5. Global Functions
   window.navigate = (path) => router.navigate(path);
   window.supabase = supabase;
+  window.campusConfig = { supabase: supabaseConfig };
   window.logoutUser = async () => {
     await AuthService.logout();
     window.location.hash = '#/login';
   };
 
   // 6. Watch for Supabase auth state changes
-  supabase.auth.onAuthStateChange(async (event) => {
-    if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
-      await store.init();
-    }
-  });
+  if (supabaseConfig.enabled) {
+    supabase.auth.onAuthStateChange(async (event) => {
+      if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
+        await store.init();
+      }
+    });
+  } else {
+    console.info('[campus] Supabase remoto pendiente:', supabaseConfig.error);
+  }
 
   // 7. Start the router (triggers first render)
   router.init();

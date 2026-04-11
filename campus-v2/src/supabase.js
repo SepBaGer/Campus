@@ -1,6 +1,49 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
+import { appConfig } from './config.js';
+import { createDemoSupabaseClient } from './demo-supabase.js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'http://127.0.0.1:54321'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_key'
+const createDisabledClient = (message) => {
+  const buildError = () => new Error(message);
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+  return {
+    auth: {
+      async signInWithPassword() {
+        return { data: null, error: buildError() };
+      },
+      async signUp() {
+        return { data: null, error: buildError() };
+      },
+      async signOut() {
+        return { error: buildError() };
+      },
+      async getUser() {
+        return { data: { user: null }, error: null };
+      },
+      onAuthStateChange() {
+        return {
+          data: {
+            subscription: {
+              unsubscribe() {}
+            }
+          }
+        };
+      }
+    },
+    from() {
+      throw buildError();
+    },
+    functions: {
+      async invoke() {
+        throw buildError();
+      }
+    }
+  };
+};
+
+export const supabaseConfig = appConfig.supabase;
+
+export const supabase = supabaseConfig.isDemo
+  ? createDemoSupabaseClient()
+  : supabaseConfig.enabled
+    ? createClient(supabaseConfig.url, supabaseConfig.anonKey)
+    : createDisabledClient(supabaseConfig.error);

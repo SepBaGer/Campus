@@ -1,4 +1,4 @@
-import { supabase } from './supabase.js';
+import { supabase, supabaseConfig } from './supabase.js';
 
 export const store = {
   state: { user: null, levels: [], lessons: [], progress: [], loading: true, errors: null },
@@ -8,6 +8,19 @@ export const store = {
     this.state = { ...this.state, loading: true };
 
     try {
+      if (!supabaseConfig.enabled) {
+        this.state = {
+          user: null,
+          levels: [],
+          lessons: [],
+          progress: [],
+          loading: false,
+          errors: { config: supabaseConfig.error }
+        };
+        this.notify();
+        return;
+      }
+
       const { data: { user: authUser } } = await supabase.auth.getUser();
 
       if (!authUser) {
@@ -104,6 +117,10 @@ export const store = {
 
   async completeLesson(lessonId) {
     try {
+      if (!supabaseConfig.enabled) {
+        throw new Error('La sincronizacion de progreso se activara cuando el Campus use Supabase remoto.');
+      }
+
       const { data, error } = await supabase.functions.invoke('complete-lesson', {
         body: { lesson_id: lessonId }
       });

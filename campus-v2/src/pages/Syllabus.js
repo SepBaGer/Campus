@@ -1,67 +1,154 @@
 import { store } from '../store.js';
 import { escapeHtml } from '../utils/sanitize.js';
 
+function splitCatalogTitle(rawTitle) {
+  const parts = String(rawTitle || '').split(' - ').map((part) => part.trim()).filter(Boolean);
+
+  if (parts.length >= 3) {
+    return {
+      meta: `${parts[0]} - ${parts[1]}`,
+      title: parts.slice(2).join(' - ')
+    };
+  }
+
+  if (parts.length === 2) {
+    return {
+      meta: parts[0],
+      title: parts[1]
+    };
+  }
+
+  return {
+    meta: '',
+    title: rawTitle || 'Contenido'
+  };
+}
+
+function renderSectionHeader({ icon, label, color = 'var(--navy)' }) {
+  return `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <i data-lucide="${icon}" style="width:18px;color:${color};"></i>
+      <h2 style="margin:0;font-size:1.65rem;letter-spacing:1px;text-transform:uppercase;color:${color};">${escapeHtml(label)}</h2>
+    </div>
+  `;
+}
+
+function renderCatalogCard({ href, meta, title, subtitle, body, accent = '#C9A227', completed = false }) {
+  return `
+    <a href="${href}" style="text-decoration:none;color:inherit;">
+      <div class="glass-panel" style="height:100%;padding:24px 28px;border-radius:22px;border-left:4px solid ${accent};background:rgba(255,255,255,0.88);box-shadow:0 16px 40px rgba(18,37,98,0.08);display:flex;flex-direction:column;gap:10px;transition:transform .25s,border-color .25s,box-shadow .25s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 24px 50px rgba(18,37,98,0.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 16px 40px rgba(18,37,98,0.08)'">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+          <div style="font-size:0.82rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:${accent};">${escapeHtml(meta)}</div>
+          ${completed ? '<i data-lucide="check-circle-2" style="width:18px;color:var(--success);"></i>' : ''}
+        </div>
+        <h3 style="margin:0;font-size:1.15rem;line-height:1.25;color:var(--navy);">${escapeHtml(title)}</h3>
+        ${subtitle ? `<p style="margin:0;color:var(--text-secondary);font-size:0.98rem;font-weight:500;line-height:1.45;">${escapeHtml(subtitle)}</p>` : ''}
+        ${body ? `<p style="margin:0;color:var(--text-muted);font-size:0.93rem;line-height:1.65;">${escapeHtml(body)}</p>` : ''}
+      </div>
+    </a>
+  `;
+}
+
 export function Syllabus(container) {
   const levels = store.state.levels || [];
   const lessons = store.state.lessons || [];
   const progress = store.state.progress || [];
 
+  const getLevel = (id) => levels.find((level) => level.id === id) || null;
+  const getLessonsForLevel = (id) => lessons.filter((lesson) => lesson.level_id === id).sort((a, b) => a.orden - b.orden);
+  const isCompleted = (lessonId) => progress.some((item) => item.lesson_id === lessonId);
+
+  const receptionLevel = getLevel(1);
+  const receptionLesson = getLessonsForLevel(1)[0];
+  const onboardingLevel = getLevel(2);
+  const onboardingLesson = getLessonsForLevel(2)[0];
+  const methodLessons = getLessonsForLevel(3);
+  const appliedLessons = getLessonsForLevel(4);
+  const closingLevel = getLevel(5);
+  const closingLesson = getLessonsForLevel(5)[0];
+
+  const onboardingParts = String(onboardingLevel?.descripcion || '').split('.').map((part) => part.trim()).filter(Boolean);
+  const onboardingSubtitle = onboardingLesson?.descripcion || onboardingParts[0] || '';
+  const onboardingBody = onboardingParts.slice(1).join('. ') || 'Configuras entorno, completas Brujula, recibes primeros aceleradores.';
+
   const html = `
-    <div style="flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding: 40px;">
-      <div style="max-width: 900px; margin: 0 auto; width: 100%;">
-        <div style="margin-bottom: 40px;">
-          <h1 style="font-size: 2.5rem; margin-bottom: 12px;">Ruta de <span class="text-gradient">Maestria</span></h1>
-          <p style="color: var(--text-secondary); font-size: 1.1rem;">Explora el programa completo de 10 niveles y sigue tu progreso hacia la soberania tecnica.</p>
+    <div style="flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:40px;">
+      <div style="max-width:1080px;margin:0 auto;width:100%;">
+        <div style="margin-bottom:42px;">
+          <h1 style="font-size:2.5rem;margin-bottom:10px;">Ruta visual del <span class="text-gradient">Programa</span></h1>
+          <p style="color:var(--text-secondary);font-size:1.08rem;max-width:760px;">La ruta del Campus ahora sigue el mismo orden narrativo de la cartilla: recepcion, metodo, IA aplicada y cierre.</p>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 40px;">
-          ${levels.map((level) => {
-            const levelLessons = lessons.filter((lesson) => lesson.level_id === level.id);
-            const levelProgress = levelLessons.filter((lesson) => progress.find((item) => item.lesson_id === lesson.id)).length;
-            const levelPercentage = levelLessons.length > 0 ? Math.round((levelProgress / levelLessons.length) * 100) : 0;
+        <section style="margin-bottom:46px;">
+          ${renderSectionHeader({ icon: 'play-circle', label: 'Recepcion - Tu puerta de entrada', color: 'var(--blue)' })}
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
+            ${receptionLevel && receptionLesson ? renderCatalogCard({
+              href: `#/leccion/${receptionLesson.id}`,
+              meta: receptionLevel.titulo,
+              title: splitCatalogTitle(receptionLesson.titulo).title,
+              subtitle: receptionLesson.descripcion,
+              accent: receptionLevel.color_hex || '#C9A227',
+              completed: isCompleted(receptionLesson.id)
+            }) : ''}
+            ${onboardingLevel && onboardingLesson ? renderCatalogCard({
+              href: `#/leccion/${onboardingLesson.id}`,
+              meta: onboardingLevel.titulo,
+              title: splitCatalogTitle(onboardingLesson.titulo).title,
+              subtitle: onboardingSubtitle,
+              body: onboardingBody,
+              accent: onboardingLevel.color_hex || '#137DC5',
+              completed: isCompleted(onboardingLesson.id)
+            }) : ''}
+          </div>
+        </section>
 
-            return `
-              <div class="glass-panel" style="padding: 0; border-radius: 24px; overflow: hidden; border: 1px solid ${levelPercentage === 100 ? 'rgba(16, 185, 129, 0.3)' : 'var(--panel-border)'};">
-                <div style="padding: 24px 32px; background: rgba(255,255,255,0.02); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--panel-border);">
-                  <div style="display: flex; align-items: center; gap: 16px;">
-                    <div style="width: 40px; height: 40px; border-radius: 12px; background: ${level.color_hex}; color: black; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem;">
-                      ${level.orden}
-                    </div>
-                    <div>
-                      <h3 style="font-size: 1.2rem; margin-bottom: 4px;">${escapeHtml(level.titulo)}</h3>
-                      <span style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Nivel de Maestria</span>
-                    </div>
-                  </div>
-                  <div style="text-align: right;">
-                    <div style="font-size: 1.1rem; font-weight: 700; color: ${levelPercentage === 100 ? 'var(--success)' : 'var(--text-primary)'};">${levelPercentage}%</div>
-                    <div style="font-size: 0.75rem; color: var(--text-secondary);">${levelProgress}/${levelLessons.length} Lecciones</div>
-                  </div>
-                </div>
+        <section style="margin-bottom:46px;">
+          ${renderSectionHeader({ icon: 'book-open', label: 'Parte 1: Metodo - Semanas 3 a 8', color: '#B8860B' })}
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;">
+            ${methodLessons.map((lesson) => {
+              const titleParts = splitCatalogTitle(lesson.titulo);
+              return renderCatalogCard({
+                href: `#/leccion/${lesson.id}`,
+                meta: titleParts.meta,
+                title: titleParts.title,
+                subtitle: lesson.descripcion,
+                accent: '#E2B007',
+                completed: isCompleted(lesson.id)
+              });
+            }).join('')}
+          </div>
+        </section>
 
-                <div style="padding: 16px 32px 32px;">
-                  <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6;">${escapeHtml(level.descripcion || 'Descripcion pendiente')}</p>
+        <section style="margin-bottom:46px;">
+          ${renderSectionHeader({ icon: 'sparkles', label: 'Parte 2: IA Aplicada - Semanas 9 a 15', color: '#B8860B' })}
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;">
+            ${appliedLessons.map((lesson) => {
+              const titleParts = splitCatalogTitle(lesson.titulo);
+              return renderCatalogCard({
+                href: `#/leccion/${lesson.id}`,
+                meta: titleParts.meta,
+                title: titleParts.title,
+                subtitle: lesson.descripcion,
+                accent: '#E2B007',
+                completed: isCompleted(lesson.id)
+              });
+            }).join('')}
+          </div>
+        </section>
 
-                  <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px;">
-                    ${levelLessons.map((lesson) => {
-                      const isCompleted = progress.find((item) => item.lesson_id === lesson.id);
-                      return `
-                        <a href="#/leccion/${lesson.id}" style="text-decoration: none; color: inherit;">
-                          <div style="padding: 14px 20px; background: rgba(255,255,255,0.03); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; border: 1px solid ${isCompleted ? 'rgba(16, 185, 129, 0.2)' : 'transparent'}; transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                              <i data-lucide="${isCompleted ? 'check-circle' : 'circle'}" style="width: 18px; color: ${isCompleted ? 'var(--success)' : 'var(--text-muted)'};"></i>
-                              <span style="font-weight: 500; font-size: 0.95rem;">${lesson.orden}. ${escapeHtml(lesson.titulo)}</span>
-                            </div>
-                            <i data-lucide="chevron-right" style="width: 16px; color: var(--text-muted);"></i>
-                          </div>
-                        </a>
-                      `;
-                    }).join('') || '<div style="color: var(--text-secondary); font-size: 0.9rem; padding: 20px; text-align: center;">Contenido disponible al desbloquear el nivel.</div>'}
-                  </div>
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
+        <section>
+          ${renderSectionHeader({ icon: 'badge-check', label: 'Cierre - Semana 16', color: 'var(--navy)' })}
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
+            ${closingLevel && closingLesson ? renderCatalogCard({
+              href: `#/leccion/${closingLesson.id}`,
+              meta: closingLevel.titulo,
+              title: splitCatalogTitle(closingLesson.titulo).title,
+              subtitle: closingLesson.descripcion,
+              accent: closingLevel.color_hex || 'var(--navy)',
+              completed: isCompleted(closingLesson.id)
+            }) : ''}
+          </div>
+        </section>
       </div>
     </div>
   `;

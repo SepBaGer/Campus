@@ -15,19 +15,19 @@ export function Sidebar() {
         <li class="nav-item">
           <a href="#/ruta">
             <i data-lucide="map"></i>
-            Ruta 10 Niveles
+            Ruta del Programa
           </a>
         </li>
         <li class="nav-item">
           <a href="#/calendario">
             <i data-lucide="calendar"></i>
-            Calendario
+            Agenda en Vivo
           </a>
         </li>
         <li class="nav-item">
           <a href="#/ranking">
             <i data-lucide="award"></i>
-            Ranking 50
+            Ranking XP
           </a>
         </li>
         <li class="nav-item">
@@ -48,7 +48,7 @@ export function Sidebar() {
         <li class="nav-item" style="list-style: none;">
           <a href="#/configuracion">
             <i data-lucide="settings"></i>
-            Configuración
+            Configuracion
           </a>
         </li>
       </div>

@@ -46,7 +46,7 @@ export function Profile(container) {
               ${safeName.charAt(0).toUpperCase()}
             </div>
             <div style="position: absolute; bottom: 0; right: 0; background: var(--accent-secondary); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; border: 2px solid var(--page-bg);">
-              NIVEL ${toDisplayNumber(user.current_level)}
+              FASE ${toDisplayNumber(user.current_level)}
             </div>
           </div>
           <div>
@@ -81,7 +81,7 @@ export function Profile(container) {
           </div>
         </div>
 
-        <h3 style="margin-bottom: 20px;">Lecciones Recientes</h3>
+        <h3 style="margin-bottom: 20px;">Lecciones recientes</h3>
         <div class="glass-panel" style="padding: 0; border-radius: 20px; overflow: hidden;">
           ${recentProgress.map((progressItem) => {
             const lesson = store.state.lessons.find((item) => item.id === progressItem.lesson_id);
