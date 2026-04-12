@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // Establece la base para que los assets carguen correctamente cuando se despliega en Hostinger bajo /campus/
-  base: '/campus/',
+  // Usa rutas relativas para que el build funcione tanto en dominio raiz como en subcarpetas.
+  base: './',
   server: {
     port: 3000,
     open: true

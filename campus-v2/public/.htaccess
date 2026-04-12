@@ -1,17 +1,18 @@
 # Hostinger .htaccess - MetodologIA Campus v2
-# Soporte para SPA (Single Page Application) en subcarpeta /campus/
+# Soporte para SPA (Single Page Application) en la carpeta donde se publique `dist/`
 
 RewriteEngine On
-RewriteBase /campus/
 
 # Evitar bucles en index.html
 RewriteRule ^index\.html$ - [L]
 
 # Si el archivo o carpeta solicitada no existe, redirigir a index.html
-# Esto permite que el router de JavaScript tome el control de la URL
+# Esto permite que el router de JavaScript tome el control de la URL.
+# La regla es relativa al directorio donde vive este `.htaccess`, por lo que
+# funciona igual si despliegas en raiz o en una subcarpeta.
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /campus/index.html [L]
+RewriteRule . index.html [L]
 
 # Optimizaciones de Cache (Opcional pero recomendado para NFR-08)
 <IfModule mod_expires.c>

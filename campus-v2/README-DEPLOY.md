@@ -28,7 +28,7 @@ VITE_SUPABASE_ANON_KEY=TU_ANON_KEY_PUBLICA
 
 ## Build
 
-Compila el proyecto optimizado para `/campus/`:
+Compila el proyecto con assets relativos para que funcione tanto en raiz como en una subcarpeta:
 
 ```bash
 npm run build
@@ -38,7 +38,14 @@ Esto genera `dist/`.
 
 ## Despliegue del frontend
 
-Sube el contenido de `dist/` a la carpeta publica donde vive `/campus/` en Hostinger, o publicalo en Firebase Hosting con la misma base path.
+Sube el contenido de `dist/` a la carpeta publica donde vivira el Campus en Hostinger o Firebase Hosting.
+
+Notas importantes:
+
+- Si publicas en `https://tu-dominio.com/`, sube `dist/` a la raiz publica del sitio.
+- Si publicas en `https://tu-dominio.com/campus/`, sube `dist/` dentro de esa carpeta.
+- El build ya no depende de una base fija `/campus/`; usa rutas relativas para evitar fallos de assets al cambiar la ubicacion.
+- Conserva el `.htaccess` generado dentro de `dist/` para el fallback de la SPA.
 
 ## Despliegue de Edge Functions
 
