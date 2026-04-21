@@ -8,7 +8,12 @@ export function Dashboard(container) {
   const safeDisplayName = escapeHtml(state.user?.display_name || 'Estudiante');
 
   const userPhase = state.user?.current_level ?? 0;
-  const nextPhase = (state.levels && state.levels.find((item) => item.orden === userPhase))
+  const accessiblePhases = (state.levels || []).filter((phase) => store.canAccessLevel(phase.id));
+  const nextPhase = accessiblePhases.find((phase) => {
+    const lessons = store.getLessonsForLevel(phase.id);
+    return lessons.some((lesson) => !store.state.progress.find((item) => item.lesson_id === lesson.id));
+  })
+    || accessiblePhases[0]
     || (state.levels && state.levels[0])
     || { id: 1, orden: 0, titulo: 'Fase inicial' };
 
@@ -23,7 +28,7 @@ export function Dashboard(container) {
         <div class="dashboard-grid">
           <div class="glass-panel card-welcome" style="animation: fadeIn 0.4s ease-out;">
             <h1 style="font-size:1.8rem;margin-bottom:8px;">Programa de <span class="text-gradient">Empoderamiento</span></h1>
-            <p style="font-size:0.95rem;color:var(--text-secondary);">Explora la nueva ruta con modulo cero, onboarding, evolucion aplicada y cierre con hitos reales.</p>
+            <p style="font-size:0.95rem;color:var(--text-secondary);">Empieza con el contenido gratuito y desbloquea toda la ruta premium cuando actives tu membresia.</p>
             <div style="margin-top:16px;">
               <a href="#/aula/${nextPhase.id}" style="text-decoration:none;">
                 <button class="btn-primary" style="font-size:0.9rem;padding:10px 20px;display:inline-flex;align-items:center;gap:8px;">
@@ -173,21 +178,30 @@ async function loadEventSnippet() {
 }
 
 function renderPhaseCard(phase, user) {
-  const userCurrentPhase = user?.current_level ?? 0;
-  const isUnlocked = userCurrentPhase >= phase.orden;
-  const isCompleted = userCurrentPhase > phase.orden;
+  const accessibleLessons = store.getLessonsForLevel(phase.id);
+  const isUnlocked = accessibleLessons.length > 0;
+  const completedLessons = accessibleLessons.filter((lesson) => {
+    return store.state.progress.some((item) => item.lesson_id === lesson.id);
+  }).length;
+  const isCompleted = isUnlocked && accessibleLessons.length > 0 && completedLessons === accessibleLessons.length;
+  const progress = accessibleLessons.length > 0
+    ? Math.round((completedLessons / accessibleLessons.length) * 100)
+    : 0;
   const color = isCompleted ? 'var(--success,#22c55e)' : (isUnlocked ? 'var(--accent-color)' : 'var(--text-muted)');
   const icon = isCompleted ? 'check-circle' : (isUnlocked ? 'play-circle' : 'lock');
-  const progress = isCompleted ? 100 : 0;
+  const statusText = isUnlocked
+    ? `${accessibleLessons.length} leccion${accessibleLessons.length === 1 ? '' : 'es'} disponible${accessibleLessons.length === 1 ? '' : 's'}`
+    : 'Contenido premium';
 
   return `
-    <a href="${isUnlocked ? '#/aula/' + phase.id : 'javascript:void(0)'}" style="text-decoration:none;color:inherit;${!isUnlocked ? 'opacity:0.55;cursor:not-allowed;' : ''}">
+    <a href="${isUnlocked ? '#/aula/' + phase.id : '#/planes'}" style="text-decoration:none;color:inherit;${!isUnlocked ? 'opacity:0.72;' : ''}">
       <div class="glass-panel course-card" style="padding:20px;display:flex;flex-direction:column;gap:16px;height:100%;border:1px solid ${isCompleted ? 'rgba(46,158,111,0.24)' : 'var(--panel-border)'};transition:border-color .3s,transform .3s;" ${isUnlocked ? `onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='rgba(255,215,0,0.28)'" onmouseout="this.style.transform='none';this.style.borderColor='${isCompleted ? 'rgba(46,158,111,0.24)' : 'var(--panel-border)'}'"` : ''}>
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div style="color:var(--text-secondary);font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Fase ${phase.orden}</div>
           <i data-lucide="${icon}" style="color:${color};width:20px;"></i>
         </div>
         <h3 style="font-size:1.05rem;line-height:1.3;margin:0;min-height:44px;display:flex;align-items:center;">${escapeHtml(phase.titulo)}</h3>
+        <p style="margin:0;color:var(--text-secondary);font-size:0.85rem;line-height:1.5;">${escapeHtml(statusText)}</p>
         <div style="background:rgba(18,37,98,0.08);height:3px;border-radius:3px;overflow:hidden;margin-top:auto;">
           <div style="width:${progress}%;background:${color};height:100%;transition:width .5s;"></div>
         </div>

@@ -99,8 +99,30 @@ export const store = {
     return user?.membership_status === 'active';
   },
 
+  hasPremiumAccess(user = this.state.user) {
+    return this.isMembershipActive(user);
+  },
+
   getLevel(levelId) {
     return this.state.levels.find((level) => level.id === levelId) || null;
+  },
+
+  getLessonsForLevel(levelId) {
+    return (this.state.lessons || [])
+      .filter((lesson) => lesson.level_id === levelId)
+      .sort((left, right) => left.orden - right.orden);
+  },
+
+  hasAccessibleLessons(levelId) {
+    return this.getLessonsForLevel(levelId).length > 0;
+  },
+
+  canAccessLevel(levelId) {
+    return this.hasAccessibleLessons(levelId);
+  },
+
+  getFirstAccessiblePhase() {
+    return (this.state.levels || []).find((level) => this.canAccessLevel(level.id)) || null;
   },
 
   isLevelUnlocked(levelId, user = this.state.user) {
@@ -112,7 +134,7 @@ export const store = {
   canAccessLesson(lesson, user = this.state.user) {
     if (!lesson) return false;
     if (lesson.is_free) return true;
-    return this.isMembershipActive(user) && this.isLevelUnlocked(lesson.level_id, user);
+    return this.hasPremiumAccess(user);
   },
 
   async completeLesson(lessonId) {

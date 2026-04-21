@@ -29,13 +29,11 @@ export function Aula(container, id) {
         (lesson) => !store.state.progress.find((item) => item.lesson_id === lesson.id)
       );
       const isCompleted = uncompletedLessons.length === 0 && lessonList.length > 0;
-      const isUnlocked = store.isLevelUnlocked(phase.id);
-      const canAccessPremium = store.isMembershipActive();
-      const emptyStateMessage = !isUnlocked
-        ? 'Esta fase se desbloquea cuando alcances el progreso requerido.'
-        : !canAccessPremium
-          ? 'Activa tu membresia para acceder a las lecciones premium de esta fase.'
-          : 'No hay lecciones disponibles en esta fase todavia.';
+      const hasAccessibleContent = store.canAccessLevel(phase.id);
+      const canAccessPremium = store.hasPremiumAccess();
+      const emptyStateMessage = !hasAccessibleContent && !canAccessPremium
+        ? 'Esta fase forma parte del contenido premium. Activa tu membresia para desbloquearla.'
+        : 'No hay lecciones disponibles en esta fase todavia.';
 
       const html = `
         <div style="flex: 1; display: flex; flex-direction: column; overflow-y: auto; position: relative; z-index: 1;">
@@ -73,11 +71,19 @@ export function Aula(container, id) {
                           <span style="color: var(--text-secondary); font-size: 0.85rem;">${lesson.tipo === 'video' ? 'Video' : 'Documento'} - ${lesson.duracion_minutos} min</span>
                         </div>
                       </div>
-                      <span style="color: var(--accent-color); font-weight: 600;">+${lesson.xp_reward} XP</span>
+                      <div style="display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:0.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:${lesson.is_free ? 'var(--blue)' : 'var(--accent-color)'};">${lesson.is_free ? 'Free' : 'Premium'}</span>
+                        <span style="color: var(--accent-color); font-weight: 600;">+${lesson.xp_reward} XP</span>
+                      </div>
                     </div>
                   </a>
                 `;
-              }).join('') || `<p style="color: var(--text-secondary);">${escapeHtml(emptyStateMessage)}</p>`}
+              }).join('') || `
+                <div class="glass-panel" style="padding:24px;">
+                  <p style="color: var(--text-secondary); margin:0 0 16px 0;">${escapeHtml(emptyStateMessage)}</p>
+                  ${!canAccessPremium ? '<a href="#/planes" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;">Desbloquear premium</a>' : ''}
+                </div>
+              `}
             </div>
           </div>
         </div>

@@ -37,7 +37,7 @@ export const router = {
     }
 
     const PROTECTED_ROUTES = ['#/dashboard', '#/aula', '#/leccion', '#/ranking', '#/calendario', '#/configuracion', '#/comunidad', '#/perfil', '#/ruta'];
-    const AUTH_ROUTES = ['#/login', '#/planes'];
+    const AUTH_ROUTES = ['#/login'];
     
     const user = await AuthService.getCurrentUser();
     const isProtected = PROTECTED_ROUTES.some(r => path.startsWith(r));
@@ -47,6 +47,9 @@ export const router = {
       return this.navigate('#/login');
     }
     if (isAuth && user) {
+      return this.navigate('#/dashboard');
+    }
+    if (path === '#/' && user) {
       return this.navigate('#/dashboard');
     }
 

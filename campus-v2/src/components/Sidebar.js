@@ -1,6 +1,10 @@
 import { Logo } from './Logo.js';
 
+import { store } from '../store.js';
+
 export function Sidebar() {
+  const showUpgradeCta = !store.hasPremiumAccess();
+
   return `
     <aside class="sidebar">
       ${Logo()}
@@ -36,9 +40,19 @@ export function Sidebar() {
             Comunidad
           </a>
         </li>
+        <li class="nav-item">
+          <a href="#/planes">
+            <i data-lucide="gem"></i>
+            Planes
+          </a>
+        </li>
       </ul>
 
       <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px;">
+        ${showUpgradeCta ? `
+        <a href="#/planes" class="btn-primary" style="justify-content:center;text-decoration:none;margin-bottom:8px;">
+          Desbloquear premium
+        </a>` : ''}
         <li class="nav-item" style="list-style: none;">
           <a href="#/perfil">
             <i data-lucide="user-circle"></i>

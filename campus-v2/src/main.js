@@ -55,6 +55,13 @@ async function initApp() {
   supabase.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
       await store.init();
+
+      const currentHash = window.location.hash || '#/';
+      const isPublicEntryPoint = currentHash === '#/' || currentHash === '#/login' || currentHash.startsWith('#access_token=');
+
+      if (session?.user && isPublicEntryPoint) {
+        router.navigate('#/dashboard');
+      }
     }
   });
 

@@ -46,6 +46,8 @@ Notas importantes:
 - Si publicas en `https://tu-dominio.com/campus/`, sube `dist/` dentro de esa carpeta.
 - El build ya no depende de una base fija `/campus/`; usa rutas relativas para evitar fallos de assets al cambiar la ubicacion.
 - Conserva el `.htaccess` generado dentro de `dist/` para el fallback de la SPA.
+- Si Hostinger tiene una `Content-Security-Policy` global activa, el `.htaccess` del Campus debe publicarse junto con el resto del build para permitir conexiones a `https://*.supabase.co` y `wss://*.supabase.co`.
+- Si `https://tu-dominio.com/campus/` devuelve `404`, el problema no es del bundle: falta publicar `dist/` en esa ruta o el subdirectorio publico no coincide con la URL esperada.
 
 ## Despliegue de Edge Functions
 
@@ -68,6 +70,8 @@ supabase secrets set SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
 ## Verificacion minima
 
 - El build termina sin errores.
+- `https://tu-dominio.com/campus/` responde `200 OK` si esa es la URL esperada del Campus.
 - `VITE_SUPABASE_URL` apunta a HTTPS remoto.
+- La `Content-Security-Policy` efectiva permite `https://*.supabase.co` y `wss://*.supabase.co` en `connect-src`.
 - RLS esta habilitado en produccion.
 - El login puede quedar pendiente hasta el despliegue, pero la app ya no debe depender de `localhost`.

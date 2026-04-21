@@ -3,6 +3,13 @@
 
 RewriteEngine On
 
+# Re-declara una CSP compatible con Campus para evitar que la politica global
+# del sitio bloquee las llamadas del frontend hacia Supabase.
+<IfModule mod_headers.c>
+    Header always unset Content-Security-Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.metodologia.info https://*.supabase.co wss://*.supabase.co; object-src 'none'; media-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+</IfModule>
+
 # Evitar bucles en index.html
 RewriteRule ^index\.html$ - [L]
 

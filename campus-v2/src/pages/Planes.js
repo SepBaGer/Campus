@@ -6,7 +6,7 @@ export function Planes(container) {
 
       <div style="max-width: 1000px; margin: 0 auto; padding: 60px 0; text-align: center; animation: fadeIn 0.8s ease-out;">
         <h1 style="font-size: 3.5rem; letter-spacing: -2px; margin-bottom: 16px;">Elige tu <span class="text-gradient">Camino</span></h1>
-        <p style="color: var(--text-secondary); font-size: 1.2rem; max-width: 680px; margin: 0 auto 24px;">Desbloquea el acceso a las lecciones, mentorias en vivo y la red de talento MetodologIA con suscripciones renovables procesadas por Stripe.</p>
+        <p style="color: var(--text-secondary); font-size: 1.2rem; max-width: 680px; margin: 0 auto 24px;">Tu cuenta free te deja entrar al contenido gratuito. Activa una membresia para desbloquear todo el contenido premium y la experiencia completa del Campus.</p>
         <div id="checkout-status" style="display:none; margin: 0 auto 26px; max-width: 520px; font-size: 0.95rem;"></div>
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">

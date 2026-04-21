@@ -49,6 +49,21 @@ function renderCatalogCard({ href, meta, title, subtitle, body, accent = '#C9A22
   `;
 }
 
+function renderLockedCard({ meta, title, body, accent = '#64748b' }) {
+  return `
+    <a href="#/planes" style="text-decoration:none;color:inherit;">
+      <div class="glass-panel" style="height:100%;padding:24px 28px;border-radius:22px;border-left:4px solid ${accent};background:rgba(255,255,255,0.74);box-shadow:0 16px 40px rgba(18,37,98,0.06);display:flex;flex-direction:column;gap:12px;opacity:0.88;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+          <div style="font-size:0.82rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:${accent};">${escapeHtml(meta)}</div>
+          <i data-lucide="lock" style="width:18px;color:${accent};"></i>
+        </div>
+        <h3 style="margin:0;font-size:1.15rem;line-height:1.25;color:var(--navy);">${escapeHtml(title)}</h3>
+        <p style="margin:0;color:var(--text-secondary);font-size:0.95rem;line-height:1.55;">${escapeHtml(body || 'Disponible al activar tu membresia premium.')}</p>
+      </div>
+    </a>
+  `;
+}
+
 export function Syllabus(container) {
   const levels = store.state.levels || [];
   const lessons = store.state.lessons || [];
@@ -70,6 +85,10 @@ export function Syllabus(container) {
   const onboardingParts = String(onboardingLevel?.descripcion || '').split('.').map((part) => part.trim()).filter(Boolean);
   const onboardingSubtitle = onboardingLesson?.descripcion || onboardingParts[0] || '';
   const onboardingBody = onboardingParts.slice(1).join('. ') || 'Configuras entorno, completas Brujula, recibes primeros aceleradores.';
+  const canAccessOnboarding = onboardingLevel ? store.canAccessLevel(onboardingLevel.id) : false;
+  const canAccessMethod = methodLessons.length > 0;
+  const canAccessApplied = appliedLessons.length > 0;
+  const canAccessClosing = closingLesson ? store.canAccessLevel(closingLevel?.id) : false;
 
   const html = `
     <div style="flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:40px;">
@@ -90,7 +109,7 @@ export function Syllabus(container) {
               accent: receptionLevel.color_hex || '#C9A227',
               completed: isCompleted(receptionLesson.id)
             }) : ''}
-            ${onboardingLevel && onboardingLesson ? renderCatalogCard({
+            ${onboardingLevel && canAccessOnboarding && onboardingLesson ? renderCatalogCard({
               href: `#/leccion/${onboardingLesson.id}`,
               meta: onboardingLevel.titulo,
               title: splitCatalogTitle(onboardingLesson.titulo).title,
@@ -98,6 +117,12 @@ export function Syllabus(container) {
               body: onboardingBody,
               accent: onboardingLevel.color_hex || '#137DC5',
               completed: isCompleted(onboardingLesson.id)
+            }) : ''}
+            ${onboardingLevel && !canAccessOnboarding ? renderLockedCard({
+              meta: onboardingLevel.titulo,
+              title: 'Onboarding premium',
+              body: 'Activa tu membresia para desbloquear esta fase y continuar la ruta completa.',
+              accent: onboardingLevel.color_hex || '#137DC5'
             }) : ''}
           </div>
         </section>
@@ -116,6 +141,12 @@ export function Syllabus(container) {
                 completed: isCompleted(lesson.id)
               });
             }).join('')}
+            ${!canAccessMethod ? renderLockedCard({
+              meta: 'Parte 1 - Metodo',
+              title: 'Contenido premium',
+              body: 'Esta seccion se desbloquea al activar tu membresia premium.',
+              accent: '#E2B007'
+            }) : ''}
           </div>
         </section>
 
@@ -133,19 +164,31 @@ export function Syllabus(container) {
                 completed: isCompleted(lesson.id)
               });
             }).join('')}
+            ${!canAccessApplied ? renderLockedCard({
+              meta: 'Parte 2 - IA Aplicada',
+              title: 'Contenido premium',
+              body: 'Desbloquea esta etapa para acceder al contenido avanzado del programa.',
+              accent: '#E2B007'
+            }) : ''}
           </div>
         </section>
 
         <section>
           ${renderSectionHeader({ icon: 'badge-check', label: 'Cierre - Semana 16', color: 'var(--navy)' })}
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
-            ${closingLevel && closingLesson ? renderCatalogCard({
+            ${closingLevel && canAccessClosing && closingLesson ? renderCatalogCard({
               href: `#/leccion/${closingLesson.id}`,
               meta: closingLevel.titulo,
               title: splitCatalogTitle(closingLesson.titulo).title,
               subtitle: closingLesson.descripcion,
               accent: closingLevel.color_hex || 'var(--navy)',
               completed: isCompleted(closingLesson.id)
+            }) : ''}
+            ${closingLevel && !canAccessClosing ? renderLockedCard({
+              meta: closingLevel.titulo,
+              title: 'Cierre premium',
+              body: 'Completa tu upgrade para acceder al cierre y los hitos finales del programa.',
+              accent: closingLevel.color_hex || 'var(--navy)'
             }) : ''}
           </div>
         </section>

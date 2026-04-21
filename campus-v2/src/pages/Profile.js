@@ -77,7 +77,7 @@ export function Profile(container) {
           <div class="glass-panel" style="padding: 24px; border-radius: 20px;">
             <h3 style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 20px;">Membresia</h3>
             <div style="font-size: 1.2rem; font-weight: 700; color: var(--accent-color); margin-bottom: 8px;">${escapeHtml(formatMembership(user))}</div>
-            <p style="font-size: 0.85rem; color: var(--text-secondary);">Tu acceso premium se valida desde Stripe y Supabase.</p>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">${user?.membership_status === 'active' ? 'Tu experiencia premium esta activa y validada desde Stripe y Supabase.' : 'Tu cuenta free ya puede explorar el contenido gratuito. Activa premium para desbloquear el resto del Campus.'}</p>
           </div>
         </div>
 

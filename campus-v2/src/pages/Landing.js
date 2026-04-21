@@ -22,11 +22,11 @@ export const Landing = {
               Metodo primero. <span class="text-gradient">IA despues.</span>
             </h1>
             <p style="font-size: 1.25rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">
-              Recorre una experiencia de 16 semanas con modulo cero, onboarding, ruta de (R)Evolucion y cierre con hitos reales de aplicacion.
+              Registrate gratis para empezar con el contenido free y desbloquea la experiencia premium cuando quieras avanzar por toda la ruta.
             </p>
             <div style="display: flex; gap: 16px; justify-content: center;">
               <a href="#/login" class="btn-primary" style="padding: 16px 32px; font-size: 1.1rem; border-radius: 14px;">
-                Empezar mi ruta <i data-lucide="zap" style="width: 20px; fill: white;"></i>
+                Empezar gratis <i data-lucide="zap" style="width: 20px; fill: white;"></i>
               </a>
               <a href="#/planes" class="glass-btn" style="padding: 16px 32px; font-size: 1.1rem; border-radius: 14px;">
                 Ver membresias

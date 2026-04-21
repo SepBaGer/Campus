@@ -37,6 +37,12 @@ export const Login = {
           <form id="loginForm" style="display:flex;flex-direction:column;gap:18px;">
             <div id="errorMsg" style="color:#ef4444;font-size:0.9rem;text-align:center;padding:10px;background:rgba(239,68,68,0.1);border-radius:8px;display:none;"></div>
             <div id="successMsg" style="color:#22c55e;font-size:0.9rem;text-align:center;padding:10px;background:rgba(34,197,94,0.1);border-radius:8px;display:none;"></div>
+            <button type="button" id="resendConfirmationBtn" style="display:none;width:100%;justify-content:center;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,215,0,0.28);background:rgba(255,215,0,0.08);color:var(--accent-color);font-weight:700;cursor:pointer;">
+              Reenviar correo de confirmacion
+            </button>
+            <button type="button" id="resendConfirmationHelperBtn" style="display:${isAuthConfigured ? 'flex' : 'none'};width:100%;justify-content:center;padding:10px 14px;border-radius:10px;border:1px dashed rgba(19,125,197,0.22);background:rgba(19,125,197,0.06);color:var(--blue);font-weight:700;cursor:pointer;">
+              Necesito un nuevo correo de confirmacion
+            </button>
             <div id="pendingMsg" style="display:${isAuthConfigured ? 'none' : 'block'}; color:var(--navy); font-size:0.9rem; text-align:center; padding:12px; background:rgba(19,125,197,0.08); border:1px solid rgba(19,125,197,0.16); border-radius:12px;">
               ${pendingMessage}
             </div>
@@ -77,11 +83,48 @@ export const Login = {
     const successMsg = document.getElementById('successMsg');
     const nameGroup = document.getElementById('nameGroup');
     const btnSubmit = document.getElementById('btnSubmit');
+    const resendConfirmationBtn = document.getElementById('resendConfirmationBtn');
+    const resendConfirmationHelperBtn = document.getElementById('resendConfirmationHelperBtn');
     const tabLogin = document.getElementById('tabLogin');
     const tabRegister = document.getElementById('tabRegister');
     const modeHint = document.getElementById('modeHint');
     const pendingMsg = document.getElementById('pendingMsg');
     const isAuthConfigured = AuthService.isConfigured();
+    let pendingConfirmationEmail = '';
+    let lastPendingSignupEmail = '';
+
+    const AUTH_PENDING_CONFIRMATION_MESSAGES = [
+      'Confirma tu correo antes de iniciar sesion.',
+      'Ya existe una cuenta con este correo. Intenta iniciar sesion o confirmar tu email.'
+    ];
+    const PENDING_CONFIRMATION_RETRY_MESSAGE = 'Si acabas de crear tu cuenta, confirma el correo o usa el reenvio antes de iniciar sesion.';
+
+    const hideResendConfirmation = () => {
+      pendingConfirmationEmail = '';
+      resendConfirmationBtn.style.display = 'none';
+      resendConfirmationBtn.disabled = false;
+      resendConfirmationBtn.textContent = 'Reenviar correo de confirmacion';
+    };
+
+    const showResendConfirmation = (email) => {
+      if (!email) return;
+      pendingConfirmationEmail = email;
+      resendConfirmationBtn.style.display = 'flex';
+      resendConfirmationBtn.disabled = false;
+      resendConfirmationBtn.textContent = 'Reenviar correo de confirmacion';
+    };
+
+    const syncResendHelper = () => {
+      if (!resendConfirmationHelperBtn) return;
+      resendConfirmationHelperBtn.style.display = this._mode === 'login' && isAuthConfigured ? 'flex' : 'none';
+    };
+
+    const isRetryingPendingConfirmation = (email, message) => {
+      return message === 'Tus credenciales no son validas. Verifica email y contrasena.'
+        && !!email
+        && !!lastPendingSignupEmail
+        && lastPendingSignupEmail === email;
+    };
 
     const showError = (msg) => {
       errorMsg.textContent = msg;
@@ -98,6 +141,7 @@ export const Login = {
     const clearMessages = () => {
       errorMsg.style.display = 'none';
       successMsg.style.display = 'none';
+      hideResendConfirmation();
     };
 
     window._loginSetMode = (mode) => {
@@ -123,6 +167,7 @@ export const Login = {
         tabRegister.style.color = 'var(--text-secondary)';
         modeHint.innerHTML = '¿Sin cuenta? <a href="#" onclick="window._loginSetMode(\'register\');return false;" style="color:var(--accent-color);font-weight:600;">Registrate gratis</a>';
       }
+      syncResendHelper();
     };
 
     if (!isAuthConfigured) {
@@ -133,6 +178,7 @@ export const Login = {
       tabLogin.style.color = 'var(--navy)';
       if (pendingMsg) pendingMsg.style.display = 'block';
     }
+    syncResendHelper();
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -154,14 +200,83 @@ export const Login = {
           window.location.hash = '#/dashboard';
         } else {
           const displayName = document.getElementById('displayName').value.trim() || email.split('@')[0];
-          await AuthService.register(email, password, displayName);
+          const registerResult = await AuthService.register(email, password, displayName);
+
+          if (registerResult.requiresEmailConfirmation) {
+            window._loginSetMode('login');
+            lastPendingSignupEmail = email;
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = '';
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Ingresar';
+            showResendConfirmation(email);
+            showSuccess(registerResult.friendlyMessage || 'Cuenta creada correctamente. Revisa tu correo y luego inicia sesion.');
+            return;
+          }
+
           showSuccess(`Cuenta creada. Bienvenido, ${displayName}. Redirigiendo...`);
           setTimeout(() => { window.location.hash = '#/dashboard'; }, 1200);
         }
       } catch (err) {
-        showError(err.message || 'Ocurrio un error. Intentalo de nuevo.');
+        const rawMessage = err.message || 'Ocurrio un error. Intentalo de nuevo.';
+        const shouldRecoverPendingConfirmation = this._mode === 'login'
+          && (AUTH_PENDING_CONFIRMATION_MESSAGES.includes(rawMessage) || isRetryingPendingConfirmation(email, rawMessage));
+        const friendlyMessage = shouldRecoverPendingConfirmation && isRetryingPendingConfirmation(email, rawMessage)
+          ? PENDING_CONFIRMATION_RETRY_MESSAGE
+          : rawMessage;
+
+        showError(friendlyMessage);
+        if (shouldRecoverPendingConfirmation) {
+          showResendConfirmation(email);
+        }
         btnSubmit.disabled = false;
         btnSubmit.textContent = this._mode === 'login' ? 'Ingresar' : 'Crear Cuenta';
+      }
+    });
+
+    resendConfirmationBtn.addEventListener('click', async () => {
+      const email = pendingConfirmationEmail || document.getElementById('email').value.trim();
+
+      if (!email) {
+        showError('Escribe tu email para reenviar la confirmacion.');
+        return;
+      }
+
+      resendConfirmationBtn.disabled = true;
+      resendConfirmationBtn.textContent = 'Reenviando...';
+
+      try {
+        const result = await AuthService.resendSignupConfirmation(email);
+        lastPendingSignupEmail = email;
+        showResendConfirmation(email);
+        showSuccess(result.message);
+      } catch (err) {
+        showResendConfirmation(email);
+        showError(err.message || 'No pudimos reenviar el correo de confirmacion.');
+      }
+    });
+
+    resendConfirmationHelperBtn?.addEventListener('click', async () => {
+      const email = document.getElementById('email').value.trim();
+
+      if (!email) {
+        showError('Escribe tu email para solicitar un nuevo correo de confirmacion.');
+        return;
+      }
+
+      resendConfirmationHelperBtn.disabled = true;
+      resendConfirmationHelperBtn.textContent = 'Solicitando correo...';
+
+      try {
+        const result = await AuthService.resendSignupConfirmation(email);
+        lastPendingSignupEmail = email;
+        showResendConfirmation(email);
+        showSuccess(result.message);
+      } catch (err) {
+        showError(err.message || 'No pudimos solicitar un nuevo correo de confirmacion.');
+      } finally {
+        resendConfirmationHelperBtn.disabled = false;
+        resendConfirmationHelperBtn.textContent = 'Necesito un nuevo correo de confirmacion';
       }
     });
   }

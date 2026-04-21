@@ -59,7 +59,7 @@ export function Leccion(container, id) {
         <div style="padding: 60px; text-align: center;">
           <i data-lucide="lock" style="width: 64px; height: 64px; color: var(--text-muted); margin-bottom: 24px;"></i>
           <h2 style="margin-bottom: 12px;">Leccion inaccesible</h2>
-          <p style="color: var(--text-secondary); margin-bottom: 24px;">Esta leccion requiere membresia activa o desbloquear fases previas.</p>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Esta leccion no esta incluida en tu acceso actual. Entra con contenido free o activa tu membresia premium.</p>
           <a href="#/dashboard" class="btn-primary" style="text-decoration: none;">Volver al panel</a>
         </div>`;
       if (window.lucide) window.lucide.createIcons();
@@ -180,6 +180,9 @@ export function Leccion(container, id) {
           </div>
 
           <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:0.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:${lesson.is_free ? 'var(--blue)' : 'var(--accent-color)'};padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid var(--panel-border);">
+              ${lesson.is_free ? 'Contenido Free' : 'Contenido Premium'}
+            </span>
             <div style="display:flex;background:rgba(255,255,255,0.05);padding:4px;border-radius:10px;border:1px solid var(--panel-border);margin-right:8px;">
               ${prevBtnHtml}
               <div style="width:1px;background:var(--panel-border);margin:4px 2px;"></div>
