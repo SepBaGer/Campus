@@ -1,0 +1,38 @@
+﻿{
+    "version":  "4.0.0",
+    "schema":  1,
+    "initialized":  "2026-04-11T04:08:30Z",
+    "workspace":  {
+                      "enabled":  true,
+                      "root":  "workspace",
+                      "autoCreate":  true,
+                      "naming":  "YYYY-MM-DD-{slug}",
+                      "maxActive":  3,
+                      "archiveAfterDays":  30,
+                      "cleanupStaleAfterDays":  7
+                  },
+    "hooks":  {
+                  "sessionStartCheck":  true,
+                  "autoWorkspace":  true,
+                  "autoTasklog":  true,
+                  "autoTasklogFilter":  [
+                                            "Write",
+                                            "Edit",
+                                            "Bash",
+                                            "Agent",
+                                            "Skill",
+                                            "NotebookEdit"
+                                        ],
+                  "autoSummary":  true
+              },
+    "governance":  {
+                       "constitutionVersion":  "6.0.0",
+                       "qualityGates":  true,
+                       "evidenceTags":  true,
+                       "confidenceThreshold":  0.95
+                   },
+    "lastSession":  {
+                        "date":  null,
+                        "activeWorkspace":  null
+                    }
+}

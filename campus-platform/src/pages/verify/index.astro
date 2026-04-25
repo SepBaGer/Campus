@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Verificar credencial | MetodologIA Campus"
+  description="Verificador publico de credenciales del Campus MetodologIA."
+>
+  <section class="section">
+    <div class="story-grid">
+      <div class="section-card">
+        <span class="eyebrow" data-i18n="page.verify.eyebrow">credencial verificable</span>
+        <h1 data-i18n="page.verify.title">Comprueba una credencial emitida por el Campus.</h1>
+        <p class="lead" data-i18n="page.verify.subtitle">
+          Esta superficie publica mantiene la misma narrativa premium del producto y permite validar la evidencia final de un participante mediante su token.
+        </p>
+        <div class="utility-bar">
+          <span class="pill" data-i18n="page.verify.pill.public">Consulta publica</span>
+          <span class="pill" data-i18n="page.verify.pill.token">Token unico</span>
+          <span class="pill" data-i18n="page.verify.pill.instant">Respuesta inmediata</span>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <span class="eyebrow" data-i18n="page.verify.helperEyebrow">usar esta vista</span>
+        <p class="lead" data-i18n="page.verify.helperCopy" data-i18n-html="true">
+          Puedes llegar con <code>/verify/?token=...</code> o mediante una ruta directa <code>/verify/&lt;token&gt;</code>.
+        </p>
+        <badge-viewer></badge-viewer>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

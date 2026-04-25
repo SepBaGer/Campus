@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { loadVerificationSnapshot, loadVerificationTokens } from "../../lib/catalog-repository";
+
+export async function getStaticPaths() {
+  const tokens = await loadVerificationTokens();
+  return tokens.map((token) => ({
+    params: { token }
+  }));
+}
+
+const badge = await loadVerificationSnapshot(Astro.params.token || "");
+if (!badge) {
+  throw new Error(`Verification token not found for ${Astro.params.token}`);
+}
+---
+
+<BaseLayout
+  title={`Badge ${badge.learnerName} | MetodologIA Campus`}
+  description={`Verificacion publica de ${badge.courseTitle}.`}
+>
+  <section class="section">
+    <div class="story-grid">
+      <div class="section-card">
+        <span class="eyebrow">verificacion publica</span>
+        <h1>{badge.courseTitle}</h1>
+        <p class="lead">
+          Credencial emitida para {badge.learnerName}. Esta vista confirma el logro y lo presenta con una capa visual coherente con el resto del campus.
+        </p>
+        <div class="utility-bar">
+          <span class="pill">Participante validado</span>
+          <span class="pill">Emision trazable</span>
+          <span class="pill">Consulta abierta</span>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <span class="eyebrow">detalle de credencial</span>
+        <badge-viewer
+          token={badge.token}
+          learner-name={badge.learnerName}
+          course-title={badge.courseTitle}
+          issued-at={badge.issuedAt}
+          issuer={badge.issuer}
+          status={badge.status}
+          criteria={badge.criteria}
+        ></badge-viewer>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

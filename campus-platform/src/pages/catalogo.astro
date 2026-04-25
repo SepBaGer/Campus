@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { loadCatalogSnapshot } from "../lib/catalog-repository";
+
+const catalog = await loadCatalogSnapshot();
+---
+
+<BaseLayout
+  title="Catalogo | MetodologIA Campus"
+  description="Programas activos del Campus MetodologIA con cohortes, activacion guiada y una experiencia visual homologada a la marca principal."
+>
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="page.catalog.eyebrow">catalogo activo</span>
+      <h1 data-i18n="page.catalog.title">Programas para convertir intencion en una practica sostenible.</h1>
+      <p class="lead" data-i18n="page.catalog.subtitle">
+        Este catalogo presenta las rutas como propuestas premium: promesa clara, cohorte visible, activacion simple y un cierre con evidencia verificable.
+      </p>
+    </div>
+    <div class="utility-bar">
+      <span class="pill" data-i18n="page.catalog.pill.cohorts">Cohortes guiadas</span>
+      <span class="pill" data-i18n="page.catalog.pill.practice">Practica aplicada</span>
+      <span class="pill" data-i18n="page.catalog.pill.badge">Badge verificable</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="three-up">
+      {catalog.map((course) => (
+        <course-card
+          title={course.title}
+          summary={course.summary}
+          eyebrow={course.eyebrow}
+          audience={course.audience}
+          access-model={course.accessModel}
+          price-label={course.priceLabel}
+          delivery-label={course.deliveryLabel}
+          run-label={course.runLabel}
+          progress-percent={course.progressPercent}
+          competencies-json={JSON.stringify(course.competencies)}
+          href={`/curso/${course.slug}`}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

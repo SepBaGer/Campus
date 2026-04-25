@@ -1,6 +1,8 @@
 # Guia de Despliegue: Campus MetodologIA v2
 
-Esta documentacion prepara el Campus para ejecutarse con frontend estatico en Hostinger o Firebase Hosting y base de datos remota en Supabase.
+Esta documentacion se conserva para el frontend legacy de respaldo. El camino
+principal del producto es `campus-platform/`; usa esta guia solo si necesitas
+mantener o probar el fallback de `campus-v2/`.
 
 ## Requisitos previos
 

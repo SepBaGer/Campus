@@ -1,0 +1,13 @@
+{
+  "env": {},
+  "permissions": {
+    "allow": [
+      "Read({{HOME}}/**)",
+      "Bash(git *)",
+      "Bash(node *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(python *)"
+    ]
+  }
+}

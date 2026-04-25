@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "policy": {
+    "mode": "allowlist-only-fail-closed",
+    "intendedTarget": "shared-campus-repository",
+    "copyBehavior": "files-only"
+  },
+  "allowlist": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "CONSTITUTION.md",
+    "README.md",
+    ".jm-adk.json",
+    "profiles/**",
+    "contracts/**",
+    "scripts/**",
+    "tests/**",
+    "specs/**",
+    "campus-platform/**",
+    "campus-v2/**",
+    "tools/README.md"
+  ],
+  "denylist": [
+    ".git/**",
+    "workspace/**",
+    "local/**",
+    "mao-sdd/**",
+    "tools/jm-adk/**",
+    "**/session-state.json",
+    "**/.env",
+    "**/.env.*",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/dist-hostinger-deploy.zip",
+    "**/supabase/.temp/**",
+    "**/supabase/.branches/**"
+  ]
+}

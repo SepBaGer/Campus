@@ -1,0 +1,55 @@
+{
+  "version": "1.0.0",
+  "canonicalEnvironment": "codex",
+  "supportedEnvironments": {
+    "codex": {
+      "role": "canonical",
+      "validationProfile": "codex-repo"
+    },
+    "claude-desktop": {
+      "role": "supported-secondary",
+      "validationProfile": "desktop-repo"
+    }
+  },
+  "validationProfiles": {
+    "codex-repo": {
+      "requiresDesktopRuntime": false,
+      "requiresCodexTemplate": true,
+      "requiresCampusApp": true
+    },
+    "desktop-repo": {
+      "requiresDesktopRuntime": false,
+      "requiresDesktopTemplate": true,
+      "requiresCampusApp": true
+    }
+  },
+  "primaryApp": "campus-platform",
+  "primarySupabaseArea": "campus-platform/supabase",
+  "legacyApps": [
+    "campus-v2"
+  ],
+  "backupApps": [
+    "campus-v2"
+  ],
+  "productAreas": [
+    "campus-platform",
+    "campus-platform/supabase",
+    "campus-v2",
+    "specs",
+    "workspace",
+    "tools/jm-adk",
+    "mao-sdd"
+  ],
+  "capabilities": {
+    "supportsRepoContracts": true,
+    "supportsDoctorScript": true,
+    "supportsWorkspaceRuntime": true,
+    "supportsCampusBuild": true,
+    "supportsCampusPlatformBuild": true,
+    "supportsLegacyCampusBuild": true,
+    "supportsVestigialCampusBackup": true,
+    "supportsSupabaseConfigTemplates": true,
+    "supportsGitHub": true,
+    "supportsPlaywrightTemplate": true
+  }
+}

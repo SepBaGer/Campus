@@ -1,0 +1,1294 @@
+<!--
+MetodologIA | Campus — Mapeo de Flujos End-to-End (Entregable 04)
+Discovery SAGE v13 · 2026-04-20 · Brand Voice v3.0 · Por Comité MetodologIA
+6 flujos · 100 Check Standard · xAPI + OpenBadges 3.0 · WCAG 2.2 AA
+Estética: Neo-Swiss Clean · Light default · Dark toggle · Mobile-First
+Paleta: #122562 · #FFD700 · #137DC5 · #1F2833 · #BBA0CC · #808080
+Tipos: Poppins (titulares) · Montserrat (cuerpo) · Trebuchet MS (notas)
+-->
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5">
+<title>Mapeo de Flujos · Campus MetodologIA | Discovery SAGE v13</title>
+<meta name="description" content="Mapeo de 6 flujos end-to-end del Campus MetodologIA: descubrimiento, matrícula, aprendizaje, evaluación, certificación y operación backoffice. 100 Check Standard.">
+<meta name="theme-color" content="#122562">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23122562'/%3E%3Cstop offset='100%25' stop-color='%231F2833'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='36' height='36' rx='10' fill='url(%23g)'/%3E%3Cpath d='M10 12h3v12h-3V12zm6 0h3v8h-3v-8zm0 10h3v2h-3v-2zm6-10h3v6h-3v-6zm0 8h3v4h-3v-4z' fill='%23fff'/%3E%3Ccircle cx='18' cy='8' r='2' fill='%23FFD700'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Poppins:wght@600;700;800;900&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.js" defer></script>
+
+<style>
+/* ═════════════════════════════════════════════════════════════
+   CSS — Neo-Swiss Clean · Paleta Exclusiva MetodologIA
+   Light default · Dark toggle · Mobile-First
+   ═════════════════════════════════════════════════════════════ */
+:root {
+  --navy: #122562;
+  --navy-light: #1A3380;
+  --navy-dark: #0A1840;
+  --gold: #FFD700;
+  --gold-dark: #B8860B;
+  --blue: #137DC5;
+  --blue-light: #3A9AE0;
+  --dark: #1F2833;
+  --lilac: #BBA0CC;
+  --gray: #808080;
+  --white: #FFFFFF;
+
+  --bg: #F9FAFB;
+  --bg-soft: #F0F0EC;
+  --bg-card: rgba(255,255,255,.88);
+  --bg-card-hover: #FFFFFF;
+  --text: #1F2833;
+  --text-sec: #4A5568;
+  --text-muted: #808080;
+  --border: rgba(18,37,98,.10);
+  --glass-bg: rgba(255,255,255,.82);
+  --glass-border: rgba(18,37,98,.06);
+  --shadow-glow: 0 2px 20px rgba(18,37,98,.06);
+  --shadow-card: 0 1px 3px rgba(0,0,0,.04), 0 6px 16px rgba(0,0,0,.06);
+
+  --positive: #16a34a;
+  --warning: #D97706;
+  --critical: #DC2626;
+  --navy-dim: rgba(18,37,98,.06);
+  --gold-dim: rgba(255,215,0,.12);
+  --blue-dim: rgba(19,125,197,.08);
+  --positive-dim: rgba(22,163,74,.09);
+  --warning-dim: rgba(217,119,6,.09);
+  --critical-dim: rgba(220,38,38,.08);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --max-w: 1120px;
+  --nav-height: 56px;
+
+  --font-head: 'Poppins', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+  --font-note: 'Trebuchet MS', 'Lucida Sans Unicode', sans-serif;
+
+  /* Brand tokens adoptados del CV Javier */
+  --brand-gold-soft: #FFE875;
+  --brand-surface: #1E293B;
+  --brand-radius: 16px;
+  --brand-radius-lg: 24px;
+}
+
+html[data-theme="dark"] {
+  --navy: #122562;
+  --navy-dark: #0A1840;
+  --bg: #0A1840;
+  --bg-soft: #071230;
+  --bg-card: rgba(18,37,98,.55);
+  --bg-card-hover: rgba(26,51,128,.85);
+  --text: #F0F4F8;
+  --text-sec: #CBD5E1;
+  --text-muted: #94A3B8;
+  --border: rgba(255,215,0,.14);
+  --glass-bg: rgba(18,37,98,.55);
+  --glass-border: rgba(255,215,0,.10);
+  --gold-dim: rgba(255,215,0,.14);
+  --blue-dim: rgba(19,125,197,.14);
+  --navy-dim: rgba(18,37,98,.25);
+  --positive-dim: rgba(22,163,74,.15);
+  --warning-dim: rgba(217,119,6,.16);
+  --critical-dim: rgba(220,38,38,.15);
+  --shadow-glow: 0 0 40px rgba(255,215,0,.06);
+  --shadow-card: 0 1px 3px rgba(0,0,0,.25), 0 6px 16px rgba(0,0,0,.35);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.65; font-size: clamp(15.5px, 1vw, 16.5px); transition: background .3s, color .3s; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+h1, h2, h3, h4, h5 { font-family: var(--font-head); font-weight: 800; line-height: 1.15; margin: 0; letter-spacing: -.02em; }
+h1 { font-size: clamp(2rem, 5.5vw, 3.5rem); font-weight: 900; }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.5rem); }
+h3 { font-size: clamp(1.15rem, 2vw, 1.35rem); }
+h4 { font-size: 1rem; letter-spacing: -.01em; }
+p { margin: 0 0 1rem; }
+a { color: var(--blue); text-decoration: none; font-weight: 600; }
+a:hover { color: var(--blue-light); text-decoration: underline; }
+strong { color: var(--text); font-weight: 700; }
+code, .mono { font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace; font-size: .85em; background: var(--navy-dim); padding: .15em .45em; border-radius: 4px; color: var(--navy); font-weight: 500; }
+html[data-theme="dark"] code, html[data-theme="dark"] code { color: var(--gold); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: var(--radius-sm); }
+:focus:not(:focus-visible) { outline: none; }
+hr.section-divider { border: none; border-top: 3px solid var(--gold); margin: 3rem 0; opacity: .35; }
+
+/* ─── Scroll progress ─── */
+#scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); width: 0%; z-index: 200; transition: width .1s; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-soft); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+
+/* ─── Floating nav ─── */
+.floating-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg); border-bottom: 2px solid var(--navy-dim);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  transition: background .3s, border-color .3s;
+}
+html[data-theme="dark"] .floating-nav { border-bottom-color: rgba(255,215,0,.18); }
+.nav-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; padding: 0 1.5rem; height: var(--nav-height); }
+.nav-logo { font-family: var(--font-head); font-size: .95rem; font-weight: 800; color: var(--navy); padding: .7rem .75rem .7rem 0; white-space: nowrap; border-right: 1px solid var(--border); margin-right: .25rem; display: flex; align-items: center; gap: .55rem; flex-shrink: 0; }
+html[data-theme="dark"] .nav-logo { color: var(--text); }
+.nav-links { display: flex; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a { display: flex; align-items: center; padding: 1rem .75rem; min-height: 44px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--navy); white-space: nowrap; text-decoration: none; border-bottom: 3px solid transparent; transition: all .2s; }
+html[data-theme="dark"] .nav-links a { color: var(--text); }
+.nav-links a:hover, .nav-links a.active { color: var(--navy-dark); border-bottom-color: var(--gold); text-decoration: none; background: var(--gold-dim); }
+html[data-theme="dark"] .nav-links a:hover, html[data-theme="dark"] .nav-links a.active { color: var(--gold); background: transparent; }
+.nav-toggles { display: flex; gap: .4rem; align-items: center; flex-shrink: 0; margin-left: .5rem; padding-left: .5rem; border-left: 1px solid var(--border); }
+
+/* ─── Toggle pills: idioma ES/EN ─── */
+.toggle-pill { display: inline-flex; border-radius: 9999px; background: var(--bg-card); border: 1px solid var(--border); padding: .2rem; gap: .1rem; box-shadow: inset 0 1px 2px rgba(0,0,0,.04); align-items: center; height: 32px; }
+.toggle-pill > span { padding: 0 .7rem; height: 24px; border-radius: 9999px; cursor: pointer; font-size: .7rem; font-weight: 700; color: var(--text-muted); transition: all .2s; user-select: none; letter-spacing: .3px; display: inline-flex; align-items: center; gap: .3rem; line-height: 1; }
+.toggle-pill > span:hover { color: var(--navy); }
+html[data-theme="dark"] .toggle-pill > span:hover { color: var(--gold); }
+.toggle-pill > span.active { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--navy-dark); box-shadow: 0 1px 3px rgba(184,134,11,.25); }
+.toggle-pill svg { width: 14px; height: 14px; stroke-width: 2.2; }
+
+/* ─── Theme switch (sun ↔ moon como slider) ─── */
+.theme-switch {
+  position: relative; display: inline-flex; align-items: center; justify-content: space-between;
+  width: 58px; height: 32px; border-radius: 9999px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  border: 1px solid var(--gold); cursor: pointer;
+  padding: 0 7px; flex-shrink: 0;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.25);
+  transition: background .25s;
+}
+.theme-switch::before {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 2px 6px rgba(0,0,0,.3);
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+  z-index: 1;
+}
+html[data-theme="dark"] .theme-switch::before { transform: translateX(26px); background: var(--gold); }
+.theme-switch svg { width: 13px; height: 13px; stroke-width: 2.4; position: relative; z-index: 2; pointer-events: none; }
+.theme-switch .sun { color: var(--gold); opacity: .55; transition: opacity .2s; }
+.theme-switch .moon { color: var(--gold); opacity: .55; transition: opacity .2s; }
+html[data-theme="light"] .theme-switch .sun { color: var(--navy-dark); opacity: 1; }
+html[data-theme="dark"] .theme-switch .moon { color: var(--navy-dark); opacity: 1; }
+.theme-switch:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ─── i18n canónico ─── */
+.en { display: none !important; }
+html[lang="en"] .es { display: none !important; }
+html[lang="en"] .en { display: inline !important; }
+
+/* ─── Logo canónico ─── */
+.logo-mark { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.logo-text, .hero-logo > span:not(.logo-mark), .footer-logo > span:not(.logo-mark) {
+  font-family: var(--font-head); font-weight: 800; letter-spacing: -.3px;
+  font-feature-settings: "kern" 1, "liga" 1;
+  white-space: nowrap;
+}
+.brand-ia {
+  color: var(--gold); font-weight: 800;
+  letter-spacing: inherit;
+  margin-left: -.02em; /* corrige kerning visual entre "g" y "I" gold */
+  font-feature-settings: "kern" 1;
+}
+.nav-logo .brand-ia, .footer-logo .brand-ia { color: var(--gold); }
+html[data-theme="light"] .hero-logo .brand-ia, html[data-theme="dark"] .hero-logo .brand-ia { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+/* Esconder texto-logo en móvil para ahorrar espacio en nav */
+@media (max-width: 560px) { .nav-logo .logo-text { display: none; } }
+
+/* ─── Hero ─── */
+.hero {
+  background: linear-gradient(135deg, #0A1840 0%, #122562 60%, #1A3380 100%);
+  position: relative; overflow: hidden;
+  padding: 3.5rem 2rem 4rem;
+  border-bottom: 8px solid var(--gold);
+  min-height: 320px;
+}
+.hero::before { content: ''; position: absolute; top: 0; right: -20%; width: 60%; height: 100%; background: radial-gradient(ellipse at 100% 50%, rgba(255,215,0,.14) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 42%; background: radial-gradient(ellipse at 0% 100%, rgba(19,125,197,.12) 0%, transparent 60%); pointer-events: none; }
+.hero-inner { position: relative; z-index: 2; max-width: var(--max-w); margin: 0 auto; color: #FFFFFF; }
+.hero-logo { font-family: var(--font-head); font-size: 1.55rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.25rem; letter-spacing: -.6px; display: flex; align-items: center; gap: .7rem; }
+.hero-logo .brand-ia { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+.hero-logo .logo-mark { filter: drop-shadow(0 2px 8px rgba(0,0,0,.25)); }
+.hero-badges { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.hero-badge { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.30); color: #FFFFFF; padding: .4rem .9rem; border-radius: var(--radius-sm); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; }
+.hero-badge.gold { background: var(--gold); border-color: var(--gold-dark); color: var(--navy-dark); }
+.hero-badge.blue { background: var(--blue); border-color: var(--blue-light); color: #FFFFFF; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: #FFFFFF; margin-bottom: .85rem; }
+.hero h1 span { color: var(--gold); }
+.hero-sub { font-size: 1.05rem; color: rgba(255,255,255,.92); margin-bottom: 2rem; line-height: 1.7; max-width: 780px; }
+.hero-sub strong, .hero-sub em { color: var(--gold); font-weight: 800; font-style: normal; -webkit-text-fill-color: var(--gold); }
+.hero-accelerators { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .85rem; margin: 1.5rem 0 1.75rem; max-width: 800px; }
+.accel-chip { display: flex; align-items: flex-start; gap: .65rem; background: rgba(255,255,255,.08); border: 1px solid rgba(255,215,0,.28); padding: .7rem .85rem; border-radius: var(--radius-md); }
+.accel-chip-icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; background: var(--gold); color: var(--navy-dark); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 800; font-size: .85rem; }
+.accel-chip-text { font-size: .82rem; line-height: 1.4; color: #FFFFFF; font-weight: 600; }
+.accel-chip-text strong { color: var(--gold); font-weight: 800; display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .6px; margin-bottom: .1rem; }
+.hero-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.hero-kpi { text-align: center; }
+.hero-kpi-value { font-family: var(--font-head); font-size: 2.1rem; font-weight: 800; line-height: 1; color: var(--gold); }
+.hero-kpi-label { font-size: .72rem; color: rgba(255,255,255,.82); margin-top: .4rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+@media (max-width: 640px) { .hero-kpis { grid-template-columns: repeat(2, 1fr); } }
+
+/* ─── Container ─── */
+main.container { max-width: var(--max-w); margin: 0 auto; padding: 3rem 1.5rem; }
+main.container > section { margin-bottom: 3.5rem; scroll-margin-top: calc(var(--nav-height) + 24px); }
+
+/* ─── Section headers ─── */
+.section-header { margin-bottom: 1.75rem; }
+.section-header .section-label { font-family: var(--font-head); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--navy); margin-bottom: .4rem; display: inline-block; padding: .25rem .6rem; background: var(--gold); border-radius: var(--radius-sm); }
+html[data-theme="dark"] .section-header .section-label { color: var(--navy-dark); background: var(--gold); }
+.section-header h2 { color: var(--navy); margin-bottom: .5rem; }
+html[data-theme="dark"] .section-header h2 { color: var(--text); }
+.section-header h2 span { color: var(--gold-dark); font-weight: 800; }
+html[data-theme="dark"] .section-header h2 span { color: var(--gold); }
+.section-header p { color: var(--text-sec); font-size: 1rem; line-height: 1.7; max-width: 820px; }
+.section-hook { border-left: 4px solid var(--gold); padding: .85rem 1.25rem; margin-bottom: 1.5rem; font-size: 1rem; font-weight: 600; color: var(--navy-dark); background: rgba(255,215,0,.18); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+html[data-theme="dark"] .section-hook { color: var(--gold); background: rgba(255,215,0,.10); }
+
+/* ─── Callouts ─── */
+.callout { border-left: 4px solid var(--navy); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 1rem 1.25rem; margin: 1.25rem 0; background: var(--navy-dim); }
+.callout strong { display: block; margin-bottom: .25rem; font-family: var(--font-head); }
+.callout p { font-size: .9rem; color: var(--text); line-height: 1.6; margin: 0; }
+.callout.gold { border-left-color: var(--gold); background: var(--gold-dim); }
+.callout.blue { border-left-color: var(--blue); background: var(--blue-dim); }
+.callout.warning { border-left-color: var(--warning); background: var(--warning-dim); }
+.callout.critical { border-left-color: var(--critical); background: var(--critical-dim); }
+
+/* ─── Stat grid ─── */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; box-shadow: var(--shadow-card); }
+.stat-card .stat-label { font-size: .72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 700; }
+.stat-card .stat-value { font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: var(--navy); margin: .25rem 0; }
+html[data-theme="dark"] .stat-card .stat-value { color: var(--gold); }
+.stat-card .stat-desc { font-size: .85rem; color: var(--text-sec); line-height: 1.5; }
+
+/* ─── Flow card (contenedor de cada flujo) ─── */
+.flow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.flow-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--navy), var(--blue), var(--gold)); }
+.flow-head { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+.flow-num {
+  flex-shrink: 0;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--navy); color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head); font-size: 1.5rem; font-weight: 800;
+}
+.flow-title-block { flex: 1; }
+.flow-title { font-family: var(--font-head); font-size: 1.35rem; font-weight: 800; color: var(--navy); margin: 0 0 .25rem; }
+html[data-theme="dark"] .flow-title { color: var(--text); }
+.flow-subtitle { font-size: .9rem; color: var(--text-sec); font-weight: 500; }
+.flow-actors { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .65rem; }
+.flow-actor { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(19,125,197,.2); padding: .25rem .7rem; border-radius: 999px; font-size: .72rem; font-weight: 700; letter-spacing: .3px; }
+
+/* ─── Mermaid wrap ─── */
+.mermaid-wrap {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+}
+.mermaid { min-width: 100%; text-align: center; }
+.mermaid svg { max-width: 100%; height: auto !important; }
+
+/* ─── Tables ─── */
+.table-wrap { overflow-x: auto; margin: 1.25rem 0; border-radius: var(--radius-md); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; background: var(--bg-card); }
+thead { background: var(--navy-dim); }
+th { text-align: left; padding: .85rem 1rem; font-family: var(--font-head); font-size: .72rem; text-transform: uppercase; letter-spacing: .8px; color: var(--navy); font-weight: 800; border-bottom: 2px solid var(--gold); }
+html[data-theme="dark"] th { color: var(--gold); }
+td { padding: .75rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--gold-dim); }
+.sev-crit { color: var(--critical); font-weight: 700; }
+.sev-high { color: var(--warning); font-weight: 700; }
+.sev-med { color: var(--blue); font-weight: 700; }
+.sev-low { color: var(--positive); font-weight: 700; }
+
+/* ─── Metric pills (dentro de flow-card) ─── */
+.metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .75rem; margin: 1rem 0; padding: 1rem; background: var(--navy-dim); border-radius: var(--radius-md); }
+.metric-pill { text-align: center; padding: .5rem; }
+.metric-pill .m-label { font-size: .68rem; text-transform: uppercase; letter-spacing: .8px; color: var(--text-muted); font-weight: 700; }
+.metric-pill .m-value { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-top: .2rem; }
+html[data-theme="dark"] .metric-pill .m-value { color: var(--gold); }
+
+/* ─── Code snippet block ─── */
+pre.code {
+  background: var(--dark); color: #E0E7FF;
+  padding: 1.25rem 1.5rem; border-radius: var(--radius-md);
+  overflow-x: auto; font-family: 'Menlo', 'Consolas', monospace; font-size: .82rem;
+  line-height: 1.6; margin: 1.25rem 0;
+  border: 1px solid var(--navy-light);
+}
+pre.code code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+.code-label { font-family: var(--font-head); font-size: .68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); font-weight: 800; margin-bottom: .4rem; }
+
+/* ─── DUA grid ─── */
+.dua-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.dua-card { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--lilac); border-radius: var(--radius-sm); padding: 1rem 1.25rem; }
+.dua-card h4 { font-size: .82rem; color: var(--navy); margin-bottom: .35rem; text-transform: uppercase; letter-spacing: .5px; }
+html[data-theme="dark"] .dua-card h4 { color: var(--text); }
+.dua-card p { font-size: .82rem; color: var(--text-sec); line-height: 1.5; margin: 0; }
+.dua-card code { font-size: .75em; }
+
+/* ─── Friction severity legend ─── */
+.sev-legend { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1rem 0; font-size: .78rem; }
+.sev-tag { display: inline-flex; align-items: center; gap: .35rem; background: var(--bg-card); border: 1px solid var(--border); padding: .25rem .7rem; border-radius: 999px; font-weight: 700; }
+.sev-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot-crit { background: var(--critical); }
+.dot-high { background: var(--warning); }
+.dot-med { background: var(--blue); }
+.dot-low { background: var(--positive); }
+
+/* ─── Footer ─── */
+.site-footer { background: #0A1840; color: rgba(255,255,255,.88); padding: 2.5rem 2rem; margin-top: 4rem; }
+.footer-inner { max-width: var(--max-w); margin: 0 auto; }
+.footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
+.footer-logo { font-family: var(--font-head); font-size: 1.2rem; font-weight: 800; color: #FFFFFF; display: flex; align-items: center; gap: .55rem; }
+.footer-logo .brand-ia { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+.footer-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+.footer-badge { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); padding: .3rem .75rem; border-radius: var(--radius-sm); font-size: .7rem; font-weight: 700; color: rgba(255,255,255,.75); letter-spacing: .3px; }
+.footer-bottom { font-size: .78rem; border-top: 1px solid rgba(255,255,255,.1); padding-top: 1.25rem; line-height: 1.7; }
+.footer-bottom em { color: var(--gold); font-style: normal; font-weight: 700; }
+
+/* ─── Print ─── */
+@media print {
+  .floating-nav, .nav-toggles, #scroll-progress { display: none !important; }
+  .hero { background: var(--navy) !important; }
+  body { background: white; color: black; }
+  .flow-card { page-break-inside: avoid; box-shadow: none; border: 1px solid #999; }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 720px) {
+  .hero { padding: 2.5rem 1.25rem 3rem; }
+  main.container { padding: 2rem 1rem; }
+  .flow-card { padding: 1.5rem 1.25rem; }
+  .flow-head { flex-direction: column; }
+  .flow-num { width: 44px; height: 44px; font-size: 1.15rem; }
+  th, td { padding: .6rem .65rem; font-size: .82rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<nav class="floating-nav" aria-label="Navegación del documento">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" width="28" height="28" role="img" aria-label="MetodologIA">
+          <defs><linearGradient id="navLogoGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#122562"/><stop offset="100%" stop-color="#1F2833"/></linearGradient></defs>
+          <rect width="36" height="36" rx="10" fill="url(#navLogoGrad)"/>
+          <rect x="10" y="12" width="4" height="12" rx=".8" fill="#FFFFFF"/>
+          <rect x="16" y="12" width="4" height="8" rx=".8" fill="#FFFFFF"/>
+          <rect x="16" y="22" width="4" height="2" rx=".8" fill="#FFFFFF"/>
+          <rect x="22" y="12" width="4" height="6" rx=".8" fill="#FFFFFF"/>
+          <rect x="22" y="20" width="4" height="4" rx=".8" fill="#FFFFFF"/>
+          <circle cx="18" cy="8" r="2" fill="#FFD700"/>
+        </svg>
+      </span>
+      <span class="logo-text">Metodolog<span class="brand-ia">IA</span></span>
+    </div>
+    <div class="nav-links" role="navigation">
+      <a href="#overview" class="active"><span class="es">Visión</span><span class="en">Overview</span></a>
+      <a href="#kpis"><span class="es">100 Check</span><span class="en">100 Check</span></a>
+      <a href="#flujo-1"><span class="es">F1 · Descubrir</span><span class="en">F1 · Discover</span></a>
+      <a href="#flujo-2"><span class="es">F2 · Matrícula</span><span class="en">F2 · Enroll</span></a>
+      <a href="#flujo-3"><span class="es">F3 · Aprender</span><span class="en">F3 · Learn</span></a>
+      <a href="#flujo-4"><span class="es">F4 · Evaluar</span><span class="en">F4 · Assess</span></a>
+      <a href="#flujo-5"><span class="es">F5 · Certificar</span><span class="en">F5 · Certify</span></a>
+      <a href="#flujo-6"><span class="es">F6 · Backoffice</span><span class="en">F6 · Backoffice</span></a>
+      <a href="#fricciones"><span class="es">Fricciones</span><span class="en">Frictions</span></a>
+      <a href="#xapi">xAPI</a>
+    </div>
+    <div class="nav-toggles">
+      <div class="toggle-pill" id="lang-toggle" role="group" aria-label="Idioma / Language">
+        <span data-lang="es" class="active">ES</span>
+        <span data-lang="en">EN</span>
+      </div>
+      <button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Cambiar tema claro / oscuro">
+        <i data-lucide="sun" class="sun" aria-hidden="true"></i>
+        <i data-lucide="moon" class="moon" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-logo">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" width="44" height="44" role="img" aria-label="MetodologIA">
+          <defs><linearGradient id="heroLogoGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0A1840"/><stop offset="100%" stop-color="#1A3380"/></linearGradient></defs>
+          <rect width="36" height="36" rx="10" fill="url(#heroLogoGrad)" stroke="#FFD700" stroke-width=".6"/>
+          <rect x="10" y="12" width="4" height="12" rx=".8" fill="#FFFFFF"/>
+          <rect x="16" y="12" width="4" height="8" rx=".8" fill="#FFFFFF"/>
+          <rect x="16" y="22" width="4" height="2" rx=".8" fill="#FFFFFF"/>
+          <rect x="22" y="12" width="4" height="6" rx=".8" fill="#FFFFFF"/>
+          <rect x="22" y="20" width="4" height="4" rx=".8" fill="#FFFFFF"/>
+          <circle cx="18" cy="8" r="2.2" fill="#FFD700"/>
+        </svg>
+      </span>
+      <span>Metodolog<span class="brand-ia">IA</span> · Campus</span>
+    </div>
+    <div class="hero-badges">
+      <span class="hero-badge gold"><span class="es">Entregable 04</span><span class="en">Deliverable 04</span></span>
+      <span class="hero-badge">Discovery SAGE v13</span>
+      <span class="hero-badge blue"><span class="es">Mapeo end-to-end</span><span class="en">End-to-end map</span></span>
+      <span class="hero-badge">2026-04-20</span>
+    </div>
+    <h1>
+      <span class="es">Aprende rápido, <span>demuéstralo</span> y llévatelo verificable.</span>
+      <span class="en">Learn fast, <span>prove it</span>, and take it with you — verifiably.</span>
+    </h1>
+    <p class="hero-sub">
+      <span class="es">Un campus pensado para personas que no quieren perder el tiempo. Entras, eliges tu ciclo, aprendes con métodos probados, recibes feedback en segundos y sales con una <strong>credencial digital verificable</strong> que tu empleador puede validar sin crear una cuenta. Todo en tu idioma, tu dispositivo y tu ritmo.</span>
+      <span class="en">A campus built for people who won't waste their time. Join, pick your cycle, learn with proven methods, get feedback in seconds, and walk out with a <strong>verifiable digital credential</strong> your employer can validate without signing up. In your language, on your device, at your pace.</span>
+    </p>
+
+    <div class="hero-accelerators" aria-label="Aceleradores del campus">
+      <div class="accel-chip">
+        <span class="accel-chip-icon">⚡</span>
+        <span class="accel-chip-text"><strong><span class="es">Arranque en 5 min</span><span class="en">5-min onboarding</span></strong><span class="es">De registro a primera lección sin fricción.</span><span class="en">From sign-up to first lesson without friction.</span></span>
+      </div>
+      <div class="accel-chip">
+        <span class="accel-chip-icon">🎯</span>
+        <span class="accel-chip-text"><strong><span class="es">Feedback inmediato</span><span class="en">Instant feedback</span></strong><span class="es">Cada respuesta explica el porqué, no solo si acertaste.</span><span class="en">Each answer explains the why, not just if you got it right.</span></span>
+      </div>
+      <div class="accel-chip">
+        <span class="accel-chip-icon">🧠</span>
+        <span class="accel-chip-text"><strong><span class="es">Repaso inteligente</span><span class="en">Smart review</span></strong><span class="es">El sistema decide cuándo te conviene repasar para no olvidar.</span><span class="en">The system schedules reviews so you don't forget.</span></span>
+      </div>
+      <div class="accel-chip">
+        <span class="accel-chip-icon">🎖️</span>
+        <span class="accel-chip-text"><strong><span class="es">Badge verificable</span><span class="en">Verifiable badge</span></strong><span class="es">OpenBadges 3.0: comparte un link, tu empleador valida.</span><span class="en">OpenBadges 3.0: share a link, the employer validates.</span></span>
+      </div>
+      <div class="accel-chip">
+        <span class="accel-chip-icon">♿</span>
+        <span class="accel-chip-text"><strong><span class="es">Accesible de verdad</span><span class="en">Truly accessible</span></strong><span class="es">WCAG 2.2 AA, audio, transcripciones, teclado.</span><span class="en">WCAG 2.2 AA: audio, transcripts, keyboard-first.</span></span>
+      </div>
+      <div class="accel-chip">
+        <span class="accel-chip-icon">🔒</span>
+        <span class="accel-chip-text"><strong><span class="es">Tus datos, tus reglas</span><span class="en">Your data, your rules</span></strong><span class="es">Ley 1581 y GDPR: exporta o elimina cuando quieras.</span><span class="en">Law 1581 &amp; GDPR: export or delete any time.</span></span>
+      </div>
+    </div>
+
+    <div class="hero-kpis">
+      <div class="hero-kpi"><div class="hero-kpi-value">&lt;5′</div><div class="hero-kpi-label"><span class="es">Para empezar</span><span class="en">To get started</span></div></div>
+      <div class="hero-kpi"><div class="hero-kpi-value">&lt;½s</div><div class="hero-kpi-label"><span class="es">Feedback por respuesta</span><span class="en">Per-answer feedback</span></div></div>
+      <div class="hero-kpi"><div class="hero-kpi-value">6</div><div class="hero-kpi-label"><span class="es">Flujos de extremo a extremo</span><span class="en">End-to-end flows</span></div></div>
+      <div class="hero-kpi"><div class="hero-kpi-value">AA</div><div class="hero-kpi-label"><span class="es">Accesible WCAG 2.2</span><span class="en">WCAG 2.2 accessible</span></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ══════════════ OVERVIEW ══════════════ -->
+<section id="overview">
+  <div class="section-header">
+    <div class="section-label">Resumen ejecutivo · TL;DR</div>
+    <h2>Del visitante anónimo al <span>badge verificable</span></h2>
+    <p>El campus une seis flujos en un solo recorrido sistémico. Cada transición cruza una frontera de contexto (identity → catalog → delivery → enrollment → learning → credentials) y emite eventos <code>xAPI</code> que alimentan analítica pedagógica y at-risk predictivo.</p>
+  </div>
+
+  <div class="section-hook">
+    Los 6 flujos anclan los 16 entregables del discovery: si un flujo no cierra métrica 100 Check, el roadmap lo absorbe como hipótesis HDD testable.
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-label">Flujos cubiertos</div>
+      <div class="stat-value">6 / 6</div>
+      <div class="stat-desc">Descubrir · Matricular · Aprender · Evaluar · Certificar · Operar</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Estándares IMS emitidos</div>
+      <div class="stat-value">4</div>
+      <div class="stat-desc">xAPI 1.0.3 · LTI 1.3 · OpenBadges 3.0 · iCal feeds</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Integraciones críticas</div>
+      <div class="stat-value">5</div>
+      <div class="stat-desc">Stripe · Supabase Realtime · FSRS · Resend · Ed25519 signer</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Fricciones críticas</div>
+      <div class="stat-value">4 🔴</div>
+      <div class="stat-desc">Checkout LatAm · Cohorte rígida · VC LinkedIn · Multimedia offline</div>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <strong>⚠️ Banner de supuestos</strong>
+    <p>Aproximadamente <strong>35% del contenido está etiquetado <code>[SUPUESTO]</code></strong>: los flujos son el TO-BE propuesto para M1; ningún usuario real los ejecutó aún. Gate G1.5 auto-aprobado con este banner visible.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ══════════════ KPIs 100 CHECK ══════════════ -->
+<section id="kpis">
+  <div class="section-header">
+    <div class="section-label">Métricas transversales</div>
+    <h2>El <span>100 Check Standard</span> aplicado a cada flujo</h2>
+    <p>Cuatro KPIs ortogonales que cada flujo debe satisfacer en el milestone M1. Cualquier incumplimiento escalará como hipótesis a refutar en sprint correctivo.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Métrica</th><th>Definición</th><th>Target M1</th><th>Técnica de medición</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Time to Value (TTV)</strong></td><td>Minutos desde registro hasta primera lección activa</td><td><code>&lt; 5 min</code></td><td>Plausible + xAPI <code>experienced</code> timestamp</td></tr>
+        <tr><td><strong>Feedback Delay (FD)</strong></td><td>Latencia entre acción del aprendiz y feedback del sistema</td><td><code>&lt; 500 ms p95</code></td><td>OTel traces en Edge Functions</td></tr>
+        <tr><td><strong>Friction Level (FL)</strong></td><td>Número de clics + formularios para acción crítica</td><td><code>≤ 2 clics</code></td><td>Instrumentación UI + Playwright E2E</td></tr>
+        <tr><td><strong>QA score</strong></td><td>Cobertura tests + WCAG 2.2 AA + performance budget</td><td><code>≥ 80%</code> lógica crítica</td><td>Vitest + pa11y-ci + Lighthouse CI</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ══════════════ FLUJO 1 · DESCUBRIMIENTO ══════════════ -->
+<section id="flujo-1">
+  <article class="flow-card">
+    <div class="flow-head">
+      <div class="flow-num">1</div>
+      <div class="flow-title-block">
+        <h3 class="flow-title">Descubrimiento</h3>
+        <div class="flow-subtitle">Visitante → Landing → Catálogo → Detalle de curso</div>
+        <div class="flow-actors">
+          <span class="flow-actor">Visitante anónimo</span>
+          <span class="flow-actor">Astro SSG</span>
+          <span class="flow-actor">Supabase PostgREST</span>
+          <span class="flow-actor">Plausible</span>
+        </div>
+      </div>
+    </div>
+
+    <p>Primera milla del embudo: contenido pre-renderizado servido desde Hostinger, catálogo público leído vía RLS <code>role=anon</code>, y analytics privacy-first con Plausible. Zero JavaScript en el path crítico salvo el <em>island</em> del <code>&lt;course-card&gt;</code>.</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant V as Visitante
+    participant L as Landing (Astro SSG)
+    participant C as Catálogo /cursos
+    participant D as Detalle /cursos/[slug]
+    participant S as Supabase PostgREST
+    participant A as Plausible Analytics
+    V->>L: GET /
+    L-->>V: HTML pre-renderizado + tokens CSS
+    L->>A: event "landing_view"
+    V->>C: Click CTA "Explorar cursos"
+    C->>S: GET /rpc/public_catalog (RLS anon)
+    S-->>C: [{course_id, title, run_next_start, price_display}]
+    C-->>V: Grid de &lt;course-card&gt;
+    V->>D: Click course
+    D->>S: GET /rpc/course_detail?slug=metodo-apalancamiento
+    S-->>D: {course, competencies, syllabus_preview}
+    D->>A: event "course_view" {course_id}
+    D-->>V: &lt;course-hero&gt; + &lt;schedule-picker&gt; + CTA
+      </div>
+    </div>
+
+    <h4>Fricciones detectadas</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fricción</th><th>Severidad</th><th>Mitigación</th><th>Sprint</th></tr></thead>
+        <tbody>
+          <tr><td>Catálogo sin filtros por duración/nivel/formato</td><td><span class="sev-med">🟡 Media</span></td><td>Facetas con <code>pg_trgm</code> + filtros CSS-only</td><td>M2 S3</td></tr>
+          <tr><td>Detalle sin previsualización de lección</td><td><span class="sev-med">🟡 Media</span></td><td>Un <code>content_block</code> marcado <code>is_preview=true</code></td><td>M1 S4</td></tr>
+          <tr><td>Precio no localizado (USD vs COP/MXN)</td><td><span class="sev-med">🟡 Media</span></td><td>Stripe multi-moneda + detección por IP</td><td>M2 S2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-pill"><div class="m-label">TTV</div><div class="m-value">N/A*</div></div>
+      <div class="metric-pill"><div class="m-label">FD</div><div class="m-value">&lt;200 ms</div></div>
+      <div class="metric-pill"><div class="m-label">FL</div><div class="m-value">2 clics</div></div>
+      <div class="metric-pill"><div class="m-label">QA</div><div class="m-value">🟢 SSG + pa11y</div></div>
+    </div>
+    <p style="font-size:.78rem;color:var(--text-muted);margin-top:.5rem;">* Pre-registro, TTV se mide desde Flujo 2 en adelante.</p>
+  </article>
+</section>
+
+<!-- ══════════════ FLUJO 2 · MATRÍCULA ══════════════ -->
+<section id="flujo-2">
+  <article class="flow-card">
+    <div class="flow-head">
+      <div class="flow-num">2</div>
+      <div class="flow-title-block">
+        <h3 class="flow-title">Matrícula</h3>
+        <div class="flow-subtitle">Registro → CourseRun → Checkout Stripe → Enrollment activo</div>
+        <div class="flow-actors">
+          <span class="flow-actor">Aprendiz</span>
+          <span class="flow-actor">Supabase Auth</span>
+          <span class="flow-actor">Edge Function <code>enroll-checkout</code></span>
+          <span class="flow-actor">Stripe Checkout</span>
+          <span class="flow-actor">Resend</span>
+        </div>
+      </div>
+    </div>
+
+    <p>Gate comercial del campus. Magic link minimiza fricción B2C; Edge Function orquesta la triangulación <code>Person → CourseRun → Stripe session</code>; webhook firmado confirma con idempotencia. El constraint <code>UNIQUE(person_id, course_run_id)</code> evita doble matrícula.</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant V as Aprendiz
+    participant D as Detalle curso
+    participant SA as Supabase Auth
+    participant E as Edge Fn enroll-checkout
+    participant ST as Stripe Checkout
+    participant W as Webhook Stripe
+    participant DB as Postgres
+    participant EM as Resend
+    V->>D: Click "Matricularme"
+    D->>SA: signInWithOtp(email)
+    SA->>EM: Magic link
+    EM-->>V: Email con link
+    V->>D: Sesión activa tras click
+    V->>D: Elige CourseRun
+    D->>E: POST {person_id, course_run_id}
+    E->>DB: INSERT enrollment status=pending
+    E->>ST: Create Checkout Session
+    ST-->>V: Redirect checkout.stripe.com
+    V->>ST: Completa pago
+    ST->>W: checkout.session.completed
+    W->>DB: UPDATE status=active, paid_at
+    W->>EM: Email bienvenida
+    EM-->>V: "Bienvenido al CourseRun X"
+    W-->>ST: 200 OK
+      </div>
+    </div>
+
+    <h4>DDL de <code>enrollment.enrollment</code> (fragmento)</h4>
+    <div class="code-label">PostgreSQL · schema enrollment</div>
+    <pre class="code"><code>CREATE TABLE enrollment.enrollment (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    person_id uuid NOT NULL REFERENCES identity.person(id),
+    course_run_id uuid NOT NULL REFERENCES delivery.course_run(id),
+    status text NOT NULL CHECK (status IN ('pending','active','completed','refunded')),
+    paid_at timestamptz,
+    created_at timestamptz DEFAULT now(),
+    UNIQUE (person_id, course_run_id)
+);</code></pre>
+
+    <div class="callout blue">
+      <strong>Regla RLS clave</strong>
+      <p><code>enrollment</code> es visible solo cuando <code>person_id = auth.uid()</code> o el usuario tiene <code>role_assignment.role IN ('admin','instructor')</code>. Idempotencia del webhook garantizada con <code>ON CONFLICT (stripe_event_id) DO NOTHING</code>.</p>
+    </div>
+
+    <h4>Fricciones detectadas</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fricción</th><th>Severidad</th><th>Mitigación</th><th>Sprint</th></tr></thead>
+        <tbody>
+          <tr><td>Magic link bloqueado por email corporativo</td><td><span class="sev-crit">🔴 Crítica</span></td><td>Fallback password + SSO OIDC</td><td>M2 S2</td></tr>
+          <tr><td>Tarjetas LatAm rechazadas por Stripe</td><td><span class="sev-crit">🔴 Crítica</span></td><td>MercadoPago / Wompi secundario</td><td>M2 S1</td></tr>
+          <tr><td>Usuario cierra pestaña antes del webhook</td><td><span class="sev-high">🟡 Alta</span></td><td>Reconciliación <code>status='pending'</code> cada 15 min</td><td>M2 S1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-pill"><div class="m-label">TTV</div><div class="m-value">&lt;5 min</div></div>
+      <div class="metric-pill"><div class="m-label">FD</div><div class="m-value">&lt;1 s</div></div>
+      <div class="metric-pill"><div class="m-label">FL</div><div class="m-value">2 clics</div></div>
+      <div class="metric-pill"><div class="m-label">QA</div><div class="m-value">🟢 Playwright E2E</div></div>
+    </div>
+  </article>
+</section>
+
+<!-- ══════════════ FLUJO 3 · APRENDIZAJE ══════════════ -->
+<section id="flujo-3">
+  <article class="flow-card">
+    <div class="flow-head">
+      <div class="flow-num">3</div>
+      <div class="flow-title-block">
+        <h3 class="flow-title">Aprendizaje</h3>
+        <div class="flow-subtitle">Login → Dashboard → Lección → Attempt → xAPI → Progreso en vivo</div>
+        <div class="flow-actors">
+          <span class="flow-actor">Aprendiz</span>
+          <span class="flow-actor">Portal estudiante</span>
+          <span class="flow-actor">Edge Fn <code>xapi-emit</code></span>
+          <span class="flow-actor">Supabase Realtime</span>
+          <span class="flow-actor">LRS interno</span>
+        </div>
+      </div>
+    </div>
+
+    <p>Corazón pedagógico del campus. Cada interacción con un <code>content_block</code> emite un <code>xapi_statement</code> al LRS interno (tabla jsonb + GIN), dispara recálculo de <code>mastery_state</code> y publica progreso en el canal Realtime del <code>course_run</code>. DUA/UDL 3.0 codificado en variantes jsonb obligatorias.</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant A as Aprendiz
+    participant P as Portal estudiante
+    participant DB as Postgres
+    participant RT as Supabase Realtime
+    participant X as Edge Fn xapi-emit
+    A->>P: Login OIDC
+    P->>DB: SELECT enrollments WHERE person_id=auth.uid()
+    DB-->>P: Cursos activos
+    P->>A: Dashboard con progress rings
+    A->>P: Click "Continuar"
+    P->>DB: SELECT next_content_block
+    DB-->>P: {block_id, type=video, variants_dua}
+    P->>A: &lt;video-player&gt; captions + transcript
+    A->>P: Marca "Completada"
+    P->>X: POST {verb=completed, object=block_id}
+    X->>DB: INSERT xapi_statement (jsonb)
+    X->>DB: UPDATE mastery_state (trigger)
+    DB->>RT: Channel course_run broadcast
+    RT-->>P: Update progress ring en vivo
+    X-->>P: 200 {statement_id}
+      </div>
+    </div>
+
+    <h4>DUA/UDL 3.0 codificado en el modelo de datos</h4>
+    <div class="dua-grid">
+      <div class="dua-card">
+        <h4>Representation variants</h4>
+        <p><code>{video, audio, transcript, sign_language?, braille?}</code>. Al menos 2 obligatorias por block.</p>
+      </div>
+      <div class="dua-card">
+        <h4>Expression variants</h4>
+        <p><code>{text, voice, drawing, code}</code>. El aprendiz elige cómo demuestra lo aprendido.</p>
+      </div>
+      <div class="dua-card">
+        <h4>Engagement hooks</h4>
+        <p><code>{prompt_reflection, peer_comment, gamification_xp}</code>. Opt-in por cohorte.</p>
+      </div>
+    </div>
+
+    <h4>Fricciones detectadas</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fricción</th><th>Severidad</th><th>Mitigación</th><th>Sprint</th></tr></thead>
+        <tbody>
+          <tr><td>Video no carga en baja conectividad</td><td><span class="sev-crit">🔴 Crítica</span></td><td>Transcript-first fallback + pre-download ZIP</td><td>M1 S4</td></tr>
+          <tr><td>Pérdida de progreso cross-device</td><td><span class="sev-high">🟡 Alta</span></td><td><code>attempt.state_snapshot</code> jsonb sincronizado</td><td>M1 S3</td></tr>
+          <tr><td>Cohorte rígida bloquea rapid learners</td><td><span class="sev-med">🟡 Media</span></td><td>Flag <code>self_paced=true</code> por course_run</td><td>M2 S4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-pill"><div class="m-label">TTV</div><div class="m-value">N/A (dentro)</div></div>
+      <div class="metric-pill"><div class="m-label">FD</div><div class="m-value">&lt;500 ms</div></div>
+      <div class="metric-pill"><div class="m-label">FL</div><div class="m-value">1 clic</div></div>
+      <div class="metric-pill"><div class="m-label">QA</div><div class="m-value">🟢 pgTAP + Realtime</div></div>
+    </div>
+  </article>
+</section>
+
+<!-- ══════════════ FLUJO 4 · EVALUACIÓN ══════════════ -->
+<section id="flujo-4">
+  <article class="flow-card">
+    <div class="flow-head">
+      <div class="flow-num">4</div>
+      <div class="flow-title-block">
+        <h3 class="flow-title">Evaluación</h3>
+        <div class="flow-subtitle">Quiz → Feedback → Mastery state → FSRS spaced repetition</div>
+        <div class="flow-actors">
+          <span class="flow-actor">Aprendiz</span>
+          <span class="flow-actor">&lt;quiz-runner&gt;</span>
+          <span class="flow-actor">Trigger <code>mastery</code></span>
+          <span class="flow-actor">Edge Fn <code>fsrs-schedule</code></span>
+        </div>
+      </div>
+    </div>
+
+    <p>Feedback formativo inmediato + recompute determinístico de <code>mastery_state</code> + planificación FSRS v4 por-persona. Cada respuesta incorrecta incluye <code>wrong_answer_rationale</code> obligatorio: la pedagogía es dato, no copy.</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart LR
+    A[Inicia quiz] --> B[&lt;quiz-runner&gt; Web Component]
+    B --> C{Respuesta}
+    C -->|Correcta| D[Feedback ✅ inmediato]
+    C -->|Incorrecta| E[Feedback pedagógico + rationale]
+    D --> F[INSERT attempt]
+    E --> F
+    F --> G[Trigger recompute mastery_state]
+    G --> H{Score ≥ umbral?}
+    H -->|Sí| I[mastery_state=mastered]
+    H -->|No| J[mastery_state=in_progress]
+    I --> K[Edge Fn fsrs-schedule-next]
+    J --> K
+    K --> L[INSERT spaced_schedule next_review_at]
+    L --> M[Notif push/email Revisa en N días]
+      </div>
+    </div>
+
+    <div class="callout gold">
+      <strong>FSRS v4 — parámetros por persona</strong>
+      <p>Tres variables core: <strong>stability</strong> (S), <strong>difficulty</strong> (D), <strong>retrievability</strong> (R). Persistidas en <code>learning.spaced_schedule.params</code> jsonb. Cron cada 6 h materializa los próximos reviews con cap de 3/día en las primeras 2 semanas para evitar sobre-planificación.</p>
+    </div>
+
+    <h4>Fricciones detectadas</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fricción</th><th>Severidad</th><th>Mitigación</th><th>Sprint</th></tr></thead>
+        <tbody>
+          <tr><td>Feedback genérico no explica el porqué</td><td><span class="sev-crit">🔴 Crítica</span></td><td><code>wrong_answer_rationale</code> obligatorio por opción</td><td>M1 S5</td></tr>
+          <tr><td>Quiz sin soporte DUA (solo texto)</td><td><span class="sev-med">🟡 Media</span></td><td>Renderer con audio de enunciado + respuestas dibujadas</td><td>M2 S3</td></tr>
+          <tr><td>FSRS sobre-planifica al inicio</td><td><span class="sev-med">🟡 Media</span></td><td>Cap de 3 reviews/día primeras 2 semanas</td><td>M3 S2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-pill"><div class="m-label">TTV</div><div class="m-value">N/A</div></div>
+      <div class="metric-pill"><div class="m-label">FD</div><div class="m-value">&lt;500 ms</div></div>
+      <div class="metric-pill"><div class="m-label">FL</div><div class="m-value">1 clic/resp</div></div>
+      <div class="metric-pill"><div class="m-label">QA</div><div class="m-value">🟢 pgTAP mastery</div></div>
+    </div>
+  </article>
+</section>
+
+<!-- ══════════════ FLUJO 5 · CERTIFICACIÓN ══════════════ -->
+<section id="flujo-5">
+  <article class="flow-card">
+    <div class="flow-head">
+      <div class="flow-num">5</div>
+      <div class="flow-title-block">
+        <h3 class="flow-title">Certificación</h3>
+        <div class="flow-subtitle">Completion → Badge template → OpenBadges 3.0 VC → Verificación pública</div>
+        <div class="flow-actors">
+          <span class="flow-actor">Trigger <code>enrollment_complete</code></span>
+          <span class="flow-actor">Edge Fn <code>badge-issue</code></span>
+          <span class="flow-actor">VC Signer Ed25519</span>
+          <span class="flow-actor">Storage público</span>
+          <span class="flow-actor">Empleador / verificador</span>
+        </div>
+      </div>
+    </div>
+
+    <p>Credencial verificable W3C VC (JSON-LD) firmada con Ed25519 y expuesta como URL pública inmutable. Sin cuenta para verificar: el empleador descarga el JSON y valida firma offline. Endpoint alterno OB 2.0 para compatibilidad con LinkedIn.</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant DB as Postgres
+    participant TR as Trigger enrollment_complete
+    participant E as Edge Fn badge-issue
+    participant V as VC Signer Ed25519
+    participant S as Storage /badges/*.json
+    participant EM as Resend
+    participant A as Aprendiz
+    participant U as Empleador
+    DB->>TR: UPDATE enrollment completed_at=now()
+    TR->>E: Invoca badge-issue(enrollment_id)
+    E->>DB: SELECT badge_template WHERE course_id
+    DB-->>E: {name, description, criteria, image_url}
+    E->>V: Firma OpenBadges 3.0 VC
+    V-->>E: signed_credential.jsonld
+    E->>S: PUT /badges/{id}.json (público)
+    E->>DB: INSERT credential_issued(verification_url)
+    E->>EM: Email 🎖️ Tu badge está listo
+    EM-->>A: Link a badge público
+    A->>U: Comparte URL
+    U->>S: GET /badges/{id}.json
+    S-->>U: signed_credential.jsonld
+    U->>V: Verifica firma Ed25519
+    V-->>U: ✅ Válido
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <strong>Estándar adoptado</strong>
+      <p><strong>OpenBadges 3.0</strong> (IMS Global / 1EdTech) con <strong>W3C Verifiable Credentials</strong>. URL de verificación pública, sin cuenta requerida, verificable offline. Perfil público opcional del aprendiz en <code>metodologia.info/u/{slug}</code>.</p>
+    </div>
+
+    <h4>Fricciones detectadas</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fricción</th><th>Severidad</th><th>Mitigación</th><th>Sprint</th></tr></thead>
+        <tbody>
+          <tr><td>LinkedIn no renderiza VC (solo OB 2.0)</td><td><span class="sev-crit">🔴 Crítica</span></td><td>Endpoint alterno JSON-LD clásico OB 2.0</td><td>M3 S1</td></tr>
+          <tr><td>Aprendiz extravía URL del badge</td><td><span class="sev-low">🟢 Baja</span></td><td>Perfil público <code>/u/{slug}</code> listando badges</td><td>M3 S3</td></tr>
+          <tr><td>Revocación por fraude académico</td><td><span class="sev-med">🟡 Media</span></td><td><code>credential_issued.revoked_at</code> + VC status</td><td>M3 S2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-pill"><div class="m-label">TTV</div><div class="m-value">&lt;2 s</div></div>
+      <div class="metric-pill"><div class="m-label">FD</div><div class="m-value">Async</div></div>
+      <div class="metric-pill"><div class="m-label">FL</div><div class="m-value">0 clics (auto)</div></div>
+      <div class="metric-pill"><div class="m-label">QA</div><div class="m-value">🟢 Validador OB en CI</div></div>
+    </div>
+  </article>
+</section>
+
+<!-- ══════════════ FLUJO 6 · BACKOFFICE ══════════════ -->
+<section id="flujo-6">
+  <article class="flow-card">
+    <div class="flow-head">
+      <div class="flow-num">6</div>
+      <div class="flow-title-block">
+        <h3 class="flow-title">Operación Backoffice</h3>
+        <div class="flow-subtitle">Docente/Admin → CourseRun → Cohorte → At-risk → Cierre de ciclo</div>
+        <div class="flow-actors">
+          <span class="flow-actor">Docente</span>
+          <span class="flow-actor">Admin MetodologIA</span>
+          <span class="flow-actor">Astro Islands admin</span>
+          <span class="flow-actor">Vista <code>v_student_risk</code></span>
+        </div>
+      </div>
+    </div>
+
+    <p>La operación del campus vive en el mismo stack: Astro + Supabase Auth con <code>role_assignment</code> elevando privilegios. El docente clona un <code>course</code> maestro en un <code>course_run</code> con cronograma propio, monitorea at-risk vía vista heurística y cierra el ciclo disparando emisión masiva de badges.</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart TD
+    A[Docente/Admin login] --> B[Dashboard admin]
+    B --> C{Acción}
+    C -->|Nuevo CourseRun| D[Clona course maestro]
+    C -->|Cohorte| H[Lista enrollments]
+    C -->|Reportes| M[Abre reportes]
+    D --> E[Define schedule + cohort_size]
+    E --> F[Set status=draft]
+    F --> G{Revisión?}
+    G -->|OK| I[Publica status=published]
+    G -->|Ajustes| E
+    I --> J[Visible en catálogo público]
+    H --> K[Ver at-risk v_student_risk]
+    K --> L[Enviar nudge email/WA]
+    M --> N[Reporte avance cohorte]
+    N --> O[Export CSV / OneRoster M2]
+    J --> P{Cierre ciclo}
+    P --> Q[status=completed dispara badges]
+      </div>
+    </div>
+
+    <h4>Vista <code>learning.v_student_risk</code> — heurística M1</h4>
+    <div class="code-label">PostgreSQL · heurística inactividad + failed_attempts + % completado</div>
+    <pre class="code"><code>CREATE VIEW learning.v_student_risk AS
+SELECT
+  e.id AS enrollment_id,
+  e.person_id,
+  e.course_run_id,
+  COALESCE(EXTRACT(DAY FROM now() - MAX(xs.occurred_at)), 999) AS days_inactive,
+  COUNT(*) FILTER (WHERE xs.verb = 'failed') AS failed_attempts,
+  ROUND(100.0 * SUM(CASE WHEN xs.verb='completed' THEN 1 ELSE 0 END) /
+        GREATEST(cr.total_blocks, 1), 1) AS pct_completed,
+  CASE
+    WHEN EXTRACT(DAY FROM now() - MAX(xs.occurred_at)) &gt; 10 THEN 'at_risk'
+    WHEN COUNT(*) FILTER (WHERE xs.verb='failed') &gt;= 3 THEN 'struggling'
+    ELSE 'on_track'
+  END AS risk_level
+FROM enrollment.enrollment e
+JOIN delivery.course_run cr ON cr.id = e.course_run_id
+LEFT JOIN learning.xapi_statement xs ON xs.person_id = e.person_id
+WHERE e.status = 'active'
+GROUP BY e.id, e.person_id, e.course_run_id, cr.total_blocks;</code></pre>
+
+    <h4>Fricciones detectadas</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fricción</th><th>Severidad</th><th>Mitigación</th><th>Sprint</th></tr></thead>
+        <tbody>
+          <tr><td>Clonar curso preserva schedule obsoleto</td><td><span class="sev-med">🟡 Media</span></td><td>Wizard "nueva edición" resetea fechas obligatorio</td><td>M2 S2</td></tr>
+          <tr><td>Reportes B2B exigen formato cliente</td><td><span class="sev-med">🟡 Media</span></td><td>Export CSV + plantilla OneRoster JSON</td><td>M2 S5</td></tr>
+          <tr><td>Admin no puede revocar badge sin dev</td><td><span class="sev-crit">🔴 Crítica</span></td><td>Botón "Revocar" con nota obligatoria en UI admin</td><td>M3 S2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-pill"><div class="m-label">TTV</div><div class="m-value">&lt;10 min</div></div>
+      <div class="metric-pill"><div class="m-label">FD</div><div class="m-value">&lt;1 s</div></div>
+      <div class="metric-pill"><div class="m-label">FL</div><div class="m-value">≤3 clics clonar</div></div>
+      <div class="metric-pill"><div class="m-label">QA</div><div class="m-value">🟢 RBAC + audit_log</div></div>
+    </div>
+  </article>
+</section>
+
+<hr class="section-divider">
+
+<!-- ══════════════ FRICCIONES CONSOLIDADAS ══════════════ -->
+<section id="fricciones">
+  <div class="section-header">
+    <div class="section-label">Vista transversal</div>
+    <h2>Fricciones <span>priorizadas</span> · sprint map</h2>
+    <p>Nueve fricciones canonizadas, cuatro críticas. Cada una lleva owner y sprint asignado en el roadmap M1-M3 del entregable 06.</p>
+  </div>
+
+  <div class="sev-legend">
+    <span class="sev-tag"><span class="sev-dot dot-crit"></span> Crítica · bloqueante para go-live</span>
+    <span class="sev-tag"><span class="sev-dot dot-high"></span> Alta · reduce conversión o retención</span>
+    <span class="sev-tag"><span class="sev-dot dot-med"></span> Media · mejora progresiva</span>
+    <span class="sev-tag"><span class="sev-dot dot-low"></span> Baja · cosmética</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Flujo</th><th>Fricción</th><th>Sev.</th><th>Sprint</th></tr></thead>
+      <tbody>
+        <tr><td><strong>F1</strong></td><td>Matrícula</td><td>Tarjetas LatAm rechazadas</td><td><span class="sev-crit">🔴 Crítica</span></td><td>M2 Sprint 1 — MercadoPago</td></tr>
+        <tr><td><strong>F2</strong></td><td>Aprendizaje</td><td>Video no carga en baja conectividad</td><td><span class="sev-crit">🔴 Crítica</span></td><td>M1 Sprint 4 — transcript-first</td></tr>
+        <tr><td><strong>F3</strong></td><td>Certificación</td><td>VC no renderiza en LinkedIn</td><td><span class="sev-crit">🔴 Crítica</span></td><td>M3 Sprint 1 — OB 2.0 alterno</td></tr>
+        <tr><td><strong>F4</strong></td><td>Backoffice</td><td>Revocar badge requiere dev</td><td><span class="sev-crit">🔴 Crítica</span></td><td>M3 Sprint 2 — botón admin</td></tr>
+        <tr><td><strong>F5</strong></td><td>Matrícula</td><td>Magic link bloqueado</td><td><span class="sev-high">🟡 Alta</span></td><td>M2 Sprint 2 — password fallback</td></tr>
+        <tr><td><strong>F6</strong></td><td>Aprendizaje</td><td>Pérdida de progreso cross-device</td><td><span class="sev-high">🟡 Alta</span></td><td>M1 Sprint 3 — state_snapshot</td></tr>
+        <tr><td><strong>F7</strong></td><td>Descubrimiento</td><td>Catálogo sin filtros</td><td><span class="sev-med">🟡 Media</span></td><td>M2 Sprint 3 — facets</td></tr>
+        <tr><td><strong>F8</strong></td><td>Evaluación</td><td>Feedback genérico</td><td><span class="sev-high">🟡 Alta</span></td><td>M1 Sprint 5 — rationale</td></tr>
+        <tr><td><strong>F9</strong></td><td>Descubrimiento</td><td>Precio no localizado</td><td><span class="sev-med">🟡 Media</span></td><td>M2 Sprint 2 — multi-moneda</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ══════════════ XAPI EVENTS ══════════════ -->
+<section id="xapi">
+  <div class="section-header">
+    <div class="section-label">Interoperabilidad</div>
+    <h2>Eventos <span>xAPI / AsyncAPI</span> por flujo</h2>
+    <p>El LRS interno (schema <code>learning</code>, tabla <code>xapi_statement</code> con índice GIN sobre jsonb) consume todos los <code>verbs</code> del Caliper/xAPI vocabulary. Los canales Realtime son el sustrato AsyncAPI para dashboards en vivo.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Flujo</th><th>Verbos xAPI emitidos</th><th>Canal Realtime</th></tr></thead>
+      <tbody>
+        <tr><td>Matrícula</td><td><code>registered</code>, <code>enrolled</code></td><td><code>enrollment:{person_id}</code></td></tr>
+        <tr><td>Aprendizaje</td><td><code>launched</code>, <code>progressed</code>, <code>completed</code> (por block)</td><td><code>course_run:{id}</code></td></tr>
+        <tr><td>Evaluación</td><td><code>attempted</code>, <code>scored</code>, <code>passed</code>/<code>failed</code>, <code>mastered</code></td><td><code>course_run:{id}</code></td></tr>
+        <tr><td>Certificación</td><td><code>awarded</code></td><td><code>credentials:{person_id}</code></td></tr>
+        <tr><td>Backoffice</td><td><code>published</code>, <code>revoked</code>, <code>audited</code></td><td><code>admin:{tenant_id}</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout gold">
+    <strong>Política de retención</strong>
+    <p>Default <strong>24 meses</strong> para <code>xapi_statement</code> de aprendices B2C · <strong>configurable por tenant</strong> B2B según contrato. Borrado vía DSAR respeta <code>credential_issued</code> (las credenciales emitidas son inmutables por diseño VC).</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ══════════════ CONCLUSIONES ══════════════ -->
+<section id="conclusiones">
+  <div class="section-header">
+    <div class="section-label">Cierre del entregable</div>
+    <h2>Trazabilidad <span>viva</span> hacia los 16 deliverables</h2>
+  </div>
+
+  <div class="callout blue">
+    <strong>Conexión con el pipeline</strong>
+    <p>Los 6 flujos anclan: el modelo de dominio (entregable 07), los contratos API (PostgREST + Edge Functions), la seguridad y privacidad (RLS + Ley 1581 + GDPR), la estrategia de testing (Vitest + pgTAP + Playwright + pa11y) y el pack pedagógico <em>scriba</em> (entregable 13). La trazabilidad <strong>flujo ↔ bounded context ↔ métrica 100 Check</strong> debe mantenerse viva a lo largo de M1-M3.</p>
+  </div>
+
+  <div class="callout warning">
+    <strong>Disclaimer comercial</strong>
+    <p>Las estimaciones citadas se expresan en <strong>FTE-meses</strong>, no constituyen oferta ni compromiso contractual. La conversión a moneda está sujeta a análisis comercial posterior.</p>
+  </div>
+
+  <p style="text-align:center;margin-top:2.5rem;font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--navy);">
+    <span style="color:var(--gold);">◆</span> &nbsp; El éxito depende más de cómo te apalancas que de cuánto te esfuerzas. &nbsp; <span style="color:var(--gold);">◆</span>
+  </p>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-row">
+      <div class="footer-logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" width="30" height="30" role="img" aria-label="MetodologIA">
+            <rect width="36" height="36" rx="10" fill="#122562" stroke="#FFD700" stroke-width=".6"/>
+            <rect x="10" y="12" width="4" height="12" rx=".8" fill="#FFFFFF"/>
+            <rect x="16" y="12" width="4" height="8" rx=".8" fill="#FFFFFF"/>
+            <rect x="16" y="22" width="4" height="2" rx=".8" fill="#FFFFFF"/>
+            <rect x="22" y="12" width="4" height="6" rx=".8" fill="#FFFFFF"/>
+            <rect x="22" y="20" width="4" height="4" rx=".8" fill="#FFFFFF"/>
+            <circle cx="18" cy="8" r="2.2" fill="#FFD700"/>
+          </svg>
+        </span>
+        <span>Metodolog<span class="brand-ia">IA</span></span>
+      </div>
+      <div class="footer-badges">
+        <span class="footer-badge">Discovery SAGE v13</span>
+        <span class="footer-badge">Entregable 04 / 16</span>
+        <span class="footer-badge">Brand Voice v3.0</span>
+        <span class="footer-badge">WCAG 2.2 AA</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p><em>MetodologIA — Success as a Service · Construido con método, potenciado por la red agéntica.</em></p>
+      <p>© 2026 MetodologIA · metodologia.info · Fecha de emisión: 2026-04-20 · Autor: Comité MetodologIA · Plan maestro: <code>sdf-run-auto-basado-en-hubexo-indexed-hennessy.md</code> · Estado: <strong>{WIP}</strong> — pendiente de firma.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═════════════ Mermaid init con tokens MetodologIA ═════════════ */
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#122562',
+    primaryTextColor: '#FFFFFF',
+    primaryBorderColor: '#FFD700',
+    lineColor: '#137DC5',
+    secondaryColor: '#F0F0EC',
+    tertiaryColor: '#FFFFFF',
+    fontFamily: 'Montserrat, sans-serif',
+    fontSize: '13px',
+    background: '#F9FAFB',
+    mainBkg: '#122562',
+    secondBkg: '#137DC5',
+    tertiaryBkg: '#BBA0CC',
+    actorBkg: '#122562',
+    actorBorder: '#FFD700',
+    actorTextColor: '#FFFFFF',
+    actorLineColor: '#808080',
+    signalColor: '#1F2833',
+    signalTextColor: '#1F2833',
+    labelBoxBkgColor: '#FFD700',
+    labelBoxBorderColor: '#122562',
+    labelTextColor: '#1F2833',
+    loopTextColor: '#122562',
+    noteBorderColor: '#FFD700',
+    noteBkgColor: '#FFF9E1',
+    noteTextColor: '#1F2833'
+  },
+  securityLevel: 'loose',
+  flowchart: { curve: 'basis', padding: 16 },
+  sequence: { actorMargin: 48, boxMargin: 12, mirrorActors: false }
+});
+
+/* ═════════════ Controls: theme switch + lang pill ═════════════ */
+const root = document.documentElement;
+const themeSwitch = document.getElementById('theme-switch');
+const langPill = document.getElementById('lang-toggle');
+
+const mermaidThemeFor = (isDark) => isDark ? {
+  primaryColor: '#122562', primaryTextColor: '#F0F4F8', primaryBorderColor: '#FFD700',
+  lineColor: '#60A5FA', background: '#0A1840', mainBkg: '#1A3380', secondBkg: '#137DC5',
+  actorBkg: '#1A3380', actorTextColor: '#F0F4F8', signalColor: '#CBD5E1',
+  signalTextColor: '#F0F4F8', labelBoxBkgColor: '#FFD700', labelTextColor: '#0A1840',
+  noteBorderColor: '#FFD700', noteBkgColor: '#1A3380', noteTextColor: '#FFD700',
+  fontFamily: 'Montserrat, sans-serif', fontSize: '13px'
+} : {
+  primaryColor: '#122562', primaryTextColor: '#FFFFFF', primaryBorderColor: '#FFD700',
+  lineColor: '#137DC5', background: '#F9FAFB', mainBkg: '#122562',
+  actorBkg: '#122562', actorTextColor: '#FFFFFF', signalColor: '#1F2833',
+  labelBoxBkgColor: '#FFD700', labelTextColor: '#1F2833',
+  noteBorderColor: '#FFD700', noteBkgColor: '#FFF9E1', noteTextColor: '#1F2833',
+  fontFamily: 'Montserrat, sans-serif', fontSize: '13px'
+};
+
+const rerenderMermaid = (isDark) => {
+  mermaid.initialize({ theme: 'base', themeVariables: mermaidThemeFor(isDark), securityLevel: 'loose', flowchart: { curve: 'basis', padding: 16 }, sequence: { actorMargin: 48, boxMargin: 12, mirrorActors: false } });
+  document.querySelectorAll('.mermaid').forEach(el => {
+    const src = el.getAttribute('data-src') || el.textContent;
+    el.setAttribute('data-src', src);
+    el.removeAttribute('data-processed');
+    el.innerHTML = src;
+  });
+  mermaid.run();
+};
+
+const applyTheme = (mode) => {
+  root.classList.remove('light', 'dark');
+  root.classList.add(mode);
+  localStorage.setItem('mi-theme', mode);
+  themeSwitch.setAttribute('aria-checked', mode === 'dark' ? 'true' : 'false');
+  rerenderMermaid(mode === 'dark');
+};
+
+const applyLang = (lang) => {
+  root.setAttribute('lang', lang);
+  localStorage.setItem('mi-lang', lang);
+  langPill.querySelectorAll('span').forEach(s => s.classList.toggle('active', s.dataset.lang === lang));
+};
+
+themeSwitch.addEventListener('click', () => {
+  const next = root.classList.contains('dark') ? 'light' : 'dark';
+  applyTheme(next);
+});
+themeSwitch.addEventListener('keydown', (e) => {
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); themeSwitch.click(); }
+});
+langPill.addEventListener('click', (e) => {
+  const t = e.target.closest('[data-lang]'); if (!t) return;
+  applyLang(t.dataset.lang);
+});
+
+// Restore preferences
+applyTheme(localStorage.getItem('mi-theme') || 'light');
+applyLang(localStorage.getItem('mi-lang') || 'es');
+
+// Render Lucide icons
+if (window.lucide) window.lucide.createIcons();
+
+/* ═════════════ Scroll progress ═════════════ */
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const p = h > 0 ? (document.documentElement.scrollTop / h) * 100 : 0;
+  document.getElementById('scroll-progress').style.width = p + '%';
+}, { passive: true });
+
+/* ═════════════ Active nav link on scroll ═════════════ */
+const sections = document.querySelectorAll('main.container > section[id]');
+const links = document.querySelectorAll('.nav-links a');
+const setActive = () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+};
+window.addEventListener('scroll', setActive, { passive: true });
+setActive();
+
+/* ═════════════ Lucide re-render on toggle changes ═════════════ */
+new MutationObserver(() => { if (window.lucide) window.lucide.createIcons(); })
+  .observe(document.body, { childList: true, subtree: true });
+</script>
+
+</body>
+</html>

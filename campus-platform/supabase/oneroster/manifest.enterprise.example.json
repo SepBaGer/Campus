@@ -1,0 +1,22 @@
+{
+  "enabled": true,
+  "provider": "oneroster",
+  "version": "1.2",
+  "base_url": "https://CLIENT-SIS/ims/oneroster/rostering/v1p2",
+  "auth": {
+    "method": "bearer",
+    "token_secret_name": "ONEROSTER_POWER_SKILLS_TOKEN"
+  },
+  "sourced_ids": {
+    "school": "SCHOOL-SOURCED-ID",
+    "class": "CLASS-SOURCED-ID"
+  },
+  "sync_direction": "pull",
+  "provision_mode": "match_only",
+  "invite_redirect_path": "/portal",
+  "sync_teacher_roles": false,
+  "request_options": {
+    "limit": 100,
+    "timeout_ms": 15000
+  }
+}

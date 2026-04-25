@@ -1,0 +1,136 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { loadCatalogSnapshot } from "../lib/catalog-repository";
+
+const catalog = await loadCatalogSnapshot();
+const [featuredCourse] = catalog;
+const featuredBlocks = featuredCourse?.blocks.length ?? 0;
+---
+
+<BaseLayout
+  title="MetodologIA Campus"
+  description="Campus de MetodologIA para activar programas premium, practicar con acompanamiento y certificar avances con evidencia verificable."
+>
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">metodologia campus</span>
+        <h1>
+          Una experiencia de aprendizaje para pasar del ruido a una
+          <span class="gradient-text">practica con metodo</span>.
+        </h1>
+        <p class="lead">
+          El nuevo Campus toma la energia visual de MetodologIA y la aterriza en un journey claro:
+          <strong>descubrir, activar, practicar, consolidar y certificar</strong>.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="/catalogo" data-i18n="layout.cta.catalog">Explorar programas</a>
+          <a
+            class="button-secondary"
+            href={featuredCourse ? `/curso/${featuredCourse.slug}` : "/catalogo"}
+            data-i18n="page.home.cta.route"
+          >
+            Ver ruta principal
+          </a>
+        </div>
+        <div class="stats" role="list" aria-label="Resumen del campus">
+          <div class="stats__cell" role="listitem">
+            <span class="stats__num">16</span>
+            <span class="stats__label">Semanas guiadas</span>
+          </div>
+          <div class="stats__cell" role="listitem">
+            <span class="stats__num">{featuredBlocks}</span>
+            <span class="stats__label">Experiencias activas</span>
+          </div>
+          <div class="stats__cell" role="listitem">
+            <span class="stats__num">Live</span>
+            <span class="stats__label">Clinics y acompanamiento</span>
+          </div>
+          <div class="stats__cell" role="listitem">
+            <span class="stats__num">Badge</span>
+            <span class="stats__label">Cierre verificable</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Promesa del campus">
+        <span class="panel-tag">premium learning journey</span>
+        <h2>Aprender aqui se siente como entrar a un sistema, no a un LMS generico.</h2>
+        <p class="lead">
+          Cada tramo combina direccion, sesiones en vivo, practica aplicada y una narrativa visual coherente con la marca principal.
+        </p>
+        <div class="utility-bar">
+          <span class="pill">Direccion clara</span>
+          <span class="pill">Practica real</span>
+          <span class="pill">Seguimiento visible</span>
+        </div>
+        <span class="code-pill">Catalogo, acceso, portal, verificacion y operacion en una misma experiencia.</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">lo que cambia</span>
+      <h2>Un campus pensado para transformar ritmo, criterio y capacidad de ejecucion.</h2>
+      <p>
+        La propuesta ya no se presenta como una lista de modulos aislados. Se vive como una ruta premium con entrada clara, acompanamiento y evidencia final.
+      </p>
+    </div>
+    <div class="feature-grid">
+      <article class="detail-card">
+        <h3>Descubres con contexto</h3>
+        <p>La capa publica explica la promesa del programa, la cohorte activa y el tipo de acompanamiento antes de pedir accion.</p>
+        <span class="surface-note">Catalogo y detalle de curso con tono de marca</span>
+      </article>
+      <article class="detail-card">
+        <h3>Activas sin friccion</h3>
+        <p>Desde la matricula hasta el magic link, la experiencia empuja a entrar rapido y con una expectativa clara de valor.</p>
+        <span class="surface-note">Acceso y conversion alineados al journey</span>
+      </article>
+      <article class="detail-card">
+        <h3>Consolidas con evidencia</h3>
+        <p>El portal y la verificacion convierten el avance en un activo visible, compartible y consistente con la narrativa premium.</p>
+        <span class="surface-note">Portal, badge y verificador publico</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="story-grid">
+      <div class="section-card">
+        <span class="eyebrow">ruta destacada</span>
+        <h2>{featuredCourse?.title ?? "Programa de Empoderamiento"}</h2>
+        <p class="lead">
+          {featuredCourse?.summary ?? "Ruta piloto para validar activacion, progreso, repaso y credencial verificable."}
+        </p>
+        {featuredCourse && (
+          <course-card
+            title={featuredCourse.title}
+            summary={featuredCourse.summary}
+            eyebrow={featuredCourse.eyebrow}
+            audience={featuredCourse.audience}
+            access-model={featuredCourse.accessModel}
+          price-label={featuredCourse.priceLabel}
+          delivery-label={featuredCourse.deliveryLabel}
+          run-label={featuredCourse.runLabel}
+          progress-percent={featuredCourse.progressPercent}
+          competencies-json={JSON.stringify(featuredCourse.competencies)}
+          href={`/curso/${featuredCourse.slug}`}
+        />
+      )}
+      </div>
+
+      <div class="section-card">
+        <span class="eyebrow">como se vive</span>
+        <h2>Un recorrido acompasado de principio a fin.</h2>
+        <ul class="journey-list">
+          <li><strong>Exploras la promesa</strong> y entiendes si la ruta encaja con el momento del profesional o del equipo.</li>
+          <li><strong>Activas tu acceso</strong> con matricula o magic link sin romper el tono ni la continuidad de la experiencia.</li>
+          <li><strong>Practicas por bloques</strong> con sesiones, ejercicios, proyectos y recomendaciones de siguiente paso.</li>
+          <li><strong>Cierras con evidencia</strong> para que el progreso no se quede en percepcion sino en una credencial verificable.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

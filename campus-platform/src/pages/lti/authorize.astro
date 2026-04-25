@@ -1,0 +1,185 @@
+---
+const supabaseFunctionsBase = String(import.meta.env.PUBLIC_SUPABASE_URL || "").replace(/\/+$/, "")
+  ? `${String(import.meta.env.PUBLIC_SUPABASE_URL || "").replace(/\/+$/, "")}/functions/v1`
+  : "";
+---
+
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Campus LTI Launch</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Montserrat, Arial, sans-serif;
+        background: #f7f0e4;
+        color: #172033;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at top, rgba(176, 127, 0, 0.16), transparent 36%),
+          linear-gradient(180deg, #fbf7ef 0%, #f1e5d3 100%);
+        padding: 1.5rem;
+      }
+
+      main {
+        width: min(32rem, 100%);
+        background: #fffaf2;
+        border: 1px solid rgba(176, 127, 0, 0.18);
+        border-radius: 28px;
+        padding: 1.75rem;
+        box-shadow: 0 24px 60px rgba(23, 32, 51, 0.12);
+      }
+
+      h1 {
+        margin: 0 0 0.75rem;
+        font-family: Poppins, Arial, sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+      }
+
+      p {
+        margin: 0 0 0.9rem;
+        line-height: 1.6;
+      }
+
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        background: rgba(23, 32, 51, 0.08);
+        border-radius: 10px;
+        padding: 0.15rem 0.4rem;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        border-radius: 999px;
+        background: #f3e4bd;
+        color: #5f4500;
+        font-weight: 700;
+        font-size: 0.9rem;
+        padding: 0.4rem 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .dot {
+        width: 0.6rem;
+        height: 0.6rem;
+        border-radius: 999px;
+        background: currentColor;
+        animation: pulse 1s ease-in-out infinite;
+      }
+
+      .error {
+        color: #9b1c1c;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 0.35;
+          transform: scale(0.9);
+        }
+
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="pill">
+        <span class="dot" aria-hidden="true"></span>
+        Preparando launch LTI seguro
+      </div>
+      <h1>Campus esta abriendo la herramienta</h1>
+      <p id="status">
+        Estamos firmando el mensaje <code>id_token</code> y conectando el bloque interactivo con la herramienta externa.
+      </p>
+      <p id="detail">No cierres esta ventana hasta que el launch termine.</p>
+      <noscript>
+        <p class="error">Este flujo necesita JavaScript para completar el <code>form_post</code> de LTI 1.3.</p>
+      </noscript>
+    </main>
+
+    <script define:vars={{ supabaseFunctionsBase }} is:inline>
+      const statusNode = document.getElementById("status");
+      const detailNode = document.getElementById("detail");
+
+      const renderError = (message) => {
+        document.title = "Campus LTI Launch Error";
+        statusNode.textContent = "No se pudo completar el launch LTI.";
+        detailNode.textContent = message;
+        detailNode.classList.add("error");
+      };
+
+      const buildHiddenInput = (name, value) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value;
+        return input;
+      };
+
+      const submitToolLaunch = (payload) => {
+        const redirectUri = String(payload?.redirect_uri || "");
+        const idToken = String(payload?.id_token || "");
+        const state = String(payload?.state || "");
+
+        if (!redirectUri || !idToken || !state) {
+          throw new Error("La plataforma no devolvio todos los campos requeridos para el form_post.");
+        }
+
+        document.title = String(payload?.tool_title || "Campus LTI Launch");
+        statusNode.textContent = "Launch firmado. Redirigiendo a la herramienta...";
+        detailNode.textContent = "Si la herramienta tarda un poco en abrir, manten esta ventana activa.";
+
+        const form = document.createElement("form");
+        form.method = "post";
+        form.action = redirectUri;
+        form.style.display = "none";
+        form.append(
+          buildHiddenInput("id_token", idToken),
+          buildHiddenInput("state", state)
+        );
+        document.body.appendChild(form);
+        form.submit();
+      };
+
+      const startLaunch = async () => {
+        if (!supabaseFunctionsBase) {
+          throw new Error("Falta PUBLIC_SUPABASE_URL para resolver el authorize endpoint del Campus.");
+        }
+
+        const query = new URLSearchParams(window.location.search);
+        query.set("action", "authorize");
+        const response = await fetch(`${supabaseFunctionsBase}/lti-launch?${query.toString()}`, {
+          method: "GET",
+          headers: {
+            Accept: "application/json"
+          }
+        });
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(String(payload?.error || "El authorize endpoint rechazo la solicitud."));
+        }
+
+        submitToolLaunch(payload);
+      };
+
+      startLaunch().catch((error) => {
+        renderError(error instanceof Error ? error.message : "Error inesperado al preparar el launch.");
+      });
+    </script>
+  </body>
+</html>

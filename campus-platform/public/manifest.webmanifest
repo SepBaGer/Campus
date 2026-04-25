@@ -1,0 +1,18 @@
+{
+  "name": "Campus MetodologIA",
+  "short_name": "Campus",
+  "description": "Ruta guiada para aprender, practicar y sostener progreso incluso con conectividad intermitente.",
+  "start_url": "/portal",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f0e4",
+  "theme_color": "#f7f0e4",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

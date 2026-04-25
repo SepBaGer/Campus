@@ -4,15 +4,36 @@ campus-v2/.env
 campus-v2/.env.*
 !campus-v2/.env.example
 !campus-v2/.env.production.example
+campus-platform/node_modules/
+campus-platform/dist/
+campus-platform/.astro/
+campus-platform/.lighthouseci/
+campus-platform/.env
+campus-platform/.env.*
+!campus-platform/.env.example
+!campus-platform/.env.production.example
+campus-platform/supabase/.env.functions
+campus-platform/supabase/.temp/
+campus-platform/supabase/.branches/
+campus-v2/supabase/.env.functions
 campus-v2/supabase/.temp/
 campus-v2/supabase/.branches/
 mao-sdd/
+**/__pycache__/
+*.pyc
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Local tooling and workspaces
-.jm-adk.json
-AGENTS.md
-tools/
-workspace/
+# Local workspace state
+workspace/*
+!workspace/README.md
+!workspace/.gitkeep
+session-state.json
+local/
+.codex-tmp/
+
+# Vendored framework checkout
+tools/*
+!tools/README.md
+tools/jm-adk/

@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Portal | MetodologIA Campus"
+  description="Portal del estudiante del nuevo Campus MetodologIA."
+  noIndex={true}
+>
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="page.portal.eyebrow">portal del estudiante</span>
+      <h1 data-i18n="page.portal.title">Tu progreso, tus siguientes pasos y tu evidencia final.</h1>
+      <p class="lead" data-i18n="page.portal.subtitle">
+        El portal resume el estado de la ruta, propone la siguiente accion y prepara el cierre verificable sin salir del universo visual del campus.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <portal-shell default-course-slug="programa-empoderamiento-power-skills"></portal-shell>
+  </section>
+</BaseLayout>

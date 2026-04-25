@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Acceso | MetodologIA Campus"
+  description="Acceso por magic link o SSO corporativo al Campus de MetodologIA."
+  noIndex={true}
+>
+  <section class="section">
+    <div class="story-grid">
+      <div class="section-card">
+        <span class="eyebrow" data-i18n="page.access.eyebrow">entrar al campus</span>
+        <h1 data-i18n="page.access.title">Acceso simple, rapido y sin friccion.</h1>
+        <p class="lead" data-i18n="page.access.subtitle">
+          Esta ruta mantiene el tono premium del campus y resuelve el ingreso por magic link o SSO corporativo para que el estudiante vuelva rapido a su progreso.
+        </p>
+        <ul class="journey-list">
+          <li><strong>Recibes el enlace</strong> en tu correo sin recordar password.</li>
+          <li><strong>O usas tu acceso corporativo</strong> con Azure AD, Google Workspace u otro SSO enterprise publicado en Supabase.</li>
+          <li><strong>Retomas tu ruta</strong> en el portal con progreso, proximas acciones y credencial.</li>
+          <li><strong>Conservas continuidad</strong> entre descubrimiento, acceso y aprendizaje.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <span class="eyebrow">magic link</span>
+        <magic-link-form redirect-path="/portal"></magic-link-form>
+      </div>
+
+      <div class="section-card">
+        <span class="eyebrow">enterprise sso</span>
+        <enterprise-sso-form redirect-path="/portal"></enterprise-sso-form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

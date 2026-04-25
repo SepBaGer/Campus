@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Static fallback for dynamic credential tokens on Apache/Hostinger.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^verify/[^/]+/?$ verify/index.html [L]

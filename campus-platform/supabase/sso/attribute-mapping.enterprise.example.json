@@ -1,0 +1,20 @@
+{
+  "keys": {
+    "email": {
+      "names": ["email", "mail", "userPrincipalName"]
+    },
+    "full_name": {
+      "names": ["name", "displayName", "cn"]
+    },
+    "given_name": {
+      "names": ["givenName", "firstName"]
+    },
+    "family_name": {
+      "names": ["sn", "surname", "lastName"]
+    },
+    "organization": {
+      "names": ["company", "organization", "tenant"],
+      "default": "enterprise"
+    }
+  }
+}

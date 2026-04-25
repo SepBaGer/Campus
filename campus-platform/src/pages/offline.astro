@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { DEFAULT_LOCALE, translate } from "../lib/i18n";
+---
+
+<BaseLayout
+  title="Offline | MetodologIA Campus"
+  description="Fallback offline del campus cuando la red no esta disponible."
+  noIndex={true}
+>
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="page.offline.eyebrow">
+        {translate(DEFAULT_LOCALE, "page.offline.eyebrow")}
+      </span>
+      <h1 data-i18n="page.offline.title">{translate(DEFAULT_LOCALE, "page.offline.title")}</h1>
+      <p class="lead" data-i18n="page.offline.subtitle">
+        {translate(DEFAULT_LOCALE, "page.offline.subtitle")}
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="detail-grid">
+      <article class="detail-card">
+        <span class="eyebrow">continuidad local</span>
+        <h2>Vuelve a una vista ya preparada.</h2>
+        <p class="lead">
+          Si dejaste la ruta lista desde tu portal, el navegador puede recuperar el curso, el preview y tu snapshot mas reciente aun sin red.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="/portal">Ir al portal</a>
+          <a class="button-secondary" href="/catalogo">Abrir catalogo</a>
+        </div>
+      </article>
+
+      <article class="detail-card">
+        <span class="eyebrow">cuando vuelva la conexion</span>
+        <h2>La sincronizacion sigue donde la dejaste.</h2>
+        <p class="lead">
+          Al recuperar internet, el campus vuelve a consultar Supabase y refresca snapshots, progreso y notificaciones sin que tengas que reinstalar nada.
+        </p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

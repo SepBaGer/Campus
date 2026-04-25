@@ -1,0 +1,179 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { loadCatalogSnapshot, loadCourseSnapshot } from "../../lib/catalog-repository";
+import { resolveCoursePreviewBlock } from "../../lib/course-preview";
+
+export async function getStaticPaths() {
+  const catalog = await loadCatalogSnapshot();
+  return catalog.map((course) => ({
+    params: { slug: course.slug }
+  }));
+}
+
+const course = await loadCourseSnapshot(Astro.params.slug || "");
+if (!course) {
+  throw new Error(`Course not found for slug ${Astro.params.slug}`);
+}
+
+const firstBlock = course.blocks[0];
+const previewBlock = resolveCoursePreviewBlock(course.blocks);
+---
+
+<BaseLayout
+  title={`${course.title} | MetodologIA Campus`}
+  description={course.summary}
+>
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">{course.trackTitle}</span>
+        <h1>{course.title}</h1>
+        <p class="lead">{course.transformationPromise}</p>
+        <div class="stats" aria-label="Resumen del programa">
+          {course.heroMetrics.map((metric) => (
+            <div class="stats__cell">
+              <span class="stats__num">{metric.value}</span>
+              <span class="stats__label">{metric.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Contexto del programa">
+        <span class="panel-tag">cohorte premium en activo</span>
+        <h2>{course.runLabel}</h2>
+        <p class="lead">
+          Una ruta disenada para instalar criterio, ritmo y herramientas aplicadas a problemas reales de trabajo.
+        </p>
+        <div class="utility-bar">
+          <span class="pill">{course.priceLabel}</span>
+          <span class="pill">{course.deliveryLabel}</span>
+          <span class="pill">{course.durationLabel}</span>
+        </div>
+        <span class="code-pill">{course.blocks.length} experiencias entre video, lectura, practica y proyecto final.</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="two-up">
+      <div class="section-card" id="activar">
+        <span class="eyebrow">activar plaza</span>
+        <h2>Entra a la cohorte sin perder contexto.</h2>
+        <p class="lead">
+          La matricula ya se presenta como un siguiente paso natural dentro del journey: eliges la ruta, dejas tu correo y activas el acceso al portal.
+        </p>
+        <enrollment-form
+          course-title={course.title}
+          access-model={course.accessModel}
+          price-label={course.priceLabel}
+          plan-code="premium"
+          course-run-slug="power-skills-pilot-open"
+          cta-label="Activar mi acceso"
+        />
+      </div>
+
+      <div class="section-card">
+        <span class="eyebrow">ritmo de trabajo</span>
+        <h2>{course.runLabel}</h2>
+        <p class="lead">{course.durationLabel}</p>
+        <schedule-picker sessions={JSON.stringify(course.sessions)}></schedule-picker>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="detail-grid">
+      <div class="detail-card">
+        <span class="eyebrow">{previewBlock ? "preview gratuito" : "primer paso"}</span>
+        <h3>{previewBlock ? previewBlock.title : firstBlock ? firstBlock.title : "Ruta en preparacion"}</h3>
+        <p>
+          {previewBlock
+            ? `La ruta ya deja probar una primera experiencia sin registro: ${previewBlock.kindLabel.toLowerCase()} para instalar foco rapido y entender el tono pedagogico antes de activar la cohorte.`
+            : firstBlock
+            ? `La experiencia arranca con ${firstBlock.kindLabel.toLowerCase()} para instalar foco rapido y abrir el resto del programa con una mejora visible.`
+            : "Esta ruta aun no tiene bloques publicados."}
+        </p>
+        {previewBlock ? (
+          <span class="code-pill">{previewBlock.rendererLabel} | Bloom {previewBlock.bloomLabel} | {previewBlock.competencyTitle}</span>
+        ) : firstBlock ? (
+          <span class="code-pill">{firstBlock.rendererLabel} | Bloom {firstBlock.bloomLabel} | {firstBlock.competencyTitle}</span>
+        ) : null}
+        <div class="hero-actions">
+          {previewBlock ? (
+            <a class="button" href={`/curso/${course.slug}/preview`}>Abrir leccion gratuita</a>
+          ) : null}
+          <a class="button-secondary" href="#activar">Activar acceso</a>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <span class="eyebrow">competencias objetivo</span>
+        <h3>La ruta se organiza alrededor de capacidades observables.</h3>
+        <div class="utility-bar">
+          {course.competencies.map((competency) => (
+            <span class="pill">{competency.title} | Bloom {competency.bloomLabel}</span>
+          ))}
+        </div>
+        <p class="lead">
+          Estas competencias dejan explicita la promesa curricular del programa y ayudan a conectar cada bloque con una progresion concreta.
+        </p>
+        <h3>Ruta completa de trabajo</h3>
+        <ul class="course-outline">
+          {course.blocks.map((block) => (
+            <li>
+              <strong>{block.order}. {block.title}</strong>
+              <small>{block.kindLabel} | Bloom {block.bloomLabel} | {block.competencyTitle} | {block.durationMinutes} min | {block.rendererLabel}</small>
+              <small>{block.summary}</small>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {course.community?.enabled ? (
+    <section class="section">
+      <div class="detail-grid">
+        <div class="detail-card">
+          <span class="eyebrow">comunidad de cohorte</span>
+          <h3>{course.community.title}</h3>
+          <p>{course.community.summary}</p>
+          <div class="utility-bar">
+            <span class="pill">{course.community.provider}</span>
+            {course.community.surfaceModes.map((mode) => (
+              <span class="pill">{mode.replaceAll("_", " ")}</span>
+            ))}
+          </div>
+          <span class="code-pill">
+            {course.community.peerReviewEnabled ? "peer-review activo" : "peer-review opcional"} | launch {course.community.toolMode}
+          </span>
+        </div>
+
+        <div class="detail-card">
+          <span class="eyebrow">como se usa</span>
+          <h3>La conversacion tambien es parte del aprendizaje medible.</h3>
+          <p class="lead">
+            Cada cohorte abre un espacio guiado para preguntas, avances con evidencia y retroalimentacion entre pares usando el mismo carril LTI del campus.
+          </p>
+          <ul class="course-outline">
+            <li>
+              <strong>Prompt de entrada</strong>
+              <small>{course.community.discussionPrompt}</small>
+            </li>
+            {course.community.expectations.map((expectation) => (
+              <li>
+                <strong>Regla de participacion</strong>
+                <small>{expectation}</small>
+              </li>
+            ))}
+          </ul>
+          <div class="hero-actions">
+            <a class="button" href="/portal">Abrir desde mi portal</a>
+            <a class="button-secondary" href="#activar">Activar acceso</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  ) : null}
+</BaseLayout>

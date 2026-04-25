@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Campus Platform</title>
+  <defs>
+    <linearGradient id="campusGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f766e" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#07131a" />
+  <path d="M14 20L32 11L50 20L32 29L14 20Z" fill="url(#campusGradient)" />
+  <path d="M20 28V38C20 43.523 25.373 48 32 48C38.627 48 44 43.523 44 38V28L32 35L20 28Z" fill="#f5efe2" />
+</svg>

@@ -1,0 +1,30 @@
+{
+  "enabled": true,
+  "provider": "discourse",
+  "title": "Comunidad de cohorte Power Skills",
+  "summary": "Foro privado de cohorte para preguntas, avances con evidencia y peer-review entre profesionales.",
+  "entry_label": "Abrir comunidad",
+  "discussion_prompt": "Comparte un avance real de trabajo y pide una retroalimentacion concreta.",
+  "peer_review_enabled": true,
+  "surface_modes": ["forum", "peer_review"],
+  "expectations": [
+    "Publica una actualizacion semanal con contexto y una decision visible.",
+    "Pide feedback con una pregunta concreta y una evidencia adjunta.",
+    "Responde a dos companeros con sugerencias accionables."
+  ],
+  "lti": {
+    "tool_mode": "custom",
+    "title": "Discourse de cohorte",
+    "login_initiation_url": "https://DISCOURSE-LTI.example.com/lti/login",
+    "target_link_uri": "https://DISCOURSE-LTI.example.com/lti/launch",
+    "client_id": "CLIENT_ID_FROM_TOOL",
+    "deployment_id": "DEPLOYMENT_ID_FROM_TOOL",
+    "resource_link_id": "resource-community-power-skills-pilot-open",
+    "launch_presentation": "window",
+    "custom_parameters": {
+      "provider": "discourse",
+      "surface": "community",
+      "channel": "power-skills-pilot"
+    }
+  }
+}

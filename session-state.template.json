@@ -1,0 +1,24 @@
+{
+  "_comment": "Template for optional session-state.json. Copy locally when persistent repo-state recovery is useful.",
+  "version": "1.0",
+  "last_session": {
+    "date": null,
+    "environment": "codex",
+    "summary": null
+  },
+  "active_workspace": {
+    "id": null,
+    "path": null,
+    "topic": null,
+    "gate_pending": null
+  },
+  "current_focus": null,
+  "recent_areas": [],
+  "pending_decisions": [],
+  "last_input_at": null,
+  "last_validation": {
+    "command": null,
+    "status": null,
+    "ran_at": null
+  }
+}

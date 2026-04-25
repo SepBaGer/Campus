@@ -1,0 +1,159 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { loadCatalogSnapshot, loadCourseSnapshot } from "../../../lib/catalog-repository";
+import { buildBlockPreviewContent, resolveCoursePreviewBlock } from "../../../lib/course-preview";
+import { extractRendererMarkdown, renderRichMarkdownToHtml } from "../../../lib/rich-text-markdown";
+
+export async function getStaticPaths() {
+  const catalog = await loadCatalogSnapshot();
+  return catalog.map((course) => ({
+    params: { slug: course.slug }
+  }));
+}
+
+const course = await loadCourseSnapshot(Astro.params.slug || "");
+if (!course) {
+  throw new Error(`Course not found for slug ${Astro.params.slug}`);
+}
+
+const previewBlock = resolveCoursePreviewBlock(course.blocks);
+const previewContent = previewBlock ? buildBlockPreviewContent(previewBlock) : null;
+const previewLessonHtml = previewBlock
+  ? renderRichMarkdownToHtml(extractRendererMarkdown(previewBlock.kind, previewBlock.rendererManifest))
+  : "";
+---
+
+<BaseLayout
+  title={`${course.title} | Preview gratuito`}
+  description={previewBlock
+    ? `Vista gratuita de ${previewBlock.title} dentro de ${course.title}.`
+    : `Preview gratuito de ${course.title}.`}
+>
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">preview gratuito</span>
+        <h1>
+          {previewBlock
+            ? previewBlock.title
+            : `La ruta ${course.title} aun no tiene una leccion publica lista.`}
+        </h1>
+        <p class="lead">
+          {previewBlock
+            ? `Pruebas una primera experiencia real del programa sin romper el tono premium de la marca ni forzar registro antes de tiempo.`
+            : "El siguiente paso recomendado es revisar el programa completo y activar tu acceso con acompanamiento guiado."}
+        </p>
+        <div class="utility-bar">
+          <span class="pill">{course.trackTitle}</span>
+          {previewBlock ? <span class="pill">{previewBlock.kindLabel}</span> : null}
+          {previewBlock ? <span class="pill">Bloom {previewBlock.bloomLabel}</span> : null}
+          {previewBlock ? <span class="pill">{previewBlock.competencyTitle}</span> : null}
+        </div>
+        <div class="hero-actions">
+          <a class="button" href="#activar">Activar ruta completa</a>
+          <a class="button-secondary" href={`/curso/${course.slug}`}>Volver al programa</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Contexto del preview">
+        <span class="panel-tag">entrada sin friccion</span>
+        <h2>{course.runLabel}</h2>
+        <p class="lead">
+          {previewBlock
+            ? `Esta leccion deja ver el tipo de acompasamiento, criterio pedagogico y estandar visual que sostiene el resto de la cohorte.`
+            : "La ruta sigue disponible para exploracion publica y activacion guiada."}
+        </p>
+        <div class="utility-bar">
+          <span class="pill">{course.deliveryLabel}</span>
+          <span class="pill">{course.durationLabel}</span>
+          <span class="pill">{course.priceLabel}</span>
+        </div>
+        {previewBlock ? (
+          <span class="code-pill">
+            {previewBlock.durationMinutes} min | {previewBlock.rendererLabel} | acceso libre antes de matricularte
+          </span>
+        ) : null}
+      </aside>
+    </div>
+  </section>
+
+  {previewBlock && previewContent ? (
+    <>
+      <section class="section">
+        <div class="two-up">
+          <article class="section-card">
+            <span class="eyebrow">que vas a recorrer</span>
+            <h2>La primera leccion ya deja una mejora visible.</h2>
+            {previewContent.paragraphs.map((paragraph, index) => (
+              <p class={index === 0 ? "lead" : undefined}>{paragraph}</p>
+            ))}
+          </article>
+
+          <article class="section-card">
+            <span class="eyebrow">como se vive</span>
+            <h2>La experiencia combina claridad, accesibilidad y accion.</h2>
+            <ul class="journey-list">
+              {previewContent.experiencePoints.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="detail-grid">
+          <article class="detail-card">
+            <span class="eyebrow">senales pedagogicas</span>
+            <h3>La leccion gratuita no es una muestra vacia.</h3>
+            <ul class="journey-list">
+              {previewContent.evidencePoints.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </article>
+
+          <article class="detail-card" id="activar">
+            <span class="eyebrow">siguiente paso</span>
+            <h3>Si esta entrada te hace sentido, activas la ruta completa.</h3>
+            <p class="lead">
+              El resto del programa suma sesiones, practica guiada, reviews por competencia y un cierre con badge verificable.
+            </p>
+            <enrollment-form
+              course-title={course.title}
+              access-model={course.accessModel}
+              price-label={course.priceLabel}
+              plan-code="premium"
+              course-run-slug="power-skills-pilot-open"
+              cta-label="Quiero continuar la ruta"
+            />
+          </article>
+        </div>
+      </section>
+
+      {previewLessonHtml ? (
+        <section class="section">
+          <article class="section-card rich-markdown">
+            <span class="eyebrow">muestra editorial</span>
+            <h2>Asi se ve la leccion publicada cuando el bloque ya viene con media y markdown enriquecido.</h2>
+            <div set:html={previewLessonHtml}></div>
+          </article>
+        </section>
+      ) : null}
+    </>
+  ) : (
+    <section class="section">
+      <div class="section-card">
+        <span class="eyebrow">sin preview publico</span>
+        <h2>La ruta todavia no tiene una leccion libre publicada.</h2>
+        <p class="lead">
+          Mientras tanto, puedes revisar la promesa del programa, las competencias objetivo y activar tu acceso desde la pagina principal del curso.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href={`/curso/${course.slug}`}>Ver programa completo</a>
+          <a class="button-secondary" href="/catalogo">Explorar catalogo</a>
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Admin | MetodologIA Campus"
+  description="Operacion editorial y academica del nuevo Campus."
+  noIndex={true}
+>
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="page.admin.eyebrow">operacion interna</span>
+      <h1 data-i18n="page.admin.title">Panel privado para mantener cursos, cohortes y experiencias.</h1>
+      <p class="lead" data-i18n="page.admin.subtitle">
+        Esta superficie sigue siendo operativa, pero ahora conversa visualmente con el resto del producto para que la capa interna no se sienta ajena al campus publico.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <admin-console course-slug="programa-empoderamiento-power-skills"></admin-console>
+  </section>
+</BaseLayout>

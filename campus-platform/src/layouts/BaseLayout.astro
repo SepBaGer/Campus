@@ -1,0 +1,164 @@
+---
+import "../styles/global.css";
+import { DEFAULT_LOCALE, getLocaleOptions, translate } from "../lib/i18n";
+
+interface Props {
+  title: string;
+  description: string;
+  noIndex?: boolean;
+}
+
+const { title, description, noIndex = false } = Astro.props;
+
+const normalizePath = (value: string) => {
+  if (!value || value === "/") {
+    return "/";
+  }
+
+  return value.replace(/\/+$/, "");
+};
+
+const currentPath = normalizePath(Astro.url.pathname);
+const localeOptions = getLocaleOptions();
+
+const navItems = [
+  { href: "/", label: translate(DEFAULT_LOCALE, "layout.nav.home"), key: "layout.nav.home" },
+  { href: "/catalogo", label: translate(DEFAULT_LOCALE, "layout.nav.catalog"), key: "layout.nav.catalog" },
+  { href: "/acceso", label: translate(DEFAULT_LOCALE, "layout.nav.access"), key: "layout.nav.access" },
+  { href: "/portal", label: translate(DEFAULT_LOCALE, "layout.nav.portal"), key: "layout.nav.portal" },
+  { href: "/admin", label: translate(DEFAULT_LOCALE, "layout.nav.admin"), key: "layout.nav.admin" }
+];
+
+const isActive = (href: string) => {
+  const target = normalizePath(href);
+
+  if (target === "/catalogo") {
+    return currentPath === "/catalogo" || currentPath.startsWith("/curso");
+  }
+
+  if (target === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath === target || currentPath.startsWith(`${target}/`);
+};
+---
+
+<!doctype html>
+<html lang={DEFAULT_LOCALE}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f0e4" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="robots" content={noIndex ? "noindex,nofollow" : "index,follow"} />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Montserrat:wght@400;500;600;700&display=optional"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Montserrat:wght@400;500;600;700&display=optional"
+    />
+    <script is:inline>
+      const storedTheme = localStorage.getItem("mdg_theme");
+      document.documentElement.dataset.theme = storedTheme === "dark" ? "dark" : "light";
+      const storedLocale = localStorage.getItem("mdg_locale");
+      const resolvedLocale = storedLocale && ["es-CO", "en-US", "pt-BR"].includes(storedLocale)
+        ? storedLocale
+        : "es-CO";
+      document.documentElement.dataset.locale = resolvedLocale;
+      document.documentElement.lang = resolvedLocale;
+    </script>
+  </head>
+  <body>
+    <div class="bg-mesh" aria-hidden="true"></div>
+    <div class="bg-orbit" aria-hidden="true"></div>
+    <a class="skip-link" href="#main-content" data-i18n="layout.skip">Saltar al contenido</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="site-brand" href="/">
+          <span class="site-brand-mark">
+            <img src="/favicon.svg" alt="Campus MetodologIA" />
+          </span>
+          <span class="site-brand-copy">
+            <span class="site-brand-name">Campus MetodologIA</span>
+            <span class="site-brand-role" data-i18n="layout.brand.role">
+              {translate(DEFAULT_LOCALE, "layout.brand.role")}
+            </span>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegacion principal">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class={isActive(item.href) ? "is-active" : undefined}
+              data-i18n={item.key}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div class="site-actions">
+          <label class="locale-picker">
+            <span data-i18n="locale.label">{translate(DEFAULT_LOCALE, "locale.label")}</span>
+            <select data-locale-select aria-label="Language selector">
+              {localeOptions.map((option) => (
+                <option value={option.value} data-i18n={`locale.option.${option.value}`}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            class="theme-toggle"
+            aria-label={translate(DEFAULT_LOCALE, "layout.theme.toggle")}
+            data-theme-toggle
+            data-i18n="layout.theme.toggle"
+            data-i18n-attr="aria-label"
+          >
+            <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.657-5.657 1.414-1.414M4.929 19.071l1.414-1.414M19.071 19.071l-1.414-1.414M6.343 6.343 4.929 4.929M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.8 6.8 0 0 0 21 12.8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <a class="site-cta" href="/catalogo" data-i18n="layout.cta.catalog">
+            {translate(DEFAULT_LOCALE, "layout.cta.catalog")}
+          </a>
+        </div>
+      </header>
+
+      <main id="main-content" class="site-main">
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <strong>Campus MetodologIA</strong>
+        <span data-i18n="layout.footer.tagline">
+          {translate(DEFAULT_LOCALE, "layout.footer.tagline")}
+        </span>
+        <span data-i18n="layout.footer.infrastructure" data-i18n-html="true">
+          La direccion visual se homologa con <a href="https://metodologia.info/" rel="noreferrer">metodologia.info</a> y el backend activo vive en <code>campus-platform/supabase</code>.
+        </span>
+      </footer>
+    </div>
+
+    <script>
+      import "../components/boot/register-elements.ts";
+      import "../components/boot/site-chrome.ts";
+    </script>
+  </body>
+</html>
